@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .wire{stroke:#333;stroke-width:3;fill:none;}
+    .box{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">RS-485 Termination + Biasing</text>
+  <line x1="120" y1="300" x2="1080" y2="300" class="wire"/>
+  <rect x="120" y="260" width="80" height="80" class="box"/>
+  <rect x="1000" y="260" width="80" height="80" class="box"/>
+  <text x="110" y="360" class="label">120Ω</text>
+  <text x="990" y="360" class="label">120Ω</text>
+  <text x="520" y="260" class="label">Bias resistors set idle state</text>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .cell { font: 14px sans-serif; fill: #111; }
+    .hdr { font: 14px sans-serif; font-weight: bold; fill: #111; }
+    .grid { stroke: #333; stroke-width: 1; }
+  </style>
+
+  <text x="40" y="40" class="title">Cell Chemistry Comparison (Simplified)</text>
+
+  <!-- Table grid -->
+  <rect x="40" y="80" width="1120" height="520" fill="#fff" stroke="#333" stroke-width="2" />
+  <line x1="40" y1="130" x2="1160" y2="130" class="grid" />
+  <line x1="40" y1="210" x2="1160" y2="210" class="grid" />
+  <line x1="40" y1="290" x2="1160" y2="290" class="grid" />
+  <line x1="40" y1="370" x2="1160" y2="370" class="grid" />
+  <line x1="40" y1="450" x2="1160" y2="450" class="grid" />
+  <line x1="40" y1="530" x2="1160" y2="530" class="grid" />
+
+  <line x1="220" y1="80" x2="220" y2="600" class="grid" />
+  <line x1="420" y1="80" x2="420" y2="600" class="grid" />
+  <line x1="600" y1="80" x2="600" y2="600" class="grid" />
+  <line x1="780" y1="80" x2="780" y2="600" class="grid" />
+  <line x1="960" y1="80" x2="960" y2="600" class="grid" />
+
+  <!-- Headers -->
+  <text x="60" y="115" class="hdr">Chemistry</text>
+  <text x="240" y="115" class="hdr">Nominal Voltage</text>
+  <text x="440" y="115" class="hdr">Energy Density (Wh/kg)</text>
+  <text x="620" y="115" class="hdr">Cycle Life</text>
+  <text x="800" y="115" class="hdr">Thermal Safety</text>
+  <text x="980" y="115" class="hdr">Key Use</text>
+
+  <!-- Rows -->
+  <text x="60" y="175" class="cell">LCO</text>
+  <text x="240" y="175" class="cell">3.6</text>
+  <text x="440" y="175" class="cell">150–200</text>
+  <text x="620" y="175" class="cell">~500</text>
+  <text x="800" y="175" class="cell">Low</text>
+  <text x="980" y="175" class="cell">Phones</text>
+
+  <text x="60" y="255" class="cell">NMC 532</text>
+  <text x="240" y="255" class="cell">3.6</text>
+  <text x="440" y="255" class="cell">170–220</text>
+  <text x="620" y="255" class="cell">1000–2000</text>
+  <text x="800" y="255" class="cell">Medium</text>
+  <text x="980" y="255" class="cell">EVs</text>
+
+  <text x="60" y="335" class="cell">NMC 811</text>
+  <text x="240" y="335" class="cell">3.6</text>
+  <text x="440" y="335" class="cell">200–260</text>
+  <text x="620" y="335" class="cell">1000–1500</text>
+  <text x="800" y="335" class="cell">Med-Low</text>
+  <text x="980" y="335" class="cell">High-range EVs</text>
+
+  <text x="60" y="415" class="cell">NCA</text>
+  <text x="240" y="415" class="cell">3.6</text>
+  <text x="440" y="415" class="cell">200–260</text>
+  <text x="620" y="415" class="cell">1000–2000</text>
+  <text x="800" y="415" class="cell">Med-Low</text>
+  <text x="980" y="415" class="cell">Tesla</text>
+
+  <text x="60" y="495" class="cell">LFP</text>
+  <text x="240" y="495" class="cell">3.2</text>
+  <text x="440" y="495" class="cell">120–165</text>
+  <text x="620" y="495" class="cell">2000–4000+</text>
+  <text x="800" y="495" class="cell">High</text>
+  <text x="980" y="495" class="cell">Budget EVs</text>
+
+  <text x="60" y="575" class="cell">LTO</text>
+  <text x="240" y="575" class="cell">2.4</text>
+  <text x="440" y="575" class="cell">60–80</text>
+  <text x="620" y="575" class="cell">>10000</text>
+  <text x="800" y="575" class="cell">Very High</text>
+  <text x="980" y="575" class="cell">Buses</text>
+</svg>

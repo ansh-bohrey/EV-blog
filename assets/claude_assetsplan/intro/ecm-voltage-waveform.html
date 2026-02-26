@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ECM Voltage Response to a Current Step</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      color: #e0e0f0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 32px;
+      min-height: 100vh;
+    }
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #c7d2fe;
+      margin-bottom: 6px;
+      text-align: center;
+      letter-spacing: 0.01em;
+    }
+    .subtitle {
+      font-size: 0.78rem;
+      color: #818cf8;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+    .charts-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      width: 100%;
+      max-width: 780px;
+    }
+    .chart-card {
+      background: #16213e;
+      border: 1px solid #2a2a5a;
+      border-radius: 10px;
+      padding: 16px 20px 12px;
+      position: relative;
+    }
+    .chart-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #a5b4fc;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    canvas { display: block; width: 100% !important; }
+
+    /* Annotation badges */
+    .anno-list {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .anno-badge {
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .badge-yellow { background: rgba(250,204,21,0.15); color: #fcd34d; border: 1px solid #fcd34d55; }
+    .badge-cyan  { background: rgba(34,211,238,0.12);  color: #67e8f9; border: 1px solid #22d3ee55; }
+    .badge-instant { background: rgba(249,115,22,0.12); color: #fb923c; border: 1px solid #f9731655; }
+    .badge-slow    { background: rgba(167,139,250,0.12); color: #c4b5fd; border: 1px solid #a78bfa55; }
+
+    .legend-row {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.78rem;
+      color: #c7d2fe;
+    }
+    .legend-dot {
+      width: 24px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .params-box {
+      max-width: 780px;
+      width: 100%;
+      margin-top: 18px;
+      background: #0f172a;
+      border: 1px solid #2a2a5a;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 0.74rem;
+      color: #94a3b8;
+      line-height: 1.7;
+    }
+    .params-box strong { color: #e2e8f0; }
+    .params-box .mono { font-family: monospace; color: #67e8f9; }
+  </style>
+</head>
+<body>
+
+<h1>ECM Voltage Response to a Current Step</h1>
+<p class="subtitle">1RC Thevenin model — OCV = 3.7 V, R₀ = 0.1 Ω, R₁ = 0.05 Ω, C₁ = 200 F (τ₁ = 10 s)</p>
+
+<div class="legend-row">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#facc15;"></div>
+    <span>Current I(t) [A]</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#22d3ee;"></div>
+    <span>Terminal Voltage V(t) [V]</span>
+  </div>
+</div>
+
+<div class="charts-wrap">
+
+  <!-- Current chart -->
+  <div class="chart-card">
+    <div class="chart-label">Top — Current I(t)</div>
+    <canvas id="chartCurrent" height="110"></canvas>
+    <div class="anno-list">
+      <span class="anno-badge badge-yellow">Step ON at t = 1 s  →  I = 2 A</span>
+      <span class="anno-badge badge-yellow">Step OFF at t = 6 s  →  I = 0 A</span>
+    </div>
+  </div>
+
+  <!-- Voltage chart -->
+  <div class="chart-card">
+    <div class="chart-label">Bottom — Terminal Voltage V(t)</div>
+    <canvas id="chartVoltage" height="180"></canvas>
+    <div class="anno-list">
+      <span class="anno-badge badge-instant">Instant drop = I × R₀ = 0.2 V  (at t = 1 s)</span>
+      <span class="anno-badge badge-slow">Slow RC decay (τ₁ = 10 s)  →  settles ~0.1 V further</span>
+      <span class="anno-badge badge-instant">Instant recovery +I × R₀  (at t = 6 s)</span>
+      <span class="anno-badge badge-slow">Exponential recovery → OCV</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="params-box">
+  <strong>Model parameters used:</strong><br>
+  <span class="mono">OCV = 3.70 V</span> &nbsp;|&nbsp;
+  <span class="mono">R₀ = 0.10 Ω</span> (ohmic / contact resistance) &nbsp;|&nbsp;
+  <span class="mono">R₁ = 0.05 Ω</span>, <span class="mono">C₁ = 200 F</span>  →  <span class="mono">τ₁ = R₁·C₁ = 10 s</span> (diffusion time constant)<br>
+  <strong>Pulse:</strong> discharge current <span class="mono">I = 2 A</span> applied from <span class="mono">t = 1 s</span> to <span class="mono">t = 6 s</span>, then removed.
+  Positive current = discharge (voltage drops).<br>
+  <strong>Key insight:</strong> R₀ sets the <em>instant</em> drop/recovery; the RC pair sets how fast the voltage
+  <em>drifts</em> during the pulse and <em>recovers</em> after. Real HPPC tests exploit this separation to extract R₀ and τ independently.
+</div>
+
+<script>
+  // ── Model parameters ──────────────────────────────────────────────────
+  const OCV  = 3.70;  // V
+  const R0   = 0.10;  // Ω
+  const R1   = 0.05;  // Ω
+  const C1   = 200;   // F   →  τ1 = 10 s
+  const tau1 = R1 * C1;
+
+  const T_START = 1;   // pulse on
+  const T_END   = 6;   // pulse off
+  const I_PULSE = 2;   // A  (discharge, so voltage drops)
+  const DT      = 0.05; // s per sample
+  const T_MAX   = 12;  // s total
+
+  // ── Generate data ──────────────────────────────────────────────────────
+  const times = [];
+  const currentData = [];
+  const voltageData = [];
+
+  let vRC = 0; // state of RC pair
+
+  for (let t = 0; t <= T_MAX; t = Math.round((t + DT) * 1000) / 1000) {
+    times.push(t);
+    const I = (t >= T_START && t < T_END) ? I_PULSE : 0;
+    currentData.push(I);
+
+    // Euler integration of RC state
+    const dvRC = (I / C1) - (vRC / tau1);
+    vRC += dvRC * DT;
+
+    const Vt = OCV - I * R0 - vRC;
+    voltageData.push(Math.round(Vt * 10000) / 10000);
+  }
+
+  // ── Chart.js defaults ─────────────────────────────────────────────────
+  Chart.defaults.color = '#94a3b8';
+  Chart.defaults.borderColor = '#1e293b';
+  Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+
+  const gridColor = 'rgba(148,163,184,0.12)';
+  const tickColor = '#64748b';
+
+  // ── Current chart ──────────────────────────────────────────────────────
+  const ctxI = document.getElementById('chartCurrent').getContext('2d');
+  new Chart(ctxI, {
+    type: 'line',
+    data: {
+      labels: times,
+      datasets: [{
+        label: 'I(t) [A]',
+        data: currentData,
+        borderColor: '#facc15',
+        backgroundColor: 'rgba(250,204,21,0.08)',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        tension: 0,
+        fill: true,
+      }]
+    },
+    options: {
+      animation: { duration: 1800, easing: 'easeInOutQuart' },
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` I = ${ctx.parsed.y.toFixed(1)} A`
+          }
+        },
+        annotation: {
+          annotations: {
+            lineOn: {
+              type: 'line', scaleID: 'x', value: T_START,
+              borderColor: 'rgba(250,204,21,0.45)', borderWidth: 1.5, borderDash: [5,4],
+              label: { content: 'Pulse ON', enabled: true, position: 'end', yAdjust: -10, font: { size: 10 }, color: '#fcd34d', backgroundColor: 'transparent' }
+            },
+            lineOff: {
+              type: 'line', scaleID: 'x', value: T_END,
+              borderColor: 'rgba(250,204,21,0.45)', borderWidth: 1.5, borderDash: [5,4],
+              label: { content: 'Pulse OFF', enabled: true, position: 'end', yAdjust: -10, font: { size: 10 }, color: '#fcd34d', backgroundColor: 'transparent' }
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          title: { display: true, text: 'Time (s)', color: '#94a3b8', font: { size: 11 } },
+          min: 0, max: T_MAX,
+          grid: { color: gridColor },
+          ticks: { color: tickColor, font: { size: 10 }, stepSize: 1 }
+        },
+        y: {
+          title: { display: true, text: 'Current (A)', color: '#94a3b8', font: { size: 11 } },
+          min: -0.3, max: 2.8,
+          grid: { color: gridColor },
+          ticks: { color: tickColor, font: { size: 10 } }
+        }
+      }
+    }
+  });
+
+  // ── Voltage chart ──────────────────────────────────────────────────────
+  const ctxV = document.getElementById('chartVoltage').getContext('2d');
+  new Chart(ctxV, {
+    type: 'line',
+    data: {
+      labels: times,
+      datasets: [{
+        label: 'V_t(t) [V]',
+        data: voltageData,
+        borderColor: '#22d3ee',
+        backgroundColor: 'rgba(34,211,238,0.07)',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        tension: 0,
+        fill: true,
+      }]
+    },
+    options: {
+      animation: { duration: 2200, easing: 'easeInOutQuart' },
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` V_t = ${ctx.parsed.y.toFixed(4)} V`
+          }
+        },
+        annotation: {
+          annotations: {
+            // OCV line
+            ocvLine: {
+              type: 'line', scaleID: 'y', value: OCV,
+              borderColor: 'rgba(167,139,250,0.5)', borderWidth: 1.5, borderDash: [6,4],
+              label: { content: 'OCV = 3.70 V', enabled: true, position: 'start', xAdjust: 8, font: { size: 10 }, color: '#c4b5fd', backgroundColor: 'transparent' }
+            },
+            // instant drop marker
+            dropArrow: {
+              type: 'line', scaleID: 'x', value: T_START,
+              borderColor: 'rgba(251,146,60,0.5)', borderWidth: 1.5, borderDash: [4,4],
+              label: { content: 'Instant drop = I×R₀', enabled: true, position: 'start', yAdjust: 20, font: { size: 10 }, color: '#fb923c', backgroundColor: 'transparent' }
+            },
+            // instant recovery marker
+            recArrow: {
+              type: 'line', scaleID: 'x', value: T_END,
+              borderColor: 'rgba(251,146,60,0.5)', borderWidth: 1.5, borderDash: [4,4],
+              label: { content: 'Instant recovery', enabled: true, position: 'start', yAdjust: -30, font: { size: 10 }, color: '#fb923c', backgroundColor: 'transparent' }
+            },
+            // slow decay annotation box
+            decayLabel: {
+              type: 'label',
+              xValue: 3.5, yValue: 3.47,
+              content: ['Slow RC decay', '(τ₁ = 10 s)'],
+              color: '#c4b5fd',
+              font: { size: 10 },
+              backgroundColor: 'rgba(15,23,42,0.75)',
+              borderColor: '#a78bfa44',
+              borderWidth: 1,
+              borderRadius: 4,
+              padding: { x: 6, y: 4 }
+            },
+            // exponential recovery annotation
+            recovLabel: {
+              type: 'label',
+              xValue: 9, yValue: 3.67,
+              content: ['Exponential recovery', '→ OCV'],
+              color: '#c4b5fd',
+              font: { size: 10 },
+              backgroundColor: 'rgba(15,23,42,0.75)',
+              borderColor: '#a78bfa44',
+              borderWidth: 1,
+              borderRadius: 4,
+              padding: { x: 6, y: 4 }
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          title: { display: true, text: 'Time (s)', color: '#94a3b8', font: { size: 11 } },
+          min: 0, max: T_MAX,
+          grid: { color: gridColor },
+          ticks: { color: tickColor, font: { size: 10 }, stepSize: 1 }
+        },
+        y: {
+          title: { display: true, text: 'Terminal Voltage (V)', color: '#94a3b8', font: { size: 11 } },
+          min: 3.30, max: 3.80,
+          grid: { color: gridColor },
+          ticks: {
+            color: tickColor, font: { size: 10 },
+            callback: v => v.toFixed(2) + ' V'
+          }
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>

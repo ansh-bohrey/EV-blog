@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .grid{stroke:#333;stroke-width:1;}
+    .cell{font:14px sans-serif;fill:#111;}
+    .hdr{font:14px sans-serif;font-weight:bold;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">RS-232 vs RS-485 vs CAN (Summary)</text>
+  <rect x="60" y="80" width="1080" height="520" fill="#fff" stroke="#333" stroke-width="2" />
+  <line x1="60" y1="130" x2="1140" y2="130" class="grid" />
+  <line x1="60" y1="200" x2="1140" y2="200" class="grid" />
+  <line x1="60" y1="270" x2="1140" y2="270" class="grid" />
+  <line x1="60" y1="340" x2="1140" y2="340" class="grid" />
+  <line x1="60" y1="410" x2="1140" y2="410" class="grid" />
+  <line x1="60" y1="480" x2="1140" y2="480" class="grid" />
+
+  <line x1="360" y1="80" x2="360" y2="600" class="grid" />
+  <line x1="660" y1="80" x2="660" y2="600" class="grid" />
+
+  <text x="80" y="115" class="hdr">Property</text>
+  <text x="380" y="115" class="hdr">RS-232</text>
+  <text x="680" y="115" class="hdr">RS-485</text>
+  <text x="980" y="115" class="hdr">CAN</text>
+
+  <text x="80" y="175" class="cell">Signaling</text>
+  <text x="380" y="175" class="cell">Single-ended</text>
+  <text x="680" y="175" class="cell">Differential</text>
+  <text x="980" y="175" class="cell">Differential</text>
+
+  <text x="80" y="245" class="cell">Nodes</text>
+  <text x="380" y="245" class="cell">2</text>
+  <text x="680" y="245" class="cell">32+</text>
+  <text x="980" y="245" class="cell">110</text>
+
+  <text x="80" y="315" class="cell">Max distance</text>
+  <text x="380" y="315" class="cell">15m</text>
+  <text x="680" y="315" class="cell">1200m</text>
+  <text x="980" y="315" class="cell">~500m</text>
+
+  <text x="80" y="385" class="cell">Error detection</text>
+  <text x="380" y="385" class="cell">None</text>
+  <text x="680" y="385" class="cell">CRC (Modbus)</text>
+  <text x="980" y="385" class="cell">Built-in</text>
+</svg>

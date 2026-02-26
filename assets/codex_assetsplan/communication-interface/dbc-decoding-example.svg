@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .box{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">DBC Decoding Example</text>
+  <rect x="80" y="140" width="1040" height="120" class="box"/>
+  <text x="100" y="200" class="label">Raw CAN: 0x18 0x3A 0x00 0x64</text>
+  <rect x="80" y="300" width="1040" height="120" class="box"/>
+  <text x="100" y="360" class="label">Decoded: SOC=58.0%, Vpack=370.0V</text>
+</svg>

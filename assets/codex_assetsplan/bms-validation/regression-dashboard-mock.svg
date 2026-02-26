@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .box{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .label{font:14px sans-serif;fill:#111;}
+    .ok{fill:#2ca02c;}
+    .fail{fill:#d62728;}
+  </style>
+  <text x="40" y="40" class="title">Regression Test Dashboard (Mock)</text>
+  <rect x="80" y="100" width="1040" height="520" class="box"/>
+  <circle cx="160" cy="180" r="10" class="ok"/>
+  <text x="180" y="185" class="label">SOC accuracy tests: PASS</text>
+  <circle cx="160" cy="240" r="10" class="ok"/>
+  <text x="180" y="245" class="label">Fault handling: PASS</text>
+  <circle cx="160" cy="300" r="10" class="fail"/>
+  <text x="180" y="305" class="label">Pre-charge timing: FAIL</text>
+</svg>

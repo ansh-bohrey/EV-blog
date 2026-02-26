@@ -1,0 +1,142 @@
+<svg viewBox="0 0 900 580" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="900" height="580" fill="#f8f9fa"/>
+  <text x="450" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a1a2e">EV System Node Map — CAN Network Architecture</text>
+  <text x="450" y="48" text-anchor="middle" font-size="11" fill="#555">All major electronic nodes and their CAN bus relationships in a typical battery EV</text>
+
+  <defs>
+    <marker id="evarr" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#1a6eb5"/>
+    </marker>
+    <marker id="evarr2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- CAN Bus backbone -->
+  <line x1="80" y1="280" x2="820" y2="280" stroke="#1a6eb5" stroke-width="4"/>
+  <text x="450" y="302" text-anchor="middle" font-size="10" fill="#1a6eb5" font-weight="bold">Powertrain CAN (500kbps, J1939)</text>
+
+  <!-- Second CAN (body/comfort) -->
+  <line x1="80" y1="390" x2="820" y2="390" stroke="#2a8a2a" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <text x="450" y="410" text-anchor="middle" font-size="10" fill="#2a8a2a">Body/Comfort CAN (125kbps) — optional</text>
+
+  <!-- ── Powertrain nodes (above main CAN) ── -->
+
+  <!-- BMS -->
+  <line x1="160" y1="280" x2="160" y2="178" stroke="#1a6eb5" stroke-width="2"/>
+  <rect x="90" y="108" width="140" height="70" rx="8" fill="#e8d0ff" stroke="#6633cc" stroke-width="2.5"/>
+  <text x="160" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#330080">BMS</text>
+  <text x="160" y="148" text-anchor="middle" font-size="9" fill="#555">Battery Mgmt System</text>
+  <text x="160" y="161" text-anchor="middle" font-size="9" fill="#555">SOC · SOH · SOP</text>
+  <text x="160" y="173" text-anchor="middle" font-size="8" fill="#888">TX: 18F21402, 18F21502</text>
+  <!-- SPI/daisy-chain to AFE -->
+  <rect x="90" y="60" width="140" height="40" rx="5" fill="#fff0d0" stroke="#e07b00" stroke-width="1.5"/>
+  <text x="160" y="78" text-anchor="middle" font-size="9" font-weight="bold" fill="#7a3a00">AFE (BQ76940)</text>
+  <text x="160" y="91" text-anchor="middle" font-size="8" fill="#555">SPI — cell V, T</text>
+  <line x1="160" y1="100" x2="160" y2="108" stroke="#e07b00" stroke-width="1.5"/>
+
+  <!-- VCU -->
+  <line x1="310" y1="280" x2="310" y2="178" stroke="#1a6eb5" stroke-width="2"/>
+  <rect x="240" y="108" width="140" height="70" rx="8" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="2.5"/>
+  <text x="310" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a5a1a">VCU</text>
+  <text x="310" y="148" text-anchor="middle" font-size="9" fill="#555">Vehicle Control Unit</text>
+  <text x="310" y="161" text-anchor="middle" font-size="9" fill="#555">Torque control · mode</text>
+  <text x="310" y="173" text-anchor="middle" font-size="8" fill="#888">TX: 0x360 (tq demand)</text>
+
+  <!-- Inverter/MCU -->
+  <line x1="460" y1="280" x2="460" y2="178" stroke="#1a6eb5" stroke-width="2"/>
+  <rect x="390" y="108" width="140" height="70" rx="8" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2.5"/>
+  <text x="460" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#003a7a">Inverter</text>
+  <text x="460" y="148" text-anchor="middle" font-size="9" fill="#003a7a">(Motor Controller)</text>
+  <text x="460" y="161" text-anchor="middle" font-size="9" fill="#555">IGBT/SiC drive</text>
+  <text x="460" y="173" text-anchor="middle" font-size="8" fill="#888">Rx: SOP limits from BMS</text>
+
+  <!-- OBC -->
+  <line x1="610" y1="280" x2="610" y2="178" stroke="#1a6eb5" stroke-width="2"/>
+  <rect x="540" y="108" width="140" height="70" rx="8" fill="#ffe0d0" stroke="#c04000" stroke-width="2"/>
+  <text x="610" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#802000">OBC</text>
+  <text x="610" y="148" text-anchor="middle" font-size="9" fill="#802000">On-Board Charger</text>
+  <text x="610" y="161" text-anchor="middle" font-size="9" fill="#555">AC→DC conversion</text>
+  <text x="610" y="173" text-anchor="middle" font-size="8" fill="#888">Rx: charge limits from BMS</text>
+
+  <!-- DC-DC converter -->
+  <line x1="750" y1="280" x2="750" y2="178" stroke="#1a6eb5" stroke-width="2"/>
+  <rect x="688" y="108" width="120" height="70" rx="8" fill="#f0f0f0" stroke="#888" stroke-width="2"/>
+  <text x="748" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#555">DC-DC</text>
+  <text x="748" y="148" text-anchor="middle" font-size="9" fill="#555">HV→12V for</text>
+  <text x="748" y="161" text-anchor="middle" font-size="9" fill="#555">12V aux loads</text>
+  <text x="748" y="173" text-anchor="middle" font-size="8" fill="#888">Rx: enable / V_ref</text>
+
+  <!-- ── Nodes hanging below main CAN ── -->
+
+  <!-- Gateway / Telematics -->
+  <line x1="160" y1="280" x2="160" y2="345" stroke="#1a6eb5" stroke-width="2"/>
+  <rect x="90" y="345" width="140" height="60" rx="6" fill="#e8f4fd" stroke="#1a6eb5" stroke-width="1.5"/>
+  <text x="160" y="366" text-anchor="middle" font-size="10" font-weight="bold" fill="#003a7a">Gateway</text>
+  <text x="160" y="381" text-anchor="middle" font-size="9" fill="#555">Bridges powertrain</text>
+  <text x="160" y="393" text-anchor="middle" font-size="9" fill="#555">CAN ↔ body CAN</text>
+
+  <!-- Instrument cluster (below body CAN) -->
+  <line x1="310" y1="390" x2="310" y2="330" stroke="#2a8a2a" stroke-width="2" stroke-dasharray="5,3"/>
+  <rect x="240" y="330" width="140" height="55" rx="6" fill="#fffaee" stroke="#c8a000" stroke-width="1.5"/>
+  <text x="310" y="350" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a5000">Instrument</text>
+  <text x="310" y="364" text-anchor="middle" font-size="9" fill="#555">Cluster (display)</text>
+  <text x="310" y="377" text-anchor="middle" font-size="9" fill="#555">SOC%, range, T</text>
+
+  <!-- HVIL / Safety loop -->
+  <line x1="460" y1="280" x2="460" y2="345" stroke="#c00" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <rect x="390" y="345" width="140" height="55" rx="6" fill="#fff0f0" stroke="#c00" stroke-width="1.5"/>
+  <text x="460" y="366" text-anchor="middle" font-size="10" font-weight="bold" fill="#c00">HVIL Loop</text>
+  <text x="460" y="381" text-anchor="middle" font-size="9" fill="#555">Not CAN — 12V pilot</text>
+  <text x="460" y="393" text-anchor="middle" font-size="9" fill="#555">through connectors</text>
+
+  <!-- Thermal management (HVAC/heat pump) -->
+  <line x1="610" y1="280" x2="610" y2="345" stroke="#1a6eb5" stroke-width="2"/>
+  <rect x="540" y="345" width="140" height="55" rx="6" fill="#d0f0f8" stroke="#1a7a9a" stroke-width="1.5"/>
+  <text x="610" y="366" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a5a7a">Thermal Mgmt</text>
+  <text x="610" y="381" text-anchor="middle" font-size="9" fill="#555">Coolant pump, valve</text>
+  <text x="610" y="393" text-anchor="middle" font-size="9" fill="#555">heat pump compressor</text>
+
+  <!-- Charge port control -->
+  <line x1="750" y1="280" x2="750" y2="345" stroke="#1a6eb5" stroke-width="2"/>
+  <rect x="688" y="345" width="120" height="55" rx="6" fill="#e8f4e8" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="748" y="366" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a5a1a">Charge Port</text>
+  <text x="748" y="381" text-anchor="middle" font-size="9" fill="#555">CP signal detect</text>
+  <text x="748" y="393" text-anchor="middle" font-size="9" fill="#555">pilot/proximity</text>
+
+  <!-- Legend + message key -->
+  <rect x="30" y="458" width="840" height="108" rx="8" fill="white" stroke="#ccc" stroke-width="1.5"/>
+  <text x="450" y="476" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Key CAN Messages — BMS sends and receives</text>
+  <line x1="30" y1="480" x2="870" y2="480" stroke="#eee" stroke-width="1"/>
+
+  <!-- Table headers -->
+  <text x="90" y="494" text-anchor="middle" font-size="9" font-weight="bold" fill="#555">Message ID</text>
+  <text x="220" y="494" text-anchor="middle" font-size="9" font-weight="bold" fill="#555">Direction</text>
+  <text x="380" y="494" text-anchor="middle" font-size="9" font-weight="bold" fill="#555">Content</text>
+  <text x="590" y="494" text-anchor="middle" font-size="9" font-weight="bold" fill="#555">Destination</text>
+  <text x="760" y="494" text-anchor="middle" font-size="9" font-weight="bold" fill="#555">Rate</text>
+
+  <text x="90" y="508" text-anchor="middle" font-size="9" fill="#333">18F21402</text>
+  <text x="220" y="508" text-anchor="middle" font-size="9" fill="#2a7a2a">BMS → Bus</text>
+  <text x="380" y="508" text-anchor="middle" font-size="9" fill="#555">SOC, SOH, V_pack, I, T_max, faults</text>
+  <text x="590" y="508" text-anchor="middle" font-size="9" fill="#555">VCU, Cluster, Telematics</text>
+  <text x="760" y="508" text-anchor="middle" font-size="9" fill="#555">10 Hz</text>
+
+  <text x="90" y="522" text-anchor="middle" font-size="9" fill="#333">18F21502</text>
+  <text x="220" y="522" text-anchor="middle" font-size="9" fill="#2a7a2a">BMS → Bus</text>
+  <text x="380" y="522" text-anchor="middle" font-size="9" fill="#555">P_max_chg, P_max_dsg (SOP limits)</text>
+  <text x="590" y="522" text-anchor="middle" font-size="9" fill="#555">VCU, Inverter, OBC</text>
+  <text x="760" y="522" text-anchor="middle" font-size="9" fill="#555">10 Hz</text>
+
+  <text x="90" y="536" text-anchor="middle" font-size="9" fill="#333">18FF3200</text>
+  <text x="220" y="536" text-anchor="middle" font-size="9" fill="#c00000">OBC → BMS</text>
+  <text x="380" y="536" text-anchor="middle" font-size="9" fill="#555">Present V, I, charge status</text>
+  <text x="590" y="536" text-anchor="middle" font-size="9" fill="#555">BMS (charge supervision)</text>
+  <text x="760" y="536" text-anchor="middle" font-size="9" fill="#555">1 Hz</text>
+
+  <text x="90" y="550" text-anchor="middle" font-size="9" fill="#333">18FEF100</text>
+  <text x="220" y="550" text-anchor="middle" font-size="9" fill="#c00000">VCU → BMS</text>
+  <text x="380" y="550" text-anchor="middle" font-size="9" fill="#555">Key state, drive mode, regen request</text>
+  <text x="590" y="550" text-anchor="middle" font-size="9" fill="#555">BMS (mode awareness)</text>
+  <text x="760" y="550" text-anchor="middle" font-size="9" fill="#555">10 Hz</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .bar1{fill:#1f77b4;}
+    .bar2{fill:#d62728;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">CAN vs CAN FD Payload Size</text>
+  <rect x="300" y="200" width="200" height="150" class="bar1"/>
+  <rect x="600" y="150" width="200" height="300" class="bar2"/>
+  <text x="320" y="380" class="label">CAN (8 bytes)</text>
+  <text x="620" y="470" class="label">CAN FD (64 bytes)</text>
+</svg>

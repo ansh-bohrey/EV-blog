@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .box{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">Charging Protocols (Concept)</text>
+  <rect x="80" y="120" width="300" height="200" class="box"/>
+  <text x="110" y="170" class="label">CC-CV</text>
+  <text x="110" y="200" class="label">Standard</text>
+
+  <rect x="450" y="120" width="300" height="200" class="box"/>
+  <text x="480" y="170" class="label">Multi-stage CC</text>
+  <text x="480" y="200" class="label">Step-down</text>
+
+  <rect x="820" y="120" width="300" height="200" class="box"/>
+  <text x="850" y="170" class="label">Pulse / Advanced</text>
+  <text x="850" y="200" class="label">Research</text>
+</svg>

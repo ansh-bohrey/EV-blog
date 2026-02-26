@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .box{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">CAN Fault Bitmask (Byte)</text>
+  <rect x="120" y="200" width="960" height="120" class="box"/>
+  <text x="150" y="250" class="label">Bit 0: OV</text>
+  <text x="300" y="250" class="label">Bit 1: UV</text>
+  <text x="450" y="250" class="label">Bit 2: OT</text>
+  <text x="600" y="250" class="label">Bit 3: OC</text>
+  <text x="750" y="250" class="label">Bit 4: IMD</text>
+  <text x="900" y="250" class="label">Bit 5: HVIL</text>
+</svg>

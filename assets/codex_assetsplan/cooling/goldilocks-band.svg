@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .axis { stroke: #222; stroke-width: 2; }
+    .band { fill: #cdeccf; stroke: #2ca02c; stroke-width: 2; }
+    .label { font: 14px sans-serif; fill: #111; }
+  </style>
+
+  <text x="40" y="40" class="title">Battery Temperature “Goldilocks” Band</text>
+
+  <line x1="100" y1="350" x2="1100" y2="350" class="axis"/>
+  <rect x="350" y="300" width="500" height="100" class="band"/>
+
+  <text x="90" y="380" class="label">-10°C</text>
+  <text x="340" y="380" class="label">15°C</text>
+  <text x="820" y="380" class="label">35°C</text>
+  <text x="1080" y="380" class="label">60°C</text>
+
+  <text x="480" y="280" class="label">Optimal operating range</text>
+</svg>

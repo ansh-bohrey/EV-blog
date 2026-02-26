@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .box { fill: #f7f7f7; stroke: #333; stroke-width: 2; }
+    .label { font: 14px sans-serif; fill: #111; }
+  </style>
+  <text x="40" y="40" class="title">Top vs Bottom Balancing</text>
+
+  <rect x="120" y="150" width="400" height="350" class="box"/>
+  <text x="140" y="190" class="label">Top Balancing</text>
+  <text x="140" y="230" class="label">Equalize at 100% SOC</text>
+
+  <rect x="680" y="150" width="400" height="350" class="box"/>
+  <text x="700" y="190" class="label">Bottom Balancing</text>
+  <text x="700" y="230" class="label">Equalize at 0% SOC</text>
+</svg>

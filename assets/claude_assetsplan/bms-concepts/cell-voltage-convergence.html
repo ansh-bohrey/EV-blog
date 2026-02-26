@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Cell Voltage Convergence Under Balancing</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 20px; }
+  h2 { text-align: center; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 16px; }
+  .container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+  .chart-box { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
+  .controls { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
+  .ctrl { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  label { color: #555; }
+  select, input { padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; }
+  button { padding: 8px 20px; background: #1a6eb5; color: white; border: none; border-radius: 5px;
+           cursor: pointer; font-size: 13px; }
+  button:hover { background: #155a9a; }
+  .info-box { background: #fff8e0; border: 1px solid #e0c060; border-radius: 6px;
+              padding: 10px 18px; font-size: 12px; color: #555; max-width: 680px;
+              margin: 0 auto 16px; }
+</style>
+</head>
+<body>
+<h2>Cell Voltage Convergence Under Balancing</h2>
+<p class="subtitle">See how passive vs active balancing brings cell voltages together over time</p>
+
+<div class="info-box">
+  <strong>What to observe:</strong> Passive balancing (top-bleed) only works during charging — it dissipates energy from the high cell.
+  Active balancing can transfer energy any time, converging faster and preserving pack capacity.
+</div>
+
+<div class="controls">
+  <div class="ctrl">
+    <label>Balancing Mode:</label>
+    <select id="modeSelect">
+      <option value="passive">Passive (top-bleed)</option>
+      <option value="active">Active (inductor shuttle)</option>
+      <option value="none">No balancing</option>
+    </select>
+  </div>
+  <div class="ctrl">
+    <label>Balance current (mA):</label>
+    <input id="balCurrent" type="number" min="10" max="200" value="50" style="width:70px"/>
+  </div>
+  <div class="ctrl">
+    <button onclick="runSim()">Run Simulation</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="chart-box"><canvas id="voltChart" width="660" height="320"></canvas></div>
+  <div class="chart-box"><canvas id="deltaChart" width="660" height="200"></canvas></div>
+</div>
+
+<script>
+const CELLS = 4;
+const CAP = 3000; // mAh nominal
+const STEPS = 300; // time steps (each = 1 min)
+
+// Starting SOC (%) for 4 cells — intentionally imbalanced
+const initSOC = [85, 72, 68, 60];
+
+// Approximate OCV-SOC for NMC: linear approximation 3.0V@0% → 4.2V@100%
+function ocv(soc) {
+  return 3.0 + (soc / 100) * 1.2;
+}
+
+function runSim() {
+  const mode = document.getElementById('modeSelect').value;
+  const Ibal = parseFloat(document.getElementById('balCurrent').value); // mA
+
+  let soc = [...initSOC]; // copy
+  const timeLabels = [];
+  const socHistory = Array.from({length: CELLS}, () => []);
+  const deltaHistory = [];
+
+  for (let t = 0; t < STEPS; t++) {
+    timeLabels.push(t);
+    for (let c = 0; c < CELLS; c++) socHistory[c].push(ocv(soc[c]).toFixed(4));
+
+    const maxIdx = soc.indexOf(Math.max(...soc));
+    const minIdx = soc.indexOf(Math.min(...soc));
+    const delta = soc[maxIdx] - soc[minIdx];
+    deltaHistory.push(delta.toFixed(2));
+
+    if (mode === 'none') {
+      // no change — just record
+    } else if (mode === 'passive') {
+      // discharge the highest cell only (during charge scenario)
+      if (delta > 0.5) {
+        const dSOC = (Ibal / CAP) * 100; // % per step (1min)
+        soc[maxIdx] = Math.max(soc[minIdx], soc[maxIdx] - dSOC);
+      }
+    } else if (mode === 'active') {
+      // transfer from highest to lowest
+      if (delta > 0.5) {
+        const dSOC = (Ibal * 0.92 / CAP) * 100; // 92% efficiency
+        soc[maxIdx] = Math.max(0, soc[maxIdx] - dSOC / 0.92);
+        soc[minIdx] = Math.min(100, soc[minIdx] + dSOC);
+      }
+    }
+  }
+
+  const colors = ['#c00000', '#1a6eb5', '#2a8a2a', '#e07b00'];
+  const labels = ['Cell 1', 'Cell 2', 'Cell 3', 'Cell 4'];
+
+  // Voltage chart
+  if (window._vchart) window._vchart.destroy();
+  const ctx1 = document.getElementById('voltChart').getContext('2d');
+  window._vchart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: timeLabels,
+      datasets: labels.map((lbl, i) => ({
+        label: lbl,
+        data: socHistory[i],
+        borderColor: colors[i],
+        borderWidth: 2,
+        pointRadius: 0,
+        tension: 0.3
+      }))
+    },
+    options: {
+      responsive: false,
+      plugins: {
+        title: { display: true, text: `Cell OCV over time — Mode: ${mode}`, font: {size:13} },
+        legend: { position: 'top' }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Time (min)' }, ticks: { maxTicksLimit: 10 } },
+        y: { title: { display: true, text: 'OCV (V)' }, min: 3.6, max: 4.25 }
+      }
+    }
+  });
+
+  // Delta chart
+  if (window._dchart) window._dchart.destroy();
+  const ctx2 = document.getElementById('deltaChart').getContext('2d');
+  window._dchart = new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: timeLabels,
+      datasets: [{
+        label: 'Max ΔV between cells (%SOC)',
+        data: deltaHistory,
+        borderColor: '#8800cc',
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: true,
+        backgroundColor: 'rgba(136,0,204,0.08)',
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: false,
+      plugins: {
+        title: { display: true, text: 'SOC Imbalance (max − min)', font: {size:13} },
+        legend: { position: 'top' }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Time (min)' }, ticks: { maxTicksLimit: 10 } },
+        y: { title: { display: true, text: 'ΔSOC (%)' }, min: 0 }
+      }
+    }
+  });
+}
+
+// Auto-run on load
+runSim();
+</script>
+</body>
+</html>

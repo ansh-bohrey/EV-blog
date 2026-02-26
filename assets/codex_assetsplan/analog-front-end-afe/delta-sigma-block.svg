@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .box { fill: #f7f7f7; stroke: #333; stroke-width: 2; }
+    .label { font: 14px sans-serif; fill: #111; }
+    .arrow { stroke: #333; stroke-width: 2.5; fill: none; }
+  </style>
+  <text x="40" y="40" class="title">Delta-Sigma ADC (Simplified)</text>
+
+  <rect x="80" y="200" width="200" height="80" class="box"/>
+  <text x="110" y="245" class="label">Input</text>
+
+  <rect x="320" y="200" width="200" height="80" class="box"/>
+  <text x="350" y="245" class="label">Modulator</text>
+
+  <rect x="560" y="200" width="200" height="80" class="box"/>
+  <text x="590" y="245" class="label">Digital Filter</text>
+
+  <rect x="800" y="200" width="200" height="80" class="box"/>
+  <text x="840" y="245" class="label">Output Code</text>
+
+  <line x1="280" y1="240" x2="320" y2="240" class="arrow"/>
+  <line x1="520" y1="240" x2="560" y2="240" class="arrow"/>
+  <line x1="760" y1="240" x2="800" y2="240" class="arrow"/>
+</svg>

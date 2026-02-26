@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .box { fill: #f7f7f7; stroke: #333; stroke-width: 2; }
+    .label { font: 14px sans-serif; fill: #111; }
+    .arrow { stroke: #333; stroke-width: 2.5; fill: none; }
+  </style>
+
+  <text x="40" y="40" class="title">ECM State-Space Model (Concept)</text>
+
+  <rect x="80" y="140" width="220" height="90" class="box"/>
+  <text x="110" y="175" class="label">Input: Current I</text>
+  <text x="110" y="195" class="label">Temperature T</text>
+
+  <rect x="380" y="120" width="300" height="130" class="box"/>
+  <text x="410" y="155" class="label">State Update</text>
+  <text x="410" y="175" class="label">[SOC, Vc1, Vc2]</text>
+  <text x="410" y="195" class="label">ECM dynamics</text>
+
+  <rect x="760" y="140" width="220" height="90" class="box"/>
+  <text x="790" y="175" class="label">Output: Vt</text>
+  <text x="790" y="195" class="label">Terminal voltage</text>
+
+  <rect x="380" y="300" width="300" height="120" class="box"/>
+  <text x="400" y="335" class="label">Lookup Tables</text>
+  <text x="400" y="355" class="label">R0, R1, C1, R2, C2</text>
+  <text x="400" y="375" class="label">OCV(SOC, T)</text>
+
+  <line x1="300" y1="185" x2="380" y2="185" class="arrow"/>
+  <line x1="680" y1="185" x2="760" y2="185" class="arrow"/>
+  <line x1="530" y1="250" x2="530" y2="300" class="arrow"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .line{stroke:#333;stroke-width:3;fill:none;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">UART Frame (Start/Data/Stop)</text>
+  <path d="M100 300 L200 300 L200 240 L300 240 L300 300 L400 300 L400 240 L500 240 L500 300 L600 300 L600 240 L700 240 L700 300 L800 300" class="line"/>
+  <text x="120" y="340" class="label">Start</text>
+  <text x="300" y="340" class="label">Data bits</text>
+  <text x="700" y="340" class="label">Stop</text>
+</svg>

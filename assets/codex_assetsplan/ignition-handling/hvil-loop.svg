@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .wire{stroke:#222;stroke-width:3;fill:none;}
+    .box{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">HVIL Loop (Continuity Chain)</text>
+  <rect x="120" y="160" width="200" height="80" class="box"/>
+  <text x="160" y="205" class="label">BMS</text>
+  <rect x="420" y="160" width="200" height="80" class="box"/>
+  <text x="440" y="205" class="label">Connector A</text>
+  <rect x="720" y="160" width="200" height="80" class="box"/>
+  <text x="740" y="205" class="label">Connector B</text>
+  <rect x="1020" y="160" width="140" height="80" class="box"/>
+  <text x="1035" y="205" class="label">MSD</text>
+  <line x1="320" y1="200" x2="420" y2="200" class="wire"/>
+  <line x1="620" y1="200" x2="720" y2="200" class="wire"/>
+  <line x1="920" y1="200" x2="1020" y2="200" class="wire"/>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .line{stroke:#333;stroke-width:3;}
+    .node{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">Standards Test Timeline (Concept)</text>
+  <line x1="100" y1="200" x2="1100" y2="200" class="line"/>
+  <rect x="100" y="150" width="160" height="80" class="node"/>
+  <text x="120" y="190" class="label">Overcharge</text>
+  <rect x="320" y="150" width="160" height="80" class="node"/>
+  <text x="350" y="190" class="label">Short circuit</text>
+  <rect x="540" y="150" width="160" height="80" class="node"/>
+  <text x="560" y="190" class="label">Thermal</text>
+  <rect x="760" y="150" width="160" height="80" class="node"/>
+  <text x="780" y="190" class="label">Vibration</text>
+  <rect x="980" y="150" width="160" height="80" class="node"/>
+  <text x="1010" y="190" class="label">IP rating</text>
+</svg>

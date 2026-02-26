@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" font-family="'Segoe UI', Arial, sans-serif">
+  <!-- Background -->
+  <rect width="800" height="500" fill="white"/>
+
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a2e">Cell Imbalance — How One Weak Cell Strands Pack Capacity</text>
+
+  <!-- Divider -->
+  <line x1="400" y1="45" x2="400" y2="490" stroke="#cccccc" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- ===== LEFT SIDE: UNBALANCED PACK ===== -->
+  <text x="200" y="65" text-anchor="middle" font-size="14" font-weight="bold" fill="#c0392b">UNBALANCED PACK</text>
+
+  <!-- Cell outlines and fill levels (vertical stack, top to bottom: Cell 1 → Cell 4) -->
+  <!-- Cell 1: 90% full, blue -->
+  <rect x="130" y="80" width="100" height="60" rx="4" fill="#ecf0f1" stroke="#2c3e50" stroke-width="2"/>
+  <rect x="132" y="82" width="96" height="53" rx="2" fill="#2980b9" opacity="0.85"/>
+  <text x="175" y="84" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold" dy="28">90%</text>
+  <!-- + terminal -->
+  <rect x="158" y="73" width="34" height="8" rx="2" fill="#2c3e50"/>
+  <text x="185" y="78" text-anchor="end" font-size="9" fill="#ffffff">+</text>
+  <text x="80" y="115" text-anchor="middle" font-size="11" fill="#2c3e50" font-weight="bold">Cell 1</text>
+  <text x="80" y="128" text-anchor="middle" font-size="10" fill="#2980b9">3.92V</text>
+
+  <!-- Cell 2: 92% full, blue -->
+  <rect x="130" y="155" width="100" height="60" rx="4" fill="#ecf0f1" stroke="#2c3e50" stroke-width="2"/>
+  <rect x="132" y="157" width="96" height="53" rx="2" fill="#2980b9" opacity="0.85"/>
+  <text x="175" y="159" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold" dy="28">92%</text>
+  <text x="80" y="190" text-anchor="middle" font-size="11" fill="#2c3e50" font-weight="bold">Cell 2</text>
+  <text x="80" y="203" text-anchor="middle" font-size="10" fill="#2980b9">3.93V</text>
+
+  <!-- Cell 3: 45% full, RED (weak cell) -->
+  <rect x="130" y="230" width="100" height="60" rx="4" fill="#ecf0f1" stroke="#c0392b" stroke-width="3"/>
+  <!-- Empty part -->
+  <rect x="132" y="232" width="96" height="29" rx="2" fill="#fadbd8"/>
+  <!-- Filled part (45%) -->
+  <rect x="132" y="261" width="96" height="27" rx="2" fill="#c0392b" opacity="0.9"/>
+  <text x="175" y="278" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold">45%</text>
+  <text x="80" y="265" text-anchor="middle" font-size="11" fill="#c0392b" font-weight="bold">Cell 3</text>
+  <text x="80" y="278" text-anchor="middle" font-size="10" fill="#c0392b">3.58V</text>
+
+  <!-- Cell 4: 88% full, blue -->
+  <rect x="130" y="305" width="100" height="60" rx="4" fill="#ecf0f1" stroke="#2c3e50" stroke-width="2"/>
+  <rect x="132" y="307" width="96" height="53" rx="2" fill="#2980b9" opacity="0.85"/>
+  <text x="175" y="309" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold" dy="28">88%</text>
+  <text x="80" y="340" text-anchor="middle" font-size="11" fill="#2c3e50" font-weight="bold">Cell 4</text>
+  <text x="80" y="353" text-anchor="middle" font-size="10" fill="#2980b9">3.90V</text>
+
+  <!-- Series connection wires -->
+  <line x1="180" y1="140" x2="180" y2="155" stroke="#2c3e50" stroke-width="2"/>
+  <line x1="180" y1="215" x2="180" y2="230" stroke="#2c3e50" stroke-width="2"/>
+  <line x1="180" y1="290" x2="180" y2="305" stroke="#2c3e50" stroke-width="2"/>
+  <!-- Bottom terminal -->
+  <rect x="158" y="365" width="34" height="8" rx="2" fill="#2c3e50"/>
+  <text x="170" y="373" font-size="9" fill="#ffffff">−</text>
+
+  <!-- Red X on Cell 3 -->
+  <text x="247" y="265" font-size="22" fill="#c0392b" font-weight="bold">✕</text>
+  <!-- Weak cell label -->
+  <line x1="248" y1="260" x2="310" y2="245" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="312" y="243" font-size="10" fill="#c0392b" font-weight="bold">Weak cell:</text>
+  <text x="312" y="256" font-size="10" fill="#c0392b">limits whole string</text>
+
+  <!-- Stranded capacity bracket for cells 1, 2, 4 -->
+  <line x1="238" y1="88" x2="255" y2="88" stroke="#e67e22" stroke-width="1.5"/>
+  <line x1="255" y1="88" x2="255" y2="228" stroke="#e67e22" stroke-width="1.5"/>
+  <line x1="238" y1="228" x2="255" y2="228" stroke="#e67e22" stroke-width="1.5"/>
+  <!-- Also bracket cell 4 stranded capacity -->
+  <line x1="238" y1="310" x2="255" y2="310" stroke="#e67e22" stroke-width="1.5"/>
+  <line x1="255" y1="310" x2="255" y2="363" stroke="#e67e22" stroke-width="1.5"/>
+  <line x1="238" y1="363" x2="255" y2="363" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="258" y="168" font-size="9" fill="#e67e22" font-weight="bold">~45% capacity</text>
+  <text x="258" y="180" font-size="9" fill="#e67e22" font-weight="bold">STRANDED in</text>
+  <text x="258" y="192" font-size="9" fill="#e67e22" font-weight="bold">healthy cells</text>
+
+  <!-- Down arrow and annotation at bottom -->
+  <text x="180" y="398" text-anchor="middle" font-size="11" fill="#c0392b">▼</text>
+  <text x="180" y="414" text-anchor="middle" font-size="9" fill="#c0392b">Pack stops discharging when</text>
+  <text x="180" y="427" text-anchor="middle" font-size="9" fill="#c0392b">Cell 3 hits V_min</text>
+
+  <!-- Pack voltage label -->
+  <text x="180" y="450" text-anchor="middle" font-size="10" fill="#7f8c8d">Pack V = 15.33V (not full)</text>
+
+  <!-- Bucket analogy - small icons bottom left -->
+  <text x="30" y="470" font-size="9" fill="#95a5a6" font-style="italic">🪣 Smallest bucket limits the chain</text>
+
+  <!-- ===== RIGHT SIDE: AFTER BALANCING ===== -->
+  <text x="600" y="65" text-anchor="middle" font-size="14" font-weight="bold" fill="#27ae60">AFTER BALANCING</text>
+
+  <!-- Cell 1: ~85% -->
+  <rect x="530" y="80" width="100" height="60" rx="4" fill="#ecf0f1" stroke="#27ae60" stroke-width="2"/>
+  <rect x="532" y="82" width="96" height="50" rx="2" fill="#27ae60" opacity="0.85"/>
+  <text x="575" y="82" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold" dy="28">85%</text>
+  <rect x="558" y="73" width="34" height="8" rx="2" fill="#2c3e50"/>
+  <text x="585" y="78" text-anchor="end" font-size="9" fill="#ffffff">+</text>
+  <text x="480" y="115" text-anchor="middle" font-size="11" fill="#2c3e50" font-weight="bold">Cell 1</text>
+  <text x="480" y="128" text-anchor="middle" font-size="10" fill="#27ae60">3.88V</text>
+
+  <!-- Cell 2: ~85% -->
+  <rect x="530" y="155" width="100" height="60" rx="4" fill="#ecf0f1" stroke="#27ae60" stroke-width="2"/>
+  <rect x="532" y="157" width="96" height="50" rx="2" fill="#27ae60" opacity="0.85"/>
+  <text x="575" y="157" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold" dy="28">85%</text>
+  <text x="480" y="190" text-anchor="middle" font-size="11" fill="#2c3e50" font-weight="bold">Cell 2</text>
+  <text x="480" y="203" text-anchor="middle" font-size="10" fill="#27ae60">3.88V</text>
+
+  <!-- Cell 3: ~85% (now healthy) -->
+  <rect x="530" y="230" width="100" height="60" rx="4" fill="#ecf0f1" stroke="#27ae60" stroke-width="2"/>
+  <rect x="532" y="232" width="96" height="50" rx="2" fill="#27ae60" opacity="0.85"/>
+  <text x="575" y="232" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold" dy="28">85%</text>
+  <text x="480" y="265" text-anchor="middle" font-size="11" fill="#2c3e50" font-weight="bold">Cell 3</text>
+  <text x="480" y="278" text-anchor="middle" font-size="10" fill="#27ae60">3.88V</text>
+
+  <!-- Cell 4: ~85% -->
+  <rect x="530" y="305" width="100" height="60" rx="4" fill="#ecf0f1" stroke="#27ae60" stroke-width="2"/>
+  <rect x="532" y="307" width="96" height="50" rx="2" fill="#27ae60" opacity="0.85"/>
+  <text x="575" y="307" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold" dy="28">85%</text>
+  <text x="480" y="340" text-anchor="middle" font-size="11" fill="#2c3e50" font-weight="bold">Cell 4</text>
+  <text x="480" y="353" text-anchor="middle" font-size="10" fill="#27ae60">3.88V</text>
+
+  <!-- Series wires -->
+  <line x1="580" y1="140" x2="580" y2="155" stroke="#2c3e50" stroke-width="2"/>
+  <line x1="580" y1="215" x2="580" y2="230" stroke="#2c3e50" stroke-width="2"/>
+  <line x1="580" y1="290" x2="580" y2="305" stroke="#2c3e50" stroke-width="2"/>
+  <rect x="558" y="365" width="34" height="8" rx="2" fill="#2c3e50"/>
+  <text x="570" y="373" font-size="9" fill="#ffffff">−</text>
+
+  <!-- Green checkmark -->
+  <text x="648" y="230" font-size="28" fill="#27ae60">✓</text>
+
+  <!-- Labels -->
+  <text x="600" y="408" text-anchor="middle" font-size="11" fill="#27ae60" font-weight="bold">All cells equalized</text>
+  <text x="600" y="425" text-anchor="middle" font-size="10" fill="#27ae60">Full pack capacity now accessible</text>
+  <text x="600" y="450" text-anchor="middle" font-size="10" fill="#7f8c8d">Pack V = 15.52V (full use)</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .box{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .label{font:12px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">CAN Frame Anatomy (Simplified)</text>
+  <rect x="80" y="200" width="1040" height="100" class="box"/>
+  <text x="100" y="240" class="label">SOF</text>
+  <text x="160" y="240" class="label">ID</text>
+  <text x="260" y="240" class="label">RTR</text>
+  <text x="330" y="240" class="label">DLC</text>
+  <text x="420" y="240" class="label">DATA</text>
+  <text x="700" y="240" class="label">CRC</text>
+  <text x="820" y="240" class="label">ACK</text>
+  <text x="900" y="240" class="label">EOF</text>
+</svg>

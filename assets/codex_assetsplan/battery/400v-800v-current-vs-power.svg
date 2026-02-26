@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .axis { stroke: #222; stroke-width: 2; }
+    .grid { stroke: #e6e6e6; stroke-width: 1; }
+    .line400 { stroke: #1f77b4; stroke-width: 3; fill: none; }
+    .line800 { stroke: #d62728; stroke-width: 3; fill: none; }
+    .label { font: 14px sans-serif; fill: #111; }
+  </style>
+
+  <text x="40" y="40" class="title">Current vs Power: 400V vs 800V</text>
+
+  <line x1="100" y1="100" x2="100" y2="600" class="axis"/>
+  <line x1="100" y1="600" x2="1100" y2="600" class="axis"/>
+
+  <line x1="100" y1="500" x2="1100" y2="500" class="grid"/>
+  <line x1="100" y1="400" x2="1100" y2="400" class="grid"/>
+  <line x1="100" y1="300" x2="1100" y2="300" class="grid"/>
+  <line x1="100" y1="200" x2="1100" y2="200" class="grid"/>
+
+  <!-- 400V line (I = P/V) scaled) -->
+  <path d="M100 580 L300 520 L500 460 L700 400 L900 340 L1100 280" class="line400"/>
+  <text x="920" y="360" class="label">400V</text>
+
+  <!-- 800V line -->
+  <path d="M100 580 L300 550 L500 520 L700 490 L900 460 L1100 430" class="line800"/>
+  <text x="920" y="470" class="label">800V</text>
+
+  <text x="1040" y="635" class="label">Power →</text>
+  <text x="30" y="120" class="label">Current ↑</text>
+</svg>

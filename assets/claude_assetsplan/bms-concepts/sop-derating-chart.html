@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>SOP Power Derating Chart</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 20px; }
+  h2 { text-align: center; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 16px; }
+  .container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+  .chart-box { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
+  .controls { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+  .ctrl { display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #555; gap: 4px; }
+  input[type=range] { width: 160px; }
+  .val { font-weight: bold; color: #1a6eb5; font-size: 13px; }
+  .meter-row { display: flex; gap: 20px; justify-content: center; margin: 14px 0; flex-wrap: wrap; }
+  .meter { background: white; border-radius: 8px; padding: 14px 20px; min-width: 160px; text-align: center;
+           box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+  .meter-val { font-size: 28px; font-weight: bold; }
+  .meter-label { font-size: 11px; color: #888; margin-top: 4px; }
+</style>
+</head>
+<body>
+<h2>SOP Power Derating — BMS Limits in Real Time</h2>
+<p class="subtitle">How BMS combines SOC, temperature, and internal resistance to compute safe power limits</p>
+
+<div class="controls">
+  <div class="ctrl">
+    <span>SOC (%)</span>
+    <input type="range" id="soc" min="0" max="100" step="1" value="60"/>
+    <span class="val" id="socVal">60%</span>
+  </div>
+  <div class="ctrl">
+    <span>Cell temperature (°C)</span>
+    <input type="range" id="temp" min="-20" max="55" step="1" value="25"/>
+    <span class="val" id="tempVal">25°C</span>
+  </div>
+  <div class="ctrl">
+    <span>SOH (%)</span>
+    <input type="range" id="soh" min="70" max="100" step="1" value="100"/>
+    <span class="val" id="sohVal">100%</span>
+  </div>
+  <div class="ctrl">
+    <span>Pack size (kWh)</span>
+    <input type="range" id="pack" min="20" max="100" step="5" value="60"/>
+    <span class="val" id="packVal">60 kWh</span>
+  </div>
+</div>
+
+<div class="meter-row">
+  <div class="meter">
+    <div class="meter-val" id="m_dchg" style="color:#c00">—</div>
+    <div class="meter-label">P_max discharge (kW)</div>
+  </div>
+  <div class="meter">
+    <div class="meter-val" id="m_chg" style="color:#2a8a2a">—</div>
+    <div class="meter-label">P_max charge (kW)</div>
+  </div>
+  <div class="meter">
+    <div class="meter-val" id="m_regen" style="color:#1a6eb5">—</div>
+    <div class="meter-label">P_max regen (kW)</div>
+  </div>
+  <div class="meter">
+    <div class="meter-val" id="m_pct" style="color:#e07b00">—</div>
+    <div class="meter-label">% of peak power</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="chart-box"><canvas id="socChart" width="520" height="320"></canvas></div>
+  <div class="chart-box"><canvas id="tempChart" width="520" height="320"></canvas></div>
+</div>
+
+<script>
+['soc','temp','soh','pack'].forEach(id => {
+  document.getElementById(id).addEventListener('input', function() {
+    const labels = { soc: '%', temp: '°C', soh: '%', pack: ' kWh' };
+    document.getElementById(id + 'Val').textContent = this.value + labels[id];
+    draw();
+  });
+});
+
+const P_PEAK = 150; // kW nominal max discharge for a 60kWh pack
+
+function rintFactor(T) {
+  const Ea = 0.28, k = 8.617e-5, Tref = 298.15;
+  return Math.exp(Ea/k * (1/(T+273.15) - 1/Tref));
+}
+
+function sopDerating(soc, T, soh) {
+  // Temperature factor: max at 25°C
+  let tFactor = 1 / rintFactor(T);
+  tFactor = Math.min(1.0, tFactor);
+
+  // SOC factor for discharge: falls off at low SOC
+  let socDchgFactor = 1.0;
+  if (soc < 20) socDchgFactor = soc / 20;
+  else if (soc > 95) socDchgFactor = (100 - soc) / 5 * 0.3 + 0.7;
+
+  // SOC factor for charge: falls off at high SOC
+  let socChgFactor = 1.0;
+  if (soc > 80) socChgFactor = (100 - soc) / 20;
+  else if (soc < 10) socChgFactor = soc / 10 * 0.5 + 0.5;
+
+  // Temperature charge limit (hard no-charge below 5°C)
+  let tChgFactor = tFactor;
+  if (T < 5) tChgFactor *= Math.max(0, (T + 5) / 10);
+
+  // SOH factor
+  const sohFactor = (soh / 100) ** 1.5;
+
+  const pDchg = P_PEAK * tFactor * socDchgFactor * sohFactor;
+  const pChg = P_PEAK * 0.7 * tChgFactor * socChgFactor * sohFactor;
+  const pRegen = P_PEAK * 0.5 * tChgFactor * socChgFactor * sohFactor;
+
+  return { pDchg: Math.max(0, pDchg), pChg: Math.max(0, pChg), pRegen: Math.max(0, pRegen) };
+}
+
+let c1 = null, c2 = null;
+
+function draw() {
+  const soc = parseInt(document.getElementById('soc').value);
+  const T = parseInt(document.getElementById('temp').value);
+  const soh = parseInt(document.getElementById('soh').value);
+  const pack = parseInt(document.getElementById('pack').value);
+  const packScale = pack / 60;
+
+  const cur = sopDerating(soc, T, soh);
+  document.getElementById('m_dchg').textContent = Math.round(cur.pDchg * packScale);
+  document.getElementById('m_chg').textContent = Math.round(cur.pChg * packScale);
+  document.getElementById('m_regen').textContent = Math.round(cur.pRegen * packScale);
+  document.getElementById('m_pct').textContent = Math.round(cur.pDchg / P_PEAK * 100) + '%';
+
+  // Chart 1: SOP vs SOC at fixed T
+  const socs = Array.from({length: 101}, (_, i) => i);
+  const dchgBySoc = socs.map(s => +(sopDerating(s, T, soh).pDchg * packScale).toFixed(1));
+  const chgBySoc  = socs.map(s => +(sopDerating(s, T, soh).pChg  * packScale).toFixed(1));
+
+  if (c1) c1.destroy();
+  c1 = new Chart(document.getElementById('socChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: socs,
+      datasets: [
+        { label: 'P_max discharge (kW)', data: dchgBySoc, borderColor: '#c00', borderWidth: 2.5, pointRadius: 0, fill: true, backgroundColor: 'rgba(200,0,0,0.07)', tension: 0.3 },
+        { label: 'P_max charge (kW)',    data: chgBySoc,  borderColor: '#2a8a2a', borderWidth: 2, pointRadius: 0, fill: true, backgroundColor: 'rgba(42,138,42,0.07)', tension: 0.3 }
+      ]
+    },
+    options: {
+      responsive: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        title: { display: true, text: `SOP vs SOC | T=${T}°C | SOH=${soh}% | ${pack}kWh pack`, font: { size: 12 } },
+        legend: { position: 'top' },
+        annotation: {
+          annotations: {
+            currentSoc: {
+              type: 'line', xMin: soc, xMax: soc,
+              borderColor: '#e07b00', borderWidth: 2, borderDash: [4,3],
+              label: { display: true, content: `SOC=${soc}%`, color: '#e07b00', font: { size: 10 } }
+            }
+          }
+        }
+      },
+      scales: {
+        x: { title: { display: true, text: 'SOC (%)' }, ticks: { maxTicksLimit: 11 } },
+        y: { title: { display: true, text: 'Power limit (kW)' }, min: 0 }
+      }
+    }
+  });
+
+  // Chart 2: SOP vs Temperature at fixed SOC
+  const temps = Array.from({length: 76}, (_, i) => i - 20);
+  const dchgByT = temps.map(t => +(sopDerating(soc, t, soh).pDchg * packScale).toFixed(1));
+  const chgByT  = temps.map(t => +(sopDerating(soc, t, soh).pChg  * packScale).toFixed(1));
+
+  if (c2) c2.destroy();
+  c2 = new Chart(document.getElementById('tempChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: temps,
+      datasets: [
+        { label: 'P_max discharge (kW)', data: dchgByT, borderColor: '#c00', borderWidth: 2.5, pointRadius: 0, fill: true, backgroundColor: 'rgba(200,0,0,0.07)', tension: 0.3 },
+        { label: 'P_max charge (kW)',    data: chgByT,  borderColor: '#2a8a2a', borderWidth: 2, pointRadius: 0, fill: true, backgroundColor: 'rgba(42,138,42,0.07)', tension: 0.3 }
+      ]
+    },
+    options: {
+      responsive: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        title: { display: true, text: `SOP vs Temperature | SOC=${soc}% | SOH=${soh}% | ${pack}kWh pack`, font: { size: 12 } },
+        legend: { position: 'top' }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Cell Temperature (°C)' }, ticks: { maxTicksLimit: 10 } },
+        y: { title: { display: true, text: 'Power limit (kW)' }, min: 0 }
+      }
+    }
+  });
+}
+
+draw();
+</script>
+</body>
+</html>

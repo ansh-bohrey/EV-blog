@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .grid { stroke: #333; stroke-width: 1; }
+    .cell { font: 14px sans-serif; fill: #111; }
+    .hdr { font: 14px sans-serif; font-weight: bold; fill: #111; }
+  </style>
+
+  <text x="40" y="40" class="title">Pack Parameter Example (96S3P NMC)</text>
+
+  <rect x="60" y="80" width="1080" height="520" fill="#fff" stroke="#333" stroke-width="2" />
+  <line x1="60" y1="130" x2="1140" y2="130" class="grid" />
+  <line x1="60" y1="200" x2="1140" y2="200" class="grid" />
+  <line x1="60" y1="270" x2="1140" y2="270" class="grid" />
+  <line x1="60" y1="340" x2="1140" y2="340" class="grid" />
+  <line x1="60" y1="410" x2="1140" y2="410" class="grid" />
+  <line x1="60" y1="480" x2="1140" y2="480" class="grid" />
+
+  <line x1="420" y1="80" x2="420" y2="600" class="grid" />
+
+  <text x="80" y="115" class="hdr">Parameter</text>
+  <text x="440" y="115" class="hdr">Value</text>
+
+  <text x="80" y="175" class="cell">Pack voltage (nominal)</text>
+  <text x="440" y="175" class="cell">96 × 3.6V = 345.6V</text>
+
+  <text x="80" y="245" class="cell">Pack capacity</text>
+  <text x="440" y="245" class="cell">3 × 5Ah = 15Ah</text>
+
+  <text x="80" y="315" class="cell">Pack energy</text>
+  <text x="440" y="315" class="cell">345.6V × 15Ah ≈ 5.2 kWh</text>
+
+  <text x="80" y="385" class="cell">Pack resistance</text>
+  <text x="440" y="385" class="cell">(96 × 30mΩ) / 3 ≈ 0.96Ω</text>
+
+  <text x="80" y="455" class="cell">Pack C-rate limit</text>
+  <text x="440" y="455" class="cell">Cell C-rate × 3 (parallel)</text>
+</svg>

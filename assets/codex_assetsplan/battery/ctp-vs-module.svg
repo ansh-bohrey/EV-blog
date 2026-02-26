@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .box { fill: #f7f7f7; stroke: #333; stroke-width: 2; }
+    .label { font: 16px sans-serif; fill: #111; }
+    .cell { fill: #e6f2ff; stroke: #333; stroke-width: 1.5; }
+  </style>
+
+  <text x="40" y="40" class="title">Module-based vs Cell-to-Pack (CTP)</text>
+
+  <rect x="80" y="100" width="480" height="500" class="box"/>
+  <text x="100" y="135" class="label">Module-based</text>
+
+  <rect x="640" y="100" width="480" height="500" class="box"/>
+  <text x="660" y="135" class="label">CTP (No Module)</text>
+
+  <!-- Module-based: cells grouped into modules -->
+  <rect x="120" y="170" width="180" height="120" class="box"/>
+  <rect x="320" y="170" width="180" height="120" class="box"/>
+  <rect x="120" y="320" width="180" height="120" class="box"/>
+  <rect x="320" y="320" width="180" height="120" class="box"/>
+
+  <!-- Cells in one module -->
+  <rect x="140" y="190" width="40" height="80" class="cell"/>
+  <rect x="190" y="190" width="40" height="80" class="cell"/>
+  <rect x="240" y="190" width="40" height="80" class="cell"/>
+
+  <!-- CTP: cells directly in pack -->
+  <rect x="680" y="170" width="60" height="280" class="cell"/>
+  <rect x="760" y="170" width="60" height="280" class="cell"/>
+  <rect x="840" y="170" width="60" height="280" class="cell"/>
+  <rect x="920" y="170" width="60" height="280" class="cell"/>
+  <rect x="1000" y="170" width="60" height="280" class="cell"/>
+
+  <text x="120" y="470" class="label">Pros: repairable</text>
+  <text x="120" y="500" class="label">Cons: lower density</text>
+
+  <text x="680" y="470" class="label">Pros: high density</text>
+  <text x="680" y="500" class="label">Cons: hard to repair</text>
+</svg>

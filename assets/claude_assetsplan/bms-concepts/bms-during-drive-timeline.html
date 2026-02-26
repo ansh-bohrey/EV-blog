@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>BMS During Drive — Timeline</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 20px; }
+  h2 { text-align: center; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 16px; }
+  .container { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .chart-box { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
+  .controls { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+  .ctrl { display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #555; gap: 4px; }
+  input[type=range] { width: 140px; }
+  .val { font-weight: bold; color: #1a6eb5; font-size: 13px; }
+  .metrics { display: flex; gap: 10px; justify-content: center; margin: 10px 0; flex-wrap: wrap; }
+  .metric { background: white; border-radius: 6px; padding: 8px 14px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+  .metric-val { font-size: 20px; font-weight: bold; }
+  .metric-lbl { font-size: 10px; color: #888; }
+  .event-log { background: white; border-radius: 8px; padding: 12px 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+               max-width: 320px; font-size: 11px; }
+  .event-log h4 { margin: 0 0 8px; font-size: 12px; color: #1a1a2e; }
+  .event { padding: 3px 0; border-bottom: 1px solid #eee; }
+  .event:last-child { border-bottom: none; }
+  .ev-t { color: #888; width: 52px; display: inline-block; }
+  .ev-L1 { color: #c8a000; }
+  .ev-L2 { color: #e07b00; }
+  .ev-L3 { color: #c00; }
+  .ev-ok { color: #2a8a2a; }
+  .ev-info { color: #1a6eb5; }
+</style>
+</head>
+<body>
+<h2>BMS During a Full Drive Cycle — What Happens Inside</h2>
+<p class="subtitle">Real-time BMS monitoring actions across a typical 45-minute urban + highway drive</p>
+
+<div class="controls">
+  <div class="ctrl">
+    <span>Pack capacity (kWh)</span>
+    <input type="range" id="cap" min="20" max="100" step="5" value="60"/>
+    <span class="val" id="capVal">60 kWh</span>
+  </div>
+  <div class="ctrl">
+    <span>Starting SOC (%)</span>
+    <input type="range" id="soc0" min="30" max="100" step="5" value="80"/>
+    <span class="val" id="soc0Val">80%</span>
+  </div>
+  <div class="ctrl">
+    <span>Ambient temperature (°C)</span>
+    <input type="range" id="tamb" min="-20" max="40" step="5" value="20"/>
+    <span class="val" id="tambVal">20°C</span>
+  </div>
+  <div class="ctrl">
+    <span>Drive style (1=eco, 5=sport)</span>
+    <input type="range" id="style" min="1" max="5" step="1" value="3"/>
+    <span class="val" id="styleVal">3</span>
+  </div>
+</div>
+
+<div class="metrics">
+  <div class="metric"><div class="metric-val" id="m_socend" style="color:#1a6eb5">—</div><div class="metric-lbl">Final SOC (%)</div></div>
+  <div class="metric"><div class="metric-val" id="m_energy" style="color:#2a8a2a">—</div><div class="metric-lbl">Energy used (kWh)</div></div>
+  <div class="metric"><div class="metric-val" id="m_regen" style="color:#6633cc">—</div><div class="metric-lbl">Regen recovered (kWh)</div></div>
+  <div class="metric"><div class="metric-val" id="m_faults" style="color:#c00">—</div><div class="metric-lbl">Fault events</div></div>
+  <div class="metric"><div class="metric-val" id="m_tpeak" style="color:#e07b00">—</div><div class="metric-lbl">Peak cell temp (°C)</div></div>
+</div>
+
+<div class="container">
+  <div class="chart-box"><canvas id="driveChart" width="740" height="340"></canvas></div>
+</div>
+
+<div class="container" style="margin-top:14px">
+  <div class="chart-box"><canvas id="powerChart" width="460" height="220"></canvas></div>
+  <div class="event-log" id="eventLog">
+    <h4>BMS Event Log (simulated)</h4>
+  </div>
+</div>
+
+<script>
+['cap','soc0','tamb','style'].forEach(id => {
+  document.getElementById(id).addEventListener('input', function() {
+    const labels = { cap: ' kWh', soc0: '%', tamb: '°C', style: '' };
+    document.getElementById(id + 'Val').textContent = this.value + labels[id];
+    draw();
+  });
+});
+
+// Drive profile: [time_min, power_kW (positive=discharge, negative=regen)]
+// Phases: start, urban slow, urban stop, highway, highway decel, urban, park
+function buildProfile(styleFactor) {
+  // styleFactor 1-5 scales peak power
+  const P_cruise = 12 + styleFactor * 2;
+  const P_accel  = 25 + styleFactor * 10;
+  const P_regen  = -(10 + styleFactor * 3);
+
+  const profile = [];
+  // t=0 to 2: pre-charge + startup (low power)
+  for (let t = 0; t <= 2; t += 0.5) profile.push({ t, p: 0.5 });
+  // t=2 to 8: urban acceleration + cruise
+  for (let t = 2.5; t <= 5; t += 0.5) profile.push({ t, p: P_accel });
+  for (let t = 5.5; t <= 8; t += 0.5) profile.push({ t, p: P_cruise });
+  // t=8 to 10: stop & go (regen + idle)
+  profile.push({ t: 8.5, p: P_regen });
+  profile.push({ t: 9, p: 2 });
+  profile.push({ t: 9.5, p: P_regen * 0.6 });
+  profile.push({ t: 10, p: 1 });
+  // t=10 to 25: highway
+  for (let t = 10.5; t <= 25; t += 0.5) profile.push({ t, p: P_cruise * 1.4 + (Math.sin(t) * styleFactor * 2) });
+  // t=25 to 27: highway braking
+  for (let t = 25.5; t <= 27; t += 0.5) profile.push({ t, p: P_regen * 1.2 });
+  // t=27 to 38: urban return
+  for (let t = 27.5; t <= 30; t += 0.5) profile.push({ t, p: P_accel * 0.7 });
+  for (let t = 30.5; t <= 35; t += 0.5) profile.push({ t, p: P_cruise * 0.9 });
+  for (let t = 35.5; t <= 38; t += 0.5) profile.push({ t, p: P_regen * 0.5 });
+  // t=38 to 42: parking approach
+  for (let t = 38.5; t <= 40; t += 0.5) profile.push({ t, p: P_cruise * 0.4 });
+  profile.push({ t: 40.5, p: P_regen * 0.3 });
+  profile.push({ t: 41, p: 0.5 });
+  profile.push({ t: 42, p: 0 });
+  return profile;
+}
+
+let c1 = null, c2 = null;
+
+function draw() {
+  const cap   = parseFloat(document.getElementById('cap').value);   // kWh
+  const soc0  = parseFloat(document.getElementById('soc0').value);  // %
+  const Tamb  = parseFloat(document.getElementById('tamb').value);  // °C
+  const style = parseInt(document.getElementById('style').value);
+
+  const profile = buildProfile(style);
+  const dt = 0.5 / 60; // hours per step (0.5 min)
+
+  // Thermal model: pack heats up with use, cools toward ambient
+  const T_init = Math.max(Tamb, Tamb < 10 ? Tamb + 5 : Tamb + 2); // slight warm above ambient
+  const Cth = 80; // thermal mass (arbitrary units)
+  const Rth = 0.15; // thermal resistance (°C per kW)
+
+  let soc = soc0;
+  let T = T_init;
+  let totalDisch = 0, totalRegen = 0;
+
+  const tData = [], socData = [], tempData = [], powerData = [];
+  const events = [];
+
+  let sopDerating = false, tempWarning = false, socWarning = false;
+
+  profile.forEach(pt => {
+    const p = pt.p;
+    const energyStep = p * dt; // kWh this step
+    const dsoc = (energyStep / cap) * 100;
+
+    soc = Math.max(0, Math.min(100, soc - dsoc));
+    if (energyStep > 0) totalDisch += energyStep;
+    else totalRegen += (-energyStep);
+
+    // Thermal: power generates heat, ambient cools
+    const heatKw = Math.abs(p) * 0.04; // 4% of power as heat
+    T += (heatKw / Cth - (T - Tamb) / (Rth * 1000)) * 0.5;
+
+    tData.push(+pt.t.toFixed(1));
+    socData.push(+soc.toFixed(1));
+    tempData.push(+T.toFixed(1));
+    powerData.push(+p.toFixed(1));
+
+    // Generate fault events
+    if (soc < 20 && !socWarning) {
+      socWarning = true;
+      events.push({ t: pt.t, level: 'L1', msg: 'SOC < 20% — L1 low battery warning' });
+    }
+    if (T > 38 && !tempWarning) {
+      tempWarning = true;
+      events.push({ t: pt.t, level: 'L1', msg: `OT_DSG warning @ ${T.toFixed(0)}°C` });
+    }
+    if (T > 42 && !sopDerating) {
+      sopDerating = true;
+      events.push({ t: pt.t, level: 'L2', msg: `Temp ${T.toFixed(0)}°C — SOP derated 30%` });
+    }
+    if (p < -15 && style >= 4) {
+      // Hard regen at high style
+    }
+  });
+
+  // Add standard events
+  const stdEvents = [
+    { t: 0,    level: 'ok',   msg: 'Key-ON: BMS boots, reads NV flash' },
+    { t: 0.5,  level: 'info', msg: 'Pre-charge complete, main contactor closed' },
+    { t: 1.0,  level: 'ok',   msg: 'DRIVE_READY broadcast on CAN' },
+    { t: 2.0,  level: 'info', msg: 'Cell scan: all voltages OK' },
+    { t: 10.0, level: 'info', msg: 'Highway mode: SOP increased' },
+    { t: 20.0, level: 'info', msg: 'SOH check: capacity within 5% of nominal' },
+    { t: 42.0, level: 'ok',   msg: 'Parked: contactors open, write NV flash' },
+  ];
+
+  const allEvents = [...stdEvents, ...events].sort((a, b) => a.t - b.t);
+  const faultCount = events.length;
+
+  // Metrics
+  document.getElementById('m_socend').textContent = soc.toFixed(0) + '%';
+  document.getElementById('m_energy').textContent = totalDisch.toFixed(1);
+  document.getElementById('m_regen').textContent = totalRegen.toFixed(1);
+  document.getElementById('m_faults').textContent = faultCount;
+  document.getElementById('m_tpeak').textContent = Math.max(...tempData).toFixed(0);
+
+  // Event log
+  const log = document.getElementById('eventLog');
+  log.innerHTML = '<h4>BMS Event Log (simulated)</h4>';
+  allEvents.forEach(ev => {
+    const d = document.createElement('div');
+    d.className = 'event';
+    d.innerHTML = `<span class="ev-t">${ev.t.toFixed(1)}min</span><span class="ev-${ev.level}">${ev.msg}</span>`;
+    log.appendChild(d);
+  });
+
+  // Chart 1: SOC + temperature
+  if (c1) c1.destroy();
+  c1 = new Chart(document.getElementById('driveChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: tData,
+      datasets: [
+        {
+          label: 'SOC (%)',
+          data: socData,
+          borderColor: '#1a6eb5',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          tension: 0.3,
+          yAxisID: 'ySOC',
+          fill: true,
+          backgroundColor: 'rgba(26,110,181,0.08)'
+        },
+        {
+          label: 'Cell temp (°C)',
+          data: tempData,
+          borderColor: '#c00',
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.4,
+          yAxisID: 'yT',
+          borderDash: [5, 3]
+        }
+      ]
+    },
+    options: {
+      responsive: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        title: { display: true, text: `Drive cycle | Cap=${cap}kWh | Start SOC=${soc0}% | Tamb=${Tamb}°C | Style=${style}`, font: { size: 13 } },
+        legend: { position: 'top' }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Time (minutes)' }, ticks: { maxTicksLimit: 15 } },
+        ySOC: {
+          type: 'linear', position: 'left',
+          title: { display: true, text: 'SOC (%)', color: '#1a6eb5' },
+          min: 0, max: 105,
+          ticks: { color: '#1a6eb5', callback: v => v + '%' }
+        },
+        yT: {
+          type: 'linear', position: 'right',
+          title: { display: true, text: 'Cell Temperature (°C)', color: '#c00' },
+          grid: { drawOnChartArea: false },
+          ticks: { color: '#c00' }
+        }
+      }
+    }
+  });
+
+  // Chart 2: power demand
+  if (c2) c2.destroy();
+  c2 = new Chart(document.getElementById('powerChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: tData,
+      datasets: [{
+        label: 'Pack power (kW)',
+        data: powerData,
+        borderColor: '#2a8a2a',
+        borderWidth: 2,
+        pointRadius: 0,
+        tension: 0.2,
+        fill: true,
+        backgroundColor: ctx => {
+          const v = ctx.dataset.data[ctx.dataIndex];
+          return v >= 0 ? 'rgba(42,138,42,0.15)' : 'rgba(102,51,204,0.15)';
+        }
+      }]
+    },
+    options: {
+      responsive: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        title: { display: true, text: 'Pack power demand (+ = discharge, − = regen)', font: { size: 12 } },
+        legend: { display: false }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Time (min)' }, ticks: { maxTicksLimit: 10 } },
+        y: { title: { display: true, text: 'Power (kW)' } }
+      }
+    }
+  });
+}
+
+draw();
+</script>
+</body>
+</html>

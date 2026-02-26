@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .axis{stroke:#222;stroke-width:2;}
+    .grid{stroke:#e6e6e6;stroke-width:1;}
+    .curve{stroke:#d62728;stroke-width:3;fill:none;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">Thermal Runaway Temperature Curve</text>
+  <line x1="100" y1="100" x2="100" y2="600" class="axis"/>
+  <line x1="100" y1="600" x2="1100" y2="600" class="axis"/>
+  <line x1="100" y1="500" x2="1100" y2="500" class="grid"/>
+  <line x1="100" y1="400" x2="1100" y2="400" class="grid"/>
+  <line x1="100" y1="300" x2="1100" y2="300" class="grid"/>
+  <path d="M100 520 C400 480, 600 440, 750 400 C850 360, 950 240, 1100 120" class="curve"/>
+  <text x="1040" y="635" class="label">Time →</text>
+  <text x="30" y="120" class="label">Temperature ↑</text>
+</svg>

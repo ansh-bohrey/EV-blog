@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .line{stroke:#222;stroke-width:3;fill:none;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">Contactor Sequencing Timeline</text>
+
+  <text x="40" y="140" class="label">NEG</text>
+  <path d="M120 120 L260 120 L260 160 L980 160" class="line"/>
+
+  <text x="40" y="260" class="label">PRE</text>
+  <path d="M120 240 L320 240 L320 280 L780 280 L780 240 L980 240" class="line"/>
+
+  <text x="40" y="380" class="label">POS</text>
+  <path d="M120 360 L620 360 L620 400 L980 400" class="line"/>
+
+  <text x="120" y="520" class="label">Time →</text>
+</svg>

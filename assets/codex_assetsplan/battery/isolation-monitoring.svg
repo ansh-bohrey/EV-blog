@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .box { fill: #f7f7f7; stroke: #333; stroke-width: 2; }
+    .wire { stroke: #333; stroke-width: 2; }
+    .label { font: 14px sans-serif; fill: #111; }
+    .fault { stroke: #d62728; stroke-width: 3; }
+  </style>
+
+  <text x="40" y="40" class="title">Isolation Monitoring Concept</text>
+
+  <rect x="120" y="140" width="240" height="120" class="box"/>
+  <text x="150" y="200" class="label">HV Pack</text>
+
+  <rect x="800" y="140" width="240" height="120" class="box"/>
+  <text x="830" y="200" class="label">Chassis</text>
+
+  <rect x="420" y="120" width="240" height="160" class="box"/>
+  <text x="445" y="170" class="label">IMD</text>
+  <text x="445" y="190" class="label">(Isolation Monitor)</text>
+
+  <line x1="360" y1="200" x2="420" y2="200" class="wire"/>
+  <line x1="660" y1="200" x2="800" y2="200" class="wire"/>
+
+  <line x1="280" y1="260" x2="520" y2="400" class="fault"/>
+  <text x="530" y="420" class="label">Leakage path</text>
+</svg>

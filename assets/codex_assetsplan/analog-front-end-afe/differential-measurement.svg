@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .wire { stroke: #222; stroke-width: 3; fill: none; }
+    .cell { stroke: #222; stroke-width: 2; fill: #f2f2f2; }
+    .label { font: 14px sans-serif; fill: #111; }
+  </style>
+  <text x="40" y="40" class="title">Differential Cell Voltage Measurement</text>
+
+  <rect x="200" y="200" width="80" height="200" class="cell"/>
+  <rect x="320" y="200" width="80" height="200" class="cell"/>
+  <rect x="440" y="200" width="80" height="200" class="cell"/>
+
+  <line x1="240" y1="180" x2="240" y2="200" class="wire"/>
+  <line x1="240" y1="420" x2="240" y2="440" class="wire"/>
+
+  <line x1="360" y1="180" x2="360" y2="200" class="wire"/>
+  <line x1="360" y1="420" x2="360" y2="440" class="wire"/>
+
+  <line x1="480" y1="180" x2="480" y2="200" class="wire"/>
+  <line x1="480" y1="420" x2="480" y2="440" class="wire"/>
+
+  <text x="600" y="260" class="label">Measure V+ - V- for each cell</text>
+</svg>

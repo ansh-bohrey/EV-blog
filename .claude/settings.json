@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Write(/home/anshb/blog/ev/**)",
+      "Edit(/home/anshb/blog/ev/**)",
+      "Bash(mkdir *)",
+      "Bash(ls *)",
+      "Bash(wc *)",
+      "Bash(find *)",
+      "Bash(cat *)"
+    ]
+  }
+}

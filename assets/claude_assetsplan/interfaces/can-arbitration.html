@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>CAN Bus Arbitration Animation</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 20px; }
+  h2 { text-align: center; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 16px; }
+  canvas { display: block; margin: 0 auto; background: white; border-radius: 8px;
+           box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
+  .controls { display: flex; gap: 16px; justify-content: center; margin: 14px 0; flex-wrap: wrap; }
+  button { padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 13px; }
+  .btn-play { background: #1a6eb5; color: white; }
+  .btn-play:hover { background: #155a9a; }
+  .btn-reset { background: #888; color: white; }
+  .btn-step { background: #2a8a2a; color: white; }
+  .info-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+  .info-card { background: white; border-radius: 6px; padding: 10px 16px; font-size: 11px;
+               box-shadow: 0 1px 4px rgba(0,0,0,0.1); max-width: 280px; }
+  .info-card strong { display: block; margin-bottom: 4px; }
+  #statusMsg { text-align: center; font-size: 13px; font-weight: bold; min-height: 22px; color: #333; margin: 8px 0; }
+</style>
+</head>
+<body>
+<h2>CAN Bus Arbitration — Non-destructive bit-by-bit</h2>
+<p class="subtitle">Two nodes start transmitting simultaneously. The lower-ID wins without retransmission.</p>
+
+<canvas id="arb" width="780" height="420"></canvas>
+<div id="statusMsg">Press Play to start the simulation</div>
+
+<div class="controls">
+  <button class="btn-play" onclick="startAnim()">▶ Play</button>
+  <button class="btn-step" onclick="stepAnim()">⏭ Step</button>
+  <button class="btn-reset" onclick="resetAnim()">↺ Reset</button>
+</div>
+
+<div class="info-row">
+  <div class="info-card">
+    <strong style="color:#c00">Node A — ID 0x320</strong>
+    Binary: <code>0011 0010 0000</code><br>
+    Priority: Medium-high<br>
+    Has a recessive bit (1) at position 5<br>
+    <em>→ loses arbitration there</em>
+  </div>
+  <div class="info-card">
+    <strong style="color:#1a6eb5">Node B — ID 0x300</strong>
+    Binary: <code>0011 0000 0000</code><br>
+    Priority: Higher (all zeros after bit 4)<br>
+    Always sends dominant when A sends recessive<br>
+    <em>→ wins arbitration</em>
+  </div>
+  <div class="info-card">
+    <strong style="color:#2a8a2a">Bus (result)</strong>
+    Wired-AND: dominant wins<br>
+    0 AND 1 = 0 (dominant)<br>
+    Both transmit identically → no conflict<br>
+    First bit difference → loser backs off
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('arb');
+const ctx = canvas.getContext('2d');
+
+// IDs
+const idA = 0x320; // 0011 0010 0000
+const idB = 0x300; // 0011 0000 0000
+
+function idBits(id, len) {
+  const bits = [];
+  for (let i = len - 1; i >= 0; i--) bits.push((id >> i) & 1);
+  return bits;
+}
+
+const bitsA = idBits(idA, 11);
+const bitsB = idBits(idB, 11);
+
+let currentBit = -1;
+let arbLostAt = -1;
+let animTimer = null;
+
+function drawFrame(bitIdx) {
+  ctx.clearRect(0, 0, 780, 420);
+
+  // Background
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, 780, 420);
+
+  const PAD_L = 120, PAD_R = 40;
+  const BIT_W = (780 - PAD_L - PAD_R) / 11;
+  const ROW_A = 100, ROW_B = 200, ROW_BUS = 310;
+  const HIGH_Y_OFF = 0, LOW_Y_OFF = 40;
+
+  // Y helper: dominant=0 → lower wire (high on chart = recessive=1)
+  // Recessive (1) = +2.5V → y = row_top + HIGH_Y_OFF
+  // Dominant  (0) = 0V   → y = row_top + LOW_Y_OFF
+
+  function bitY(row, bit) { return bit === 1 ? row : row + 40; }
+
+  // Labels
+  ctx.font = 'bold 12px Arial';
+  ctx.fillStyle = '#c00';
+  ctx.fillText(`Node A (0x${idA.toString(16).toUpperCase()})`, 10, ROW_A + 20);
+  ctx.fillStyle = '#1a6eb5';
+  ctx.fillText(`Node B (0x${idB.toString(16).toUpperCase()})`, 10, ROW_B + 20);
+  ctx.fillStyle = '#2a8a2a';
+  ctx.fillText('Bus (result)', 10, ROW_BUS + 20);
+
+  // Grid column backgrounds
+  for (let i = 0; i < 11; i++) {
+    const x = PAD_L + i * BIT_W;
+    if (i < bitIdx) {
+      const dominated = bitsA[i] === 0 || bitsB[i] === 0; // dominant wins
+      ctx.fillStyle = i === arbLostAt ? '#fff0f0' : '#f0fff4';
+      ctx.fillRect(x, 60, BIT_W, 280);
+    } else if (i === bitIdx) {
+      ctx.fillStyle = '#fffde7';
+      ctx.fillRect(x, 60, BIT_W, 280);
+    }
+    // Column separator
+    ctx.strokeStyle = '#ddd';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x, 60); ctx.lineTo(x, 360);
+    ctx.stroke();
+    // Bit number
+    ctx.fillStyle = '#888';
+    ctx.font = '9px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(`b${10-i}`, x + BIT_W/2, 376);
+  }
+
+  // Draw waveforms up to bitIdx
+  function drawWave(bits, row, color, dashed) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.5;
+    ctx.setLineDash(dashed ? [6, 3] : []);
+    ctx.beginPath();
+    // Start left of first bit
+    ctx.moveTo(PAD_L, bitY(row, 1)); // starts recessive (idle)
+
+    for (let i = 0; i <= Math.min(bitIdx, bits.length - 1); i++) {
+      const x = PAD_L + i * BIT_W;
+      const yPrev = i === 0 ? bitY(row, 1) : bitY(row, bits[i-1]);
+      const yCurr = bitY(row, bits[i]);
+      // Vertical edge
+      ctx.lineTo(x, yPrev);
+      ctx.lineTo(x, yCurr);
+      // Horizontal segment
+      const xEnd = x + (i < bitIdx ? BIT_W : BIT_W * 0.7);
+      ctx.lineTo(xEnd, yCurr);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  function drawBusWave(bA, bB, row) {
+    ctx.strokeStyle = '#2a8a2a';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(PAD_L, bitY(row, 1));
+    for (let i = 0; i <= Math.min(bitIdx, 10); i++) {
+      const x = PAD_L + i * BIT_W;
+      const busValPrev = i === 0 ? 1 : Math.min(bA[i-1], bB[i-1]);
+      const busVal = Math.min(bA[i], bB[i]); // wired-AND: dominant wins
+      ctx.lineTo(x, bitY(row, busValPrev));
+      ctx.lineTo(x, bitY(row, busVal));
+      ctx.lineTo(x + (i < bitIdx ? BIT_W : BIT_W * 0.7), bitY(row, busVal));
+    }
+    ctx.stroke();
+  }
+
+  drawWave(bitsA, ROW_A, '#c00', false);
+  drawWave(bitsB, ROW_B, '#1a6eb5', false);
+  drawBusWave(bitsA, bitsB, ROW_BUS);
+
+  // Bit value labels
+  ctx.font = 'bold 11px Arial';
+  ctx.textAlign = 'center';
+  for (let i = 0; i <= Math.min(bitIdx, 10); i++) {
+    const x = PAD_L + i * BIT_W + BIT_W/2;
+    ctx.fillStyle = '#c00';
+    ctx.fillText(bitsA[i], x, ROW_A - 8);
+    ctx.fillStyle = '#1a6eb5';
+    ctx.fillText(bitsB[i], x, ROW_B - 8);
+    const busVal = Math.min(bitsA[i], bitsB[i]);
+    ctx.fillStyle = '#2a8a2a';
+    ctx.fillText(busVal, x, ROW_BUS - 8);
+  }
+
+  // Arrow at arbitration loss point
+  if (arbLostAt >= 0 && arbLostAt <= bitIdx) {
+    const xArb = PAD_L + arbLostAt * BIT_W + BIT_W/2;
+    ctx.fillStyle = '#c00';
+    ctx.font = 'bold 11px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('⚠ A loses', xArb, 55);
+    // Dashed vertical line
+    ctx.strokeStyle = '#c00';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 3]);
+    ctx.beginPath();
+    ctx.moveTo(xArb, 58); ctx.lineTo(xArb, 360);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    if (bitIdx > arbLostAt) {
+      const xCont = PAD_L + (arbLostAt + 1) * BIT_W;
+      ctx.fillStyle = '#1a6eb5';
+      ctx.font = 'bold 11px Arial';
+      ctx.fillText('B wins → continues TX', xCont + BIT_W * 2, 55);
+    }
+  }
+
+  // Row labels
+  ctx.font = '10px Arial';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#888';
+  ctx.fillText('RECESSIVE (1)', 8, ROW_A - 2);
+  ctx.fillText('DOMINANT (0)', 8, ROW_A + 50);
+}
+
+function findArbLoss() {
+  for (let i = 0; i < 11; i++) {
+    if (bitsA[i] !== bitsB[i]) return i;
+  }
+  return -1;
+}
+
+arbLostAt = findArbLoss();
+
+function resetAnim() {
+  if (animTimer) { clearInterval(animTimer); animTimer = null; }
+  currentBit = -1;
+  drawFrame(-1);
+  document.getElementById('statusMsg').textContent = 'Press Play to start the simulation';
+}
+
+function stepAnim() {
+  if (currentBit < 10) {
+    currentBit++;
+    drawFrame(currentBit);
+    updateStatus();
+  }
+}
+
+function updateStatus() {
+  const msg = document.getElementById('statusMsg');
+  if (currentBit < 0) { msg.textContent = 'Ready'; return; }
+  if (currentBit < arbLostAt) {
+    msg.textContent = `Bit ${10-currentBit}: A=${bitsA[currentBit]}, B=${bitsB[currentBit]} — identical, both continue`;
+  } else if (currentBit === arbLostAt) {
+    msg.textContent = `Bit ${10-currentBit}: A=${bitsA[currentBit]} (recessive), B=${bitsB[currentBit]} (dominant) — Node A loses arbitration, backs off silently!`;
+    msg.style.color = '#c00';
+  } else {
+    msg.textContent = `Bit ${10-currentBit}: Node B continues transmitting — Node A waits for bus to become free`;
+    msg.style.color = '#1a6eb5';
+  }
+}
+
+function startAnim() {
+  if (animTimer) return;
+  animTimer = setInterval(() => {
+    if (currentBit < 10) {
+      currentBit++;
+      drawFrame(currentBit);
+      updateStatus();
+    } else {
+      clearInterval(animTimer); animTimer = null;
+    }
+  }, 600);
+}
+
+resetAnim();
+</script>
+</body>
+</html>

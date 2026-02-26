@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .wire { stroke: #222; stroke-width: 3; fill: none; }
+    .component { stroke: #222; stroke-width: 3; fill: none; }
+    .label { font: 14px sans-serif; fill: #111; }
+  </style>
+  <text x="40" y="40" class="title">Passive Balancing (One Cell)</text>
+
+  <rect x="200" y="180" width="80" height="200" class="component"/>
+  <text x="210" y="400" class="label">Cell</text>
+
+  <line x1="280" y1="220" x2="420" y2="220" class="wire"/>
+  <rect x="420" y="205" width="80" height="30" class="component"/>
+  <text x="440" y="225" class="label">Rbleed</text>
+
+  <rect x="520" y="200" width="60" height="40" class="component"/>
+  <text x="530" y="225" class="label">FET</text>
+
+  <line x1="580" y1="220" x2="640" y2="220" class="wire"/>
+  <line x1="640" y1="220" x2="640" y2="360" class="wire"/>
+  <line x1="640" y1="360" x2="200" y2="360" class="wire"/>
+</svg>

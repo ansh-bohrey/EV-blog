@@ -1,0 +1,129 @@
+<svg viewBox="0 0 860 480" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="860" height="480" fill="#f8f9fa"/>
+  <text x="430" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a1a2e">Modbus RTU Frame — Used with RS-485 in BMS</text>
+  <text x="430" y="48" text-anchor="middle" font-size="11" fill="#555">Request and response frames for reading cell voltages from a slave module</text>
+
+  <!-- ── Request frame (top) ── -->
+  <text x="430" y="75" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a6eb5">Master Request Frame (Read Holding Registers)</text>
+
+  <!-- Fields -->
+  <!-- Address -->
+  <rect x="30" y="85" width="100" height="55" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="80" y="106" text-anchor="middle" font-size="10" font-weight="bold" fill="#003a7a">Slave Addr</text>
+  <text x="80" y="120" text-anchor="middle" font-size="10" fill="#003a7a">0x01</text>
+  <text x="80" y="133" text-anchor="middle" font-size="8" fill="#555">1 byte</text>
+
+  <!-- Function code -->
+  <rect x="130" y="85" width="100" height="55" fill="#ffe0d0" stroke="#c04000" stroke-width="2"/>
+  <text x="180" y="106" text-anchor="middle" font-size="10" font-weight="bold" fill="#802000">Function</text>
+  <text x="180" y="120" text-anchor="middle" font-size="10" fill="#802000">0x03</text>
+  <text x="180" y="133" text-anchor="middle" font-size="8" fill="#555">Read Holding Regs</text>
+
+  <!-- Start register -->
+  <rect x="230" y="85" width="120" height="55" fill="#fff3b0" stroke="#c8a000" stroke-width="2"/>
+  <text x="290" y="106" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a5000">Start Reg</text>
+  <text x="290" y="120" text-anchor="middle" font-size="10" fill="#7a5000">0x0000</text>
+  <text x="290" y="133" text-anchor="middle" font-size="8" fill="#555">2 bytes (reg 0)</text>
+
+  <!-- Quantity -->
+  <rect x="350" y="85" width="120" height="55" fill="#fff3b0" stroke="#c8a000" stroke-width="2"/>
+  <text x="410" y="106" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a5000">Quantity</text>
+  <text x="410" y="120" text-anchor="middle" font-size="10" fill="#7a5000">0x0008</text>
+  <text x="410" y="133" text-anchor="middle" font-size="8" fill="#555">2 bytes (8 regs)</text>
+
+  <!-- CRC -->
+  <rect x="470" y="85" width="120" height="55" fill="#e8d0ff" stroke="#6633cc" stroke-width="2"/>
+  <text x="530" y="106" text-anchor="middle" font-size="10" font-weight="bold" fill="#330080">CRC16</text>
+  <text x="530" y="120" text-anchor="middle" font-size="10" fill="#330080">0xC40B</text>
+  <text x="530" y="133" text-anchor="middle" font-size="8" fill="#555">2 bytes (little-endian)</text>
+
+  <!-- Frame total -->
+  <rect x="590" y="85" width="240" height="55" fill="#f0f0f0" stroke="#888" stroke-width="1.5"/>
+  <text x="710" y="106" text-anchor="middle" font-size="10" font-weight="bold" fill="#555">Request total: 8 bytes</text>
+  <text x="710" y="120" text-anchor="middle" font-size="9" fill="#555">01 03 00 00 00 08 44 0C</text>
+  <text x="710" y="133" text-anchor="middle" font-size="8" fill="#888">(hex over RS-485 bus)</text>
+
+  <!-- Timing: 3.5 char silent interval -->
+  <rect x="30" y="148" width="780" height="25" rx="4" fill="#fff8e0" stroke="#e0c060" stroke-width="1"/>
+  <text x="430" y="164" text-anchor="middle" font-size="9" fill="#7a5000">Silent interval ≥ 3.5 character times before and after each frame (at 9600 bps: 3.5 × 1.04 ms ≈ 3.6 ms)</text>
+
+  <!-- ── Response frame (middle) ── -->
+  <text x="430" y="198" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a8a2a">Slave Response Frame (cell voltage data)</text>
+
+  <!-- Address -->
+  <rect x="30" y="208" width="75" height="55" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="2"/>
+  <text x="67" y="228" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a5a1a">Slave</text>
+  <text x="67" y="242" text-anchor="middle" font-size="10" fill="#1a5a1a">0x01</text>
+  <text x="67" y="255" text-anchor="middle" font-size="8" fill="#555">1 byte</text>
+
+  <!-- Function -->
+  <rect x="105" y="208" width="75" height="55" fill="#ffe0d0" stroke="#c04000" stroke-width="2"/>
+  <text x="142" y="228" text-anchor="middle" font-size="10" font-weight="bold" fill="#802000">Fn</text>
+  <text x="142" y="242" text-anchor="middle" font-size="10" fill="#802000">0x03</text>
+  <text x="142" y="255" text-anchor="middle" font-size="8" fill="#555">echo</text>
+
+  <!-- Byte count -->
+  <rect x="180" y="208" width="75" height="55" fill="#fff3b0" stroke="#c8a000" stroke-width="1.5"/>
+  <text x="217" y="228" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a5000">Byte Cnt</text>
+  <text x="217" y="242" text-anchor="middle" font-size="10" fill="#7a5000">0x10</text>
+  <text x="217" y="255" text-anchor="middle" font-size="8" fill="#555">16 bytes</text>
+
+  <!-- Data registers: 8 × 2 bytes = 16 bytes of cell voltages -->
+  <rect x="255" y="208" width="340" height="55" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="425" y="225" text-anchor="middle" font-size="10" font-weight="bold" fill="#003a7a">Data (8 × uint16 — cell voltages in mV)</text>
+  <text x="425" y="240" text-anchor="middle" font-size="9" fill="#333">0E88 0E92 0E7F 0E85 0E80 0E91 0E7A 0E86</text>
+  <text x="425" y="253" text-anchor="middle" font-size="8" fill="#555">3720 3730 3711 3717 3712 3729 3706 3718 (mV)</text>
+
+  <!-- CRC -->
+  <rect x="595" y="208" width="100" height="55" fill="#e8d0ff" stroke="#6633cc" stroke-width="2"/>
+  <text x="645" y="228" text-anchor="middle" font-size="10" font-weight="bold" fill="#330080">CRC16</text>
+  <text x="645" y="242" text-anchor="middle" font-size="10" fill="#330080">0x2B A1</text>
+  <text x="645" y="255" text-anchor="middle" font-size="8" fill="#555">2 bytes</text>
+
+  <rect x="695" y="208" width="135" height="55" fill="#f0f0f0" stroke="#888" stroke-width="1.5"/>
+  <text x="762" y="228" text-anchor="middle" font-size="10" font-weight="bold" fill="#555">Response: 21 bytes</text>
+  <text x="762" y="243" text-anchor="middle" font-size="9" fill="#555">1+1+1+16+2</text>
+  <text x="762" y="256" text-anchor="middle" font-size="8" fill="#888">~21 ms @ 9600 bps</text>
+
+  <!-- CRC explanation -->
+  <rect x="30" y="280" width="380" height="80" rx="6" fill="#f5f0ff" stroke="#6633cc" stroke-width="1.5"/>
+  <text x="220" y="298" text-anchor="middle" font-size="10" font-weight="bold" fill="#330080">CRC-16/IBM (Modbus)</text>
+  <text x="40" y="314" font-size="9" fill="#333">Polynomial: 0x8005 (reversed: 0xA001)</text>
+  <text x="40" y="327" font-size="9" fill="#333">Init: 0xFFFF, process each byte LSB-first</text>
+  <text x="40" y="340" font-size="9" fill="#333">For each bit: if LSB=1, shift right, XOR with poly</text>
+  <text x="40" y="353" font-size="9" fill="#555">Low byte sent first in frame (little-endian CRC)</text>
+
+  <!-- Exception response -->
+  <rect x="430" y="280" width="400" height="80" rx="6" fill="#fff0f0" stroke="#c00" stroke-width="1.5"/>
+  <text x="630" y="298" text-anchor="middle" font-size="10" font-weight="bold" fill="#c00">Exception Response (on error)</text>
+  <text x="440" y="314" font-size="9" fill="#333">Slave returns: [Addr] [Fn | 0x80] [Exception code] [CRC]</text>
+  <text x="440" y="327" font-size="9" fill="#555">Exception 01: Illegal function code</text>
+  <text x="440" y="340" font-size="9" fill="#555">Exception 02: Illegal data address</text>
+  <text x="440" y="353" font-size="9" fill="#555">Exception 04: Slave device failure</text>
+
+  <!-- Register map example -->
+  <rect x="30" y="375" width="800" height="90" rx="6" fill="#f0fff0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="430" y="393" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a5a1a">Example BMS Slave Register Map (Modbus RTU)</text>
+  <line x1="30" y1="397" x2="830" y2="397" stroke="#ddd" stroke-width="1"/>
+  <text x="80" y="410" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Reg</text>
+  <text x="200" y="410" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Content</text>
+  <text x="380" y="410" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Format</text>
+  <text x="560" y="410" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Reg</text>
+  <text x="700" y="410" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Content</text>
+  <line x1="30" y1="413" x2="830" y2="413" stroke="#eee" stroke-width="1"/>
+  <text x="80" y="426" text-anchor="middle" font-size="9" fill="#555">0x0000–07</text>
+  <text x="200" y="426" text-anchor="middle" font-size="9" fill="#333">Cell voltages 1–8 (mV)</text>
+  <text x="380" y="426" text-anchor="middle" font-size="9" fill="#555">uint16, 1 mV/bit</text>
+  <text x="560" y="426" text-anchor="middle" font-size="9" fill="#555">0x0010–11</text>
+  <text x="700" y="426" text-anchor="middle" font-size="9" fill="#333">Pack voltage (mV)</text>
+  <text x="80" y="440" text-anchor="middle" font-size="9" fill="#555">0x0008–0F</text>
+  <text x="200" y="440" text-anchor="middle" font-size="9" fill="#333">Cell temps 1–8 (°C)</text>
+  <text x="380" y="440" text-anchor="middle" font-size="9" fill="#555">uint8, offset −40°C</text>
+  <text x="560" y="440" text-anchor="middle" font-size="9" fill="#555">0x0012</text>
+  <text x="700" y="440" text-anchor="middle" font-size="9" fill="#333">SOC (0–200 = 0–100%)</text>
+  <text x="80" y="454" text-anchor="middle" font-size="9" fill="#555">0x001A</text>
+  <text x="200" y="454" text-anchor="middle" font-size="9" fill="#333">Fault flags (bitmask)</text>
+  <text x="380" y="454" text-anchor="middle" font-size="9" fill="#555">uint16, bit = fault type</text>
+  <text x="560" y="454" text-anchor="middle" font-size="9" fill="#555">0x0020–21</text>
+  <text x="700" y="454" text-anchor="middle" font-size="9" fill="#333">Firmware version (BCD)</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .axis{stroke:#222;stroke-width:2;}
+    .grid{stroke:#e6e6e6;stroke-width:1;}
+    .signal{stroke:#1f77b4;stroke-width:3;fill:none;}
+    .thresh{stroke:#d62728;stroke-width:2;fill:none;stroke-dasharray:6 6;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">Threshold + Debounce</text>
+  <line x1="100" y1="100" x2="100" y2="600" class="axis"/>
+  <line x1="100" y1="600" x2="1100" y2="600" class="axis"/>
+  <line x1="100" y1="350" x2="1100" y2="350" class="thresh"/>
+  <path d="M100 520 C250 480, 350 320, 450 300 C550 290, 700 330, 900 340 C1000 345, 1100 360, 1100 360" class="signal"/>
+  <text x="1040" y="635" class="label">Time →</text>
+  <text x="30" y="120" class="label">Signal ↑</text>
+  <text x="900" y="340" class="label">Threshold</text>
+</svg>

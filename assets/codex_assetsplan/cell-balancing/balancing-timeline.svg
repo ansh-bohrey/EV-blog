@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .axis { stroke: #222; stroke-width: 2; }
+    .grid { stroke: #e6e6e6; stroke-width: 1; }
+    .c1 { stroke: #1f77b4; stroke-width: 3; fill: none; }
+    .c2 { stroke: #ff7f0e; stroke-width: 3; fill: none; }
+    .c3 { stroke: #2ca02c; stroke-width: 3; fill: none; }
+    .label { font: 14px sans-serif; fill: #111; }
+  </style>
+  <text x="40" y="40" class="title">Balancing Convergence Over Time</text>
+  <line x1="100" y1="100" x2="100" y2="600" class="axis"/>
+  <line x1="100" y1="600" x2="1100" y2="600" class="axis"/>
+  <line x1="100" y1="500" x2="1100" y2="500" class="grid"/>
+  <line x1="100" y1="400" x2="1100" y2="400" class="grid"/>
+  <line x1="100" y1="300" x2="1100" y2="300" class="grid"/>
+  <path d="M100 200 C300 240, 500 280, 700 300 C900 315, 1050 320, 1100 320" class="c1"/>
+  <path d="M100 260 C300 280, 500 300, 700 310 C900 318, 1050 320, 1100 320" class="c2"/>
+  <path d="M100 360 C300 340, 500 330, 700 325 C900 322, 1050 320, 1100 320" class="c3"/>
+  <text x="1040" y="635" class="label">Time →</text>
+  <text x="30" y="120" class="label">Cell V ↑</text>
+</svg>

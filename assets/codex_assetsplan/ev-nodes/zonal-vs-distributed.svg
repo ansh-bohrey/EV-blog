@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .box{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">Distributed vs Zonal Architecture</text>
+  <rect x="80" y="120" width="480" height="450" class="box"/>
+  <text x="100" y="160" class="label">Distributed (many ECUs)</text>
+  <rect x="640" y="120" width="480" height="450" class="box"/>
+  <text x="660" y="160" class="label">Zonal (few controllers)</text>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .bar1 { fill: #d62728; }
+    .bar2 { fill: #2ca02c; }
+    .label { font: 14px sans-serif; fill: #111; }
+  </style>
+  <text x="40" y="40" class="title">Balancing Efficiency (Concept)</text>
+
+  <rect x="200" y="200" width="200" height="250" class="bar1"/>
+  <rect x="520" y="150" width="200" height="300" class="bar2"/>
+
+  <text x="210" y="470" class="label">Passive (0%)</text>
+  <text x="540" y="470" class="label">Active (85–95%)</text>
+</svg>

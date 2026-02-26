@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .pack{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .sensor{fill:#d62728;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">Sensor Placement for Runaway Detection</text>
+  <rect x="200" y="160" width="800" height="360" class="pack"/>
+  <circle cx="300" cy="220" r="8" class="sensor"/>
+  <circle cx="520" cy="240" r="8" class="sensor"/>
+  <circle cx="740" cy="220" r="8" class="sensor"/>
+  <circle cx="420" cy="420" r="8" class="sensor"/>
+  <circle cx="620" cy="420" r="8" class="sensor"/>
+  <text x="220" y="550" class="label">Temp, gas, pressure sensors near hotspots</text>
+</svg>

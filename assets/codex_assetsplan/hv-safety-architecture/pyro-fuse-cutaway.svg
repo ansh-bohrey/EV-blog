@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .box{fill:#f7f7f7;stroke:#333;stroke-width:2;}
+    .label{font:14px sans-serif;fill:#111;}
+    .cut{stroke:#d62728;stroke-width:3;}
+  </style>
+  <text x="40" y="40" class="title">Pyrotechnic Fuse (Cutaway Concept)</text>
+  <rect x="200" y="240" width="800" height="120" class="box"/>
+  <line x1="600" y1="240" x2="600" y2="360" class="cut"/>
+  <text x="560" y="220" class="label">Cut line</text>
+</svg>

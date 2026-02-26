@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .grid { stroke: #333; stroke-width: 1; }
+    .cell { font: 14px sans-serif; fill: #111; }
+    .hdr { font: 14px sans-serif; font-weight: bold; fill: #111; }
+  </style>
+  <text x="40" y="40" class="title">Stress Factors vs Aging Mechanisms</text>
+  <rect x="60" y="80" width="1080" height="520" fill="#fff" stroke="#333" stroke-width="2" />
+  <line x1="60" y1="130" x2="1140" y2="130" class="grid" />
+  <line x1="60" y1="200" x2="1140" y2="200" class="grid" />
+  <line x1="60" y1="270" x2="1140" y2="270" class="grid" />
+  <line x1="60" y1="340" x2="1140" y2="340" class="grid" />
+  <line x1="60" y1="410" x2="1140" y2="410" class="grid" />
+  <line x1="60" y1="480" x2="1140" y2="480" class="grid" />
+
+  <line x1="360" y1="80" x2="360" y2="600" class="grid" />
+  <line x1="760" y1="80" x2="760" y2="600" class="grid" />
+
+  <text x="80" y="115" class="hdr">Stress Factor</text>
+  <text x="380" y="115" class="hdr">Mechanism Accelerated</text>
+  <text x="780" y="115" class="hdr">Rule of Thumb</text>
+
+  <text x="80" y="175" class="cell">High temperature</text>
+  <text x="380" y="175" class="cell">SEI growth, electrolyte</text>
+  <text x="780" y="175" class="cell">10°C ↑ ≈ 2× faster</text>
+
+  <text x="80" y="245" class="cell">High SOC</text>
+  <text x="380" y="245" class="cell">SEI growth, cathode stress</text>
+  <text x="780" y="245" class="cell">Keep below 80%</text>
+
+  <text x="80" y="315" class="cell">Low temp charging</text>
+  <text x="380" y="315" class="cell">Lithium plating</text>
+  <text x="780" y="315" class="cell">Avoid fast charge</text>
+
+  <text x="80" y="385" class="cell">High C-rate</text>
+  <text x="380" y="385" class="cell">Plating, cracking</text>
+  <text x="780" y="385" class="cell">Occasional is ok</text>
+
+  <text x="80" y="455" class="cell">Deep DoD</text>
+  <text x="380" y="455" class="cell">Mechanical stress</text>
+  <text x="780" y="455" class="cell">Avoid 100→0%</text>
+</svg>

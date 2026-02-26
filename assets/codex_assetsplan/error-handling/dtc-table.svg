@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .grid{stroke:#333;stroke-width:1;}
+    .cell{font:14px sans-serif;fill:#111;}
+    .hdr{font:14px sans-serif;font-weight:bold;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">DTC Table Example</text>
+  <rect x="60" y="80" width="1080" height="520" fill="#fff" stroke="#333" stroke-width="2" />
+  <line x1="60" y1="130" x2="1140" y2="130" class="grid" />
+  <line x1="60" y1="200" x2="1140" y2="200" class="grid" />
+  <line x1="60" y1="270" x2="1140" y2="270" class="grid" />
+  <line x1="60" y1="340" x2="1140" y2="340" class="grid" />
+  <line x1="60" y1="410" x2="1140" y2="410" class="grid" />
+
+  <line x1="240" y1="80" x2="240" y2="600" class="grid" />
+  <line x1="520" y1="80" x2="520" y2="600" class="grid" />
+  <line x1="800" y1="80" x2="800" y2="600" class="grid" />
+
+  <text x="80" y="115" class="hdr">Code</text>
+  <text x="260" y="115" class="hdr">Description</text>
+  <text x="540" y="115" class="hdr">Severity</text>
+  <text x="820" y="115" class="hdr">Clear Condition</text>
+
+  <text x="80" y="175" class="cell">P0A01</text>
+  <text x="260" y="175" class="cell">Cell OV</text>
+  <text x="540" y="175" class="cell">Shutdown</text>
+  <text x="820" y="175" class="cell">Cell < Vmax</text>
+
+  <text x="80" y="245" class="cell">P0A02</text>
+  <text x="260" y="245" class="cell">Cell UV</text>
+  <text x="540" y="245" class="cell">Shutdown</text>
+  <text x="820" y="245" class="cell">Cell > Vmin</text>
+
+  <text x="80" y="315" class="cell">P0A10</text>
+  <text x="260" y="315" class="cell">Overtemp</text>
+  <text x="540" y="315" class="cell">Fault</text>
+  <text x="820" y="315" class="cell">Temp < limit</text>
+</svg>

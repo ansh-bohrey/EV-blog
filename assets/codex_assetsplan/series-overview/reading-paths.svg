@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .lane { fill: #f7f7f7; stroke: #333; stroke-width: 2; }
+    .label { font: 16px sans-serif; fill: #111; }
+    .chip { fill: #e6f2ff; stroke: #333; stroke-width: 1.5; }
+  </style>
+
+  <text x="40" y="40" class="title">Reading Paths (A / B / C)</text>
+
+  <rect x="40" y="80" width="1120" height="160" class="lane"/>
+  <text x="60" y="110" class="label">Path A — Enthusiast</text>
+
+  <rect x="40" y="270" width="1120" height="160" class="lane"/>
+  <text x="60" y="300" class="label">Path B — Student</text>
+
+  <rect x="40" y="460" width="1120" height="160" class="lane"/>
+  <text x="60" y="490" class="label">Path C — Engineer (Reference)</text>
+
+  <!-- Path A chips -->
+  <rect x="80" y="130" width="120" height="50" class="chip"/>
+  <text x="95" y="160" class="label">Cell</text>
+  <rect x="220" y="130" width="140" height="50" class="chip"/>
+  <text x="235" y="160" class="label">Battery</text>
+  <rect x="380" y="130" width="140" height="50" class="chip"/>
+  <text x="395" y="160" class="label">Cooling</text>
+  <rect x="540" y="130" width="180" height="50" class="chip"/>
+  <text x="555" y="160" class="label">BMS During Drive</text>
+  <rect x="740" y="130" width="220" height="50" class="chip"/>
+  <text x="755" y="160" class="label">Why Range Drops in Winter</text>
+
+  <!-- Path B chips -->
+  <rect x="80" y="320" width="120" height="50" class="chip"/>
+  <text x="95" y="350" class="label">Cell</text>
+  <rect x="220" y="320" width="140" height="50" class="chip"/>
+  <text x="235" y="350" class="label">Battery</text>
+  <rect x="380" y="320" width="140" height="50" class="chip"/>
+  <text x="395" y="350" class="label">Cooling</text>
+  <rect x="540" y="320" width="180" height="50" class="chip"/>
+  <text x="560" y="350" class="label">ECM Primer</text>
+  <rect x="740" y="320" width="120" height="50" class="chip"/>
+  <text x="770" y="350" class="label">SOC</text>
+  <rect x="880" y="320" width="120" height="50" class="chip"/>
+  <text x="910" y="350" class="label">SOH</text>
+  <rect x="1020" y="320" width="120" height="50" class="chip"/>
+  <text x="1050" y="350" class="label">SOP</text>
+
+  <!-- Path C chips -->
+  <rect x="80" y="510" width="200" height="50" class="chip"/>
+  <text x="95" y="540" class="label">Topic Review Table</text>
+  <rect x="300" y="510" width="200" height="50" class="chip"/>
+  <text x="320" y="540" class="label">Jump to Any Post</text>
+  <rect x="520" y="510" width="220" height="50" class="chip"/>
+  <text x="540" y="540" class="label">Use Literature Review</text>
+</svg>

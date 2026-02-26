@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .grid{stroke:#333;stroke-width:1;}
+    .cell{font:14px sans-serif;fill:#111;}
+    .hdr{font:14px sans-serif;font-weight:bold;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">Chemistry vs Minimum Voltage (Concept)</text>
+  <rect x="60" y="80" width="1080" height="520" fill="#fff" stroke="#333" stroke-width="2" />
+  <line x1="60" y1="130" x2="1140" y2="130" class="grid" />
+  <line x1="60" y1="200" x2="1140" y2="200" class="grid" />
+  <line x1="60" y1="270" x2="1140" y2="270" class="grid" />
+  <line x1="60" y1="340" x2="1140" y2="340" class="grid" />
+  <line x1="60" y1="410" x2="1140" y2="410" class="grid" />
+  <line x1="60" y1="480" x2="1140" y2="480" class="grid" />
+
+  <line x1="360" y1="80" x2="360" y2="600" class="grid" />
+  <line x1="700" y1="80" x2="700" y2="600" class="grid" />
+
+  <text x="80" y="115" class="hdr">Chemistry</text>
+  <text x="380" y="115" class="hdr">Vmin (cutoff)</text>
+  <text x="720" y="115" class="hdr">Deep discharge tolerance</text>
+
+  <text x="80" y="175" class="cell">LCO</text>
+  <text x="380" y="175" class="cell">~3.0V</text>
+  <text x="720" y="175" class="cell">Low</text>
+
+  <text x="80" y="245" class="cell">NMC</text>
+  <text x="380" y="245" class="cell">2.5–3.0V</text>
+  <text x="720" y="245" class="cell">Medium</text>
+
+  <text x="80" y="315" class="cell">NCA</text>
+  <text x="380" y="315" class="cell">~2.5V</text>
+  <text x="720" y="315" class="cell">Medium</text>
+
+  <text x="80" y="385" class="cell">LFP</text>
+  <text x="380" y="385" class="cell">~2.5V</text>
+  <text x="720" y="385" class="cell">Higher</text>
+
+  <text x="80" y="455" class="cell">LTO</text>
+  <text x="380" y="455" class="cell">~1.5V</text>
+  <text x="720" y="455" class="cell">High</text>
+</svg>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Pre-charge RC Curve</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 20px; }
+  h2 { text-align: center; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 16px; }
+  .container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+  .chart-box { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
+  .controls { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+  .ctrl { display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #555; gap: 4px; }
+  input[type=range] { width: 150px; }
+  .val { font-weight: bold; color: #1a6eb5; font-size: 13px; }
+  .info-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+  .info-card { background: white; border-radius: 6px; padding: 10px 14px; font-size: 11px;
+               box-shadow: 0 1px 4px rgba(0,0,0,0.1); max-width: 240px; }
+  .info-card strong { display: block; margin-bottom: 4px; }
+  .metrics { display: flex; gap: 14px; justify-content: center; margin: 10px 0; flex-wrap: wrap; }
+  .metric { background: white; border-radius: 6px; padding: 10px 18px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+  .metric-val { font-size: 22px; font-weight: bold; }
+  .metric-lbl { font-size: 10px; color: #888; }
+</style>
+</head>
+<body>
+<h2>Pre-charge Circuit — V_bus RC Rise Curve</h2>
+<p class="subtitle">Why a resistor is needed before closing the main contactor — and how the BMS decides it's safe</p>
+
+<div class="controls">
+  <div class="ctrl">
+    <span>Pack voltage (V)</span>
+    <input type="range" id="vpack" min="200" max="800" step="10" value="400"/>
+    <span class="val" id="vpackVal">400 V</span>
+  </div>
+  <div class="ctrl">
+    <span>Pre-charge resistance (Ω)</span>
+    <input type="range" id="rpre" min="10" max="200" step="5" value="50"/>
+    <span class="val" id="rpreVal">50 Ω</span>
+  </div>
+  <div class="ctrl">
+    <span>Inverter bus capacitance (mF)</span>
+    <input type="range" id="cbus" min="0.5" max="10" step="0.5" value="3"/>
+    <span class="val" id="cbusVal">3.0 mF</span>
+  </div>
+  <div class="ctrl">
+    <span>Threshold (% of V_pack)</span>
+    <input type="range" id="thresh" min="85" max="99" step="1" value="95"/>
+    <span class="val" id="threshVal">95%</span>
+  </div>
+</div>
+
+<div class="metrics">
+  <div class="metric"><div class="metric-val" id="m_tau" style="color:#1a6eb5">—</div><div class="metric-lbl">τ = R×C (ms)</div></div>
+  <div class="metric"><div class="metric-val" id="m_t95" style="color:#2a8a2a">—</div><div class="metric-lbl">Time to threshold (ms)</div></div>
+  <div class="metric"><div class="metric-val" id="m_imax" style="color:#c00">—</div><div class="metric-lbl">Peak inrush (A)</div></div>
+  <div class="metric"><div class="metric-val" id="m_pwrpre" style="color:#e07b00">—</div><div class="metric-lbl">Peak R_pre power (W)</div></div>
+</div>
+
+<div class="container">
+  <div class="chart-box"><canvas id="preChart" width="700" height="360"></canvas></div>
+</div>
+
+<div class="info-row">
+  <div class="info-card">
+    <strong style="color:#c00">Without pre-charge</strong>
+    At key-ON, inverter bus caps = 0V.<br>
+    Main contactor closes → instant short:<br>
+    I_inrush = V_pack / R_pack_int (could be kA!)<br>
+    Arc welds contacts shut. Pack fault. Fire risk.
+  </div>
+  <div class="info-card">
+    <strong style="color:#2a8a2a">With pre-charge resistor</strong>
+    R_pre limits inrush to V/R ≈ 400/50 = 8A.<br>
+    V_bus rises as RC exponential.<br>
+    BMS polls V_bus every 10ms via sensor.<br>
+    When V_bus ≥ 95% V_pack → close main, open R_pre.
+  </div>
+  <div class="info-card">
+    <strong style="color:#e07b00">R_pre sizing</strong>
+    Min: limit inrush below contactor arc current.<br>
+    Max: τ must be short enough for fast startup.<br>
+    Typical: 30–100 Ω, rated for V²/R watts for 5τ.<br>
+    Wirewound or thick-film power resistor.
+  </div>
+  <div class="info-card">
+    <strong style="color:#6633cc">BMS detection</strong>
+    V_bus sensor reads every 10 ms.<br>
+    Timeout: if V_bus &lt; threshold after 3×τ → fault.<br>
+    Could mean: cap short, R_pre open, bad sensor.<br>
+    Fault logged: PRECHARGE_TIMEOUT.
+  </div>
+</div>
+
+<script>
+['vpack','rpre','cbus','thresh'].forEach(id => {
+  document.getElementById(id).addEventListener('input', function() {
+    const labels = { vpack: ' V', rpre: ' Ω', cbus: ' mF', thresh: '%' };
+    document.getElementById(id + 'Val').textContent = parseFloat(this.value).toFixed(id==='cbus'?1:0) + labels[id];
+    draw();
+  });
+});
+
+let chart = null;
+
+function draw() {
+  const Vpack = parseFloat(document.getElementById('vpack').value);
+  const R = parseFloat(document.getElementById('rpre').value);
+  const C = parseFloat(document.getElementById('cbus').value) / 1000; // F
+  const thresh = parseFloat(document.getElementById('thresh').value) / 100;
+
+  const tau = R * C * 1000; // ms
+  const tThresh = -tau * Math.log(1 - thresh); // ms
+  const Imax = Vpack / R;
+  const Pmax = Vpack * Vpack / R;
+
+  document.getElementById('m_tau').textContent = tau.toFixed(0);
+  document.getElementById('m_t95').textContent = tThresh.toFixed(0);
+  document.getElementById('m_imax').textContent = Imax.toFixed(1);
+  document.getElementById('m_pwrpre').textContent = Math.round(Pmax);
+
+  // Simulation
+  const maxT = Math.max(tThresh * 2.5, tau * 5);
+  const steps = 300;
+  const dt = maxT / steps;
+  const tData = [], vData = [], iData = [];
+  let t = 0;
+  for (let i = 0; i <= steps; i++) {
+    const vbus = Vpack * (1 - Math.exp(-t / tau));
+    const I = (Vpack - vbus) / R;
+    tData.push(+t.toFixed(1));
+    vData.push(+vbus.toFixed(2));
+    iData.push(+I.toFixed(3));
+    t += dt;
+  }
+
+  if (chart) chart.destroy();
+  chart = new Chart(document.getElementById('preChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: tData,
+      datasets: [
+        {
+          label: 'V_bus (V)',
+          data: vData,
+          borderColor: '#1a6eb5',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          tension: 0.3,
+          yAxisID: 'yV'
+        },
+        {
+          label: 'Pre-charge current (A)',
+          data: iData,
+          borderColor: '#c00',
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.3,
+          borderDash: [5,3],
+          yAxisID: 'yI'
+        }
+      ]
+    },
+    options: {
+      responsive: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        title: {
+          display: true,
+          text: `Pre-charge | V_pack=${Vpack}V | R=${R}Ω | C=${(C*1000).toFixed(1)}mF | τ=${tau.toFixed(0)}ms`,
+          font: { size: 13 }
+        },
+        legend: { position: 'top' },
+        annotation: {
+          annotations: {
+            threshLine: {
+              type: 'line', yMin: Vpack * thresh, yMax: Vpack * thresh,
+              yScaleID: 'yV',
+              borderColor: '#2a8a2a', borderWidth: 2, borderDash: [6,3],
+              label: { display: true, content: `Threshold ${(thresh*100).toFixed(0)}% = ${(Vpack*thresh).toFixed(0)}V`, position: 'start', color: '#2a8a2a', font: { size: 10 } }
+            },
+            tLine: {
+              type: 'line', xMin: tThresh.toFixed(0), xMax: tThresh.toFixed(0),
+              borderColor: '#e07b00', borderWidth: 2, borderDash: [4,3],
+              label: { display: true, content: `Close main @ ${tThresh.toFixed(0)}ms`, position: 'end', color: '#e07b00', font: { size: 10 } }
+            }
+          }
+        }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Time (ms)' }, ticks: { maxTicksLimit: 12 } },
+        yV: { type: 'linear', position: 'left', title: { display: true, text: 'V_bus (V)', color: '#1a6eb5' }, min: 0, max: Vpack * 1.05 },
+        yI: { type: 'linear', position: 'right', title: { display: true, text: 'Current (A)', color: '#c00' }, min: 0, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
+}
+
+draw();
+</script>
+</body>
+</html>

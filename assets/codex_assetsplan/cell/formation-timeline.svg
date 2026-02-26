@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .line { stroke: #333; stroke-width: 3; }
+    .node { fill: #f7f7f7; stroke: #333; stroke-width: 2; }
+    .label { font: 14px sans-serif; fill: #111; }
+  </style>
+
+  <text x="40" y="40" class="title">Cell Formation Cycling (High-Level Timeline)</text>
+
+  <line x1="80" y1="200" x2="1120" y2="200" class="line"/>
+
+  <rect x="80" y="150" width="180" height="80" class="node"/>
+  <text x="95" y="190" class="label">Assembly Complete</text>
+
+  <rect x="320" y="150" width="200" height="80" class="node"/>
+  <text x="340" y="185" class="label">First Charge</text>
+  <text x="340" y="205" class="label">(SEI formation)</text>
+
+  <rect x="580" y="150" width="200" height="80" class="node"/>
+  <text x="600" y="185" class="label">Rest & Measure</text>
+  <text x="600" y="205" class="label">OCV/SOC curve</text>
+
+  <rect x="840" y="150" width="200" height="80" class="node"/>
+  <text x="860" y="185" class="label">Grading & Binning</text>
+  <text x="860" y="205" class="label">Match cells</text>
+</svg>

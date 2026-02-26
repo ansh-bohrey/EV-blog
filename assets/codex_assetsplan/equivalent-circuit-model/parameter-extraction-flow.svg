@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .box { fill: #f7f7f7; stroke: #333; stroke-width: 2; }
+    .label { font: 14px sans-serif; fill: #111; }
+    .arrow { stroke: #333; stroke-width: 2.5; fill: none; }
+  </style>
+
+  <text x="40" y="40" class="title">ECM Parameter Extraction (HPPC Workflow)</text>
+
+  <rect x="60" y="100" width="220" height="80" class="box"/>
+  <text x="80" y="145" class="label">Rest at known SOC</text>
+
+  <rect x="340" y="100" width="220" height="80" class="box"/>
+  <text x="360" y="135" class="label">Apply current step</text>
+  <text x="360" y="155" class="label">(HPPC pulse)</text>
+
+  <rect x="620" y="100" width="220" height="80" class="box"/>
+  <text x="640" y="145" class="label">Measure voltage response</text>
+
+  <rect x="900" y="100" width="220" height="80" class="box"/>
+  <text x="915" y="145" class="label">Extract R0 (ΔV/ΔI)</text>
+
+  <rect x="200" y="240" width="260" height="80" class="box"/>
+  <text x="220" y="285" class="label">Fit exponential tail</text>
+
+  <rect x="520" y="240" width="260" height="80" class="box"/>
+  <text x="540" y="275" class="label">Compute τ1, τ2</text>
+  <text x="540" y="295" class="label">→ C1, C2</text>
+
+  <rect x="840" y="240" width="260" height="80" class="box"/>
+  <text x="860" y="285" class="label">Build SOC×Temp tables</text>
+
+  <line x1="280" y1="140" x2="340" y2="140" class="arrow"/>
+  <line x1="560" y1="140" x2="620" y2="140" class="arrow"/>
+  <line x1="840" y1="140" x2="900" y2="140" class="arrow"/>
+
+  <line x1="1010" y1="180" x2="330" y2="240" class="arrow"/>
+  <line x1="460" y1="280" x2="520" y2="280" class="arrow"/>
+  <line x1="780" y1="280" x2="840" y2="280" class="arrow"/>
+</svg>

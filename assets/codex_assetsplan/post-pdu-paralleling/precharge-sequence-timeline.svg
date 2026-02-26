@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title{font:24px sans-serif;fill:#111;}
+    .line{stroke:#222;stroke-width:3;fill:none;}
+    .label{font:14px sans-serif;fill:#111;}
+  </style>
+  <text x="40" y="40" class="title">Parallel Pre-charge Sequence</text>
+  <text x="40" y="140" class="label">Pre-charge contactor</text>
+  <path d="M200 120 L400 120 L400 160 L800 160 L800 120 L1000 120" class="line"/>
+  <text x="40" y="260" class="label">Main contactor</text>
+  <path d="M200 240 L700 240 L700 280 L1000 280" class="line"/>
+</svg>

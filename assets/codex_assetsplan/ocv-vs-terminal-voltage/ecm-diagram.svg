@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .title { font: 24px sans-serif; fill: #111; }
+    .wire { stroke: #222; stroke-width: 3; fill: none; }
+    .component { stroke: #222; stroke-width: 3; fill: none; }
+    .label { font: 14px sans-serif; fill: #111; }
+  </style>
+  <text x="40" y="40" class="title">Thevenin ECM (OCV + R0 + RC)</text>
+
+  <circle cx="160" cy="300" r="30" class="component"/>
+  <text x="145" y="305" class="label">OCV</text>
+  <line x1="190" y1="300" x2="260" y2="300" class="wire"/>
+  <rect x="260" y="285" width="60" height="30" class="component"/>
+  <text x="280" y="305" class="label">R0</text>
+  <line x1="320" y1="300" x2="360" y2="300" class="wire"/>
+  <rect x="360" y="285" width="60" height="30" class="component"/>
+  <text x="380" y="305" class="label">R1</text>
+  <line x1="420" y1="300" x2="520" y2="300" class="wire"/>
+
+  <line x1="360" y1="300" x2="340" y2="300" class="wire"/>
+  <line x1="420" y1="300" x2="440" y2="300" class="wire"/>
+  <line x1="340" y1="300" x2="340" y2="360" class="wire"/>
+  <line x1="440" y1="300" x2="440" y2="360" class="wire"/>
+  <line x1="340" y1="360" x2="440" y2="360" class="wire"/>
+  <line x1="385" y1="340" x2="385" y2="380" class="component"/>
+  <line x1="395" y1="340" x2="395" y2="380" class="component"/>
+  <text x="405" y="375" class="label">C1</text>
+</svg>

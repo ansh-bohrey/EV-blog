@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>CAN Arbitration Animation</title>
+  <style>
+    body { margin: 0; font-family: sans-serif; background: #fafafa; }
+    .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 20px; }
+    svg { width: 100%; height: 600px; background: #fff; border: 1px solid #ddd; }
+    .line { stroke: #333; stroke-width: 3; }
+    .car { fill: #1f77b4; }
+    .car2 { fill: #d62728; }
+    .label { font: 14px sans-serif; fill: #111; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2>CAN Arbitration (Lower ID Wins)</h2>
+    <svg viewBox="0 0 1200 600">
+      <line x1="100" y1="300" x2="1100" y2="300" class="line"/>
+      <rect id="a" x="120" y="260" width="80" height="80" class="car"/>
+      <rect id="b" x="120" y="360" width="80" height="80" class="car2"/>
+      <text x="220" y="290" class="label">Node A (ID 0x100)</text>
+      <text x="220" y="390" class="label">Node B (ID 0x200)</text>
+
+      <animate xlink:href="#a" attributeName="x" values="120; 900; 120" dur="4s" repeatCount="indefinite" />
+      <animate xlink:href="#b" attributeName="x" values="120; 400; 120" dur="4s" repeatCount="indefinite" />
+    </svg>
+  </div>
+</body>
+</html>
