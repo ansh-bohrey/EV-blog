@@ -89,7 +89,7 @@ Estimating SOH is harder than estimating SOC. SOC changes continuously during us
 
 **Data-driven prediction** is represented by the landmark Severson et al. 2019 *Nature Energy* paper: features extracted from early-cycle voltage curves (discharge curve shape, variance of dQ/dV) predict remaining cycle life with high accuracy, well before conventional capacity fade becomes measurable. This approach is more relevant to fleet management and second-life decisions than to continuous in-vehicle estimation.
 
-<iframe src="../assets/bms-concepts/capacity-fade-chart.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/capacity-fade-chart.html" width="100%" height="380" frameborder="0"></iframe>
 
 ---
 

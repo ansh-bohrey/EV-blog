@@ -74,7 +74,7 @@ V(t) = V_battery × (1 − e^(−t / RC))
 
 For a 50 Ω resistor and 1000 µF capacitor, the time constant τ = RC = 50 × 0.001 = 50 ms. The capacitor reaches 63% of battery voltage in one τ, 95% in 3τ (150 ms), and 99% in 5τ (250 ms). In practice the BMS declares pre-charge complete when the **inverter-side voltage** — measured by the BMS at the load terminal of the main positive contactor — reaches within 5–10 V of the pack voltage. This threshold, not a fixed timer, is the correct way to implement pre-charge completion detection, because resistor heating and capacitor value tolerances both affect the actual time required.
 
-<iframe src="../assets/bms-concepts/precharge-rc-curve.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/precharge-rc-curve.html" width="100%" height="380" frameborder="0"></iframe>
 
 Once the inverter-side voltage matches pack voltage, the inrush current through the main positive contactor at closure is:
 
