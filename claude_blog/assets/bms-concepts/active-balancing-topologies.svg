@@ -1,0 +1,200 @@
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="900" height="560" fill="#f8f9fa"/>
+  <text x="450" y="32" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a1a2e">Cell Balancing Topologies: Passive vs Active</text>
+
+  <!-- ── PASSIVE (leftmost) ── -->
+  <rect x="20" y="50" width="200" height="300" rx="8" fill="white" stroke="#aaa" stroke-width="2"/>
+  <text x="120" y="73" text-anchor="middle" font-size="13" font-weight="bold" fill="#c00000">Passive (Dissipative)</text>
+
+  <!-- 4 cells -->
+  <!-- Cell 1 (overcharged) -->
+  <rect x="50" y="88" width="60" height="40" rx="4" fill="#ffcccc" stroke="#c00" stroke-width="1.5"/>
+  <text x="80" y="104" text-anchor="middle" font-size="10" fill="#c00" font-weight="bold">4.18V ⚡</text>
+  <text x="80" y="118" text-anchor="middle" font-size="9" fill="#555">Cell 1</text>
+  <!-- Resistor shunt next to cell 1 -->
+  <line x1="110" y1="108" x2="130" y2="108" stroke="#333" stroke-width="1.5"/>
+  <rect x="130" y="100" width="40" height="16" rx="2" fill="#ffe0b0" stroke="#e07b00" stroke-width="1.5"/>
+  <text x="150" y="112" text-anchor="middle" font-size="9" fill="#e07b00">R</text>
+  <line x1="170" y1="108" x2="190" y2="108" stroke="#333" stroke-width="1.5"/>
+  <text x="196" y="112" font-size="9" fill="#c00">→heat</text>
+
+  <!-- Cell 2 normal -->
+  <rect x="50" y="148" width="60" height="40" rx="4" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="80" y="164" text-anchor="middle" font-size="10" fill="#2a8a2a">4.00V</text>
+  <text x="80" y="178" text-anchor="middle" font-size="9" fill="#555">Cell 2</text>
+
+  <!-- Cell 3 normal -->
+  <rect x="50" y="208" width="60" height="40" rx="4" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="80" y="224" text-anchor="middle" font-size="10" fill="#2a8a2a">4.00V</text>
+  <text x="80" y="238" text-anchor="middle" font-size="9" fill="#555">Cell 3</text>
+
+  <!-- Cell 4 normal -->
+  <rect x="50" y="268" width="60" height="40" rx="4" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="80" y="284" text-anchor="middle" font-size="10" fill="#2a8a2a">4.00V</text>
+  <text x="80" y="298" text-anchor="middle" font-size="9" fill="#555">Cell 4</text>
+
+  <!-- Pro/con box -->
+  <rect x="25" y="320" width="190" height="70" rx="5" fill="#fff0f0" stroke="#c00" stroke-width="1"/>
+  <text x="120" y="336" text-anchor="middle" font-size="10" font-weight="bold" fill="#c00">Passive</text>
+  <text x="35" y="350" font-size="9" fill="#2a7a2a">+ Low cost, simple</text>
+  <text x="35" y="363" font-size="9" fill="#c00000">− Energy wasted as heat</text>
+  <text x="35" y="376" font-size="9" fill="#c00000">− Not suitable for large packs</text>
+  <text x="35" y="389" font-size="9" fill="#555">Efficiency: 60–80%</text>
+
+  <!-- ── ACTIVE: Inductor-based (centre) ── -->
+  <rect x="240" y="50" width="200" height="300" rx="8" fill="white" stroke="#aaa" stroke-width="2"/>
+  <text x="340" y="73" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a6eb5">Active: Inductor Shuttle</text>
+
+  <!-- 4 cells (A) -->
+  <rect x="255" y="88" width="50" height="40" rx="4" fill="#ffcccc" stroke="#c00" stroke-width="1.5"/>
+  <text x="280" y="104" text-anchor="middle" font-size="10" fill="#c00" font-weight="bold">High</text>
+  <text x="280" y="117" text-anchor="middle" font-size="9" fill="#555">C1</text>
+
+  <rect x="255" y="148" width="50" height="40" rx="4" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="1.5"/>
+  <text x="280" y="164" text-anchor="middle" font-size="10" fill="#1a6eb5">Low</text>
+  <text x="280" y="177" text-anchor="middle" font-size="9" fill="#555">C2</text>
+
+  <rect x="255" y="208" width="50" height="40" rx="4" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="280" y="224" text-anchor="middle" font-size="10" fill="#2a8a2a">Mid</text>
+  <text x="280" y="237" text-anchor="middle" font-size="9" fill="#555">C3</text>
+
+  <rect x="255" y="268" width="50" height="40" rx="4" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="280" y="284" text-anchor="middle" font-size="10" fill="#2a8a2a">Mid</text>
+  <text x="280" y="297" text-anchor="middle" font-size="9" fill="#555">C4</text>
+
+  <!-- Inductor symbol (coil) between C1 and C2 -->
+  <path d="M306,108 C310,100 320,100 320,108 C320,116 330,116 330,108 C330,100 340,100 340,108 C340,116 350,116 350,108 C350,100 360,100 360,108"
+        stroke="#1a6eb5" stroke-width="2" fill="none"/>
+  <text x="340" y="98" text-anchor="middle" font-size="9" fill="#1a6eb5">L</text>
+  <!-- arrows showing energy move from C1 to C2 -->
+  <defs>
+    <marker id="barr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#1a6eb5"/>
+    </marker>
+    <marker id="rarr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#c00"/>
+    </marker>
+  </defs>
+  <line x1="306" y1="118" x2="306" y2="148" stroke="#1a6eb5" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#barr)"/>
+  <text x="320" y="138" font-size="9" fill="#1a6eb5">energy</text>
+  <text x="320" y="148" font-size="9" fill="#1a6eb5">transfer</text>
+
+  <!-- switches (simplified as labels) -->
+  <text x="400" y="120" font-size="10" fill="#5555cc">S1▲ S2▼</text>
+  <text x="400" y="135" font-size="9" fill="#777">MOSFETs</text>
+
+  <!-- Pro/con box -->
+  <rect x="245" y="320" width="190" height="70" rx="5" fill="#f0f4ff" stroke="#1a6eb5" stroke-width="1"/>
+  <text x="340" y="336" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a6eb5">Inductor shuttle</text>
+  <text x="255" y="350" font-size="9" fill="#2a7a2a">+ Energy recycled (90–95% eff.)</text>
+  <text x="255" y="363" font-size="9" fill="#c00000">− Bigger circuit, higher cost</text>
+  <text x="255" y="376" font-size="9" fill="#555">Transfers only to adjacent cells</text>
+  <text x="255" y="389" font-size="9" fill="#555">Used in: some Tesla modules</text>
+
+  <!-- ── ACTIVE: Transformer-based (right) ── -->
+  <rect x="460" y="50" width="200" height="300" rx="8" fill="white" stroke="#aaa" stroke-width="2"/>
+  <text x="560" y="73" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a7a50">Active: Transformer</text>
+
+  <rect x="475" y="88" width="50" height="40" rx="4" fill="#ffcccc" stroke="#c00" stroke-width="1.5"/>
+  <text x="500" y="104" text-anchor="middle" font-size="10" fill="#c00" font-weight="bold">High C1</text>
+
+  <rect x="475" y="148" width="50" height="40" rx="4" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="1.5"/>
+  <text x="500" y="164" text-anchor="middle" font-size="10" fill="#1a6eb5">Low C2</text>
+
+  <rect x="475" y="208" width="50" height="40" rx="4" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="500" y="224" text-anchor="middle" font-size="10" fill="#2a8a2a">Mid C3</text>
+
+  <rect x="475" y="268" width="50" height="40" rx="4" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="500" y="284" text-anchor="middle" font-size="10" fill="#2a8a2a">Mid C4</text>
+
+  <!-- Transformer symbol (two coils on shared core) -->
+  <path d="M526,105 C530,97 540,97 540,105 C540,113 550,113 550,105 C550,97 560,97 560,105"
+        stroke="#1a7a50" stroke-width="2" fill="none"/>
+  <line x1="540" y1="97" x2="550" y2="97" stroke="#1a7a50" stroke-width="3"/>
+  <path d="M565,105 C570,97 580,97 580,105 C580,113 590,113 590,105 C590,97 600,97 600,105"
+        stroke="#1a7a50" stroke-width="2" fill="none"/>
+  <text x="563" y="93" text-anchor="middle" font-size="8" fill="#1a7a50">1:1 xfmr</text>
+
+  <!-- arrows from any cell to any cell -->
+  <line x1="526" y1="108" x2="526" y2="170" stroke="#1a7a50" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="526" y1="170" x2="526" y2="230" stroke="#1a7a50" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="545" y="165" font-size="9" fill="#1a7a50">any cell</text>
+  <text x="545" y="177" font-size="9" fill="#1a7a50">→ any cell</text>
+
+  <rect x="465" y="320" width="190" height="70" rx="5" fill="#f0fff4" stroke="#1a7a50" stroke-width="1"/>
+  <text x="560" y="336" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a7a50">Transformer / Flyback</text>
+  <text x="475" y="350" font-size="9" fill="#2a7a2a">+ Transfer between any two cells</text>
+  <text x="475" y="363" font-size="9" fill="#2a7a2a">+ Fast balancing speed</text>
+  <text x="475" y="376" font-size="9" fill="#c00000">− Most expensive, complex</text>
+  <text x="475" y="389" font-size="9" fill="#555">Used in: high-end BESS, racing BMS</text>
+
+  <!-- ── ACTIVE: Capacitor shuttle (far right) ── -->
+  <rect x="680" y="50" width="200" height="300" rx="8" fill="white" stroke="#aaa" stroke-width="2"/>
+  <text x="780" y="68" text-anchor="middle" font-size="12" font-weight="bold" fill="#6633cc">Active: Cap Shuttle</text>
+
+  <rect x="695" y="88" width="50" height="40" rx="4" fill="#ffcccc" stroke="#c00" stroke-width="1.5"/>
+  <text x="720" y="104" text-anchor="middle" font-size="10" fill="#c00" font-weight="bold">High C1</text>
+
+  <rect x="695" y="148" width="50" height="40" rx="4" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="1.5"/>
+  <text x="720" y="164" text-anchor="middle" font-size="10" fill="#1a6eb5">Low C2</text>
+
+  <rect x="695" y="208" width="50" height="40" rx="4" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="720" y="224" text-anchor="middle" font-size="10" fill="#2a8a2a">Mid C3</text>
+
+  <rect x="695" y="268" width="50" height="40" rx="4" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="720" y="284" text-anchor="middle" font-size="10" fill="#2a8a2a">Mid C4</text>
+
+  <!-- flying cap symbol -->
+  <line x1="746" y1="108" x2="760" y2="108" stroke="#6633cc" stroke-width="1.5"/>
+  <line x1="760" y1="100" x2="760" y2="116" stroke="#6633cc" stroke-width="2.5"/>
+  <line x1="764" y1="100" x2="764" y2="116" stroke="#6633cc" stroke-width="2.5"/>
+  <line x1="764" y1="108" x2="780" y2="108" stroke="#6633cc" stroke-width="1.5"/>
+  <text x="763" y="95" text-anchor="middle" font-size="9" fill="#6633cc">C_fly</text>
+
+  <line x1="746" y1="108" x2="746" y2="170" stroke="#6633cc" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="760" y="155" font-size="9" fill="#6633cc">shuttles</text>
+  <text x="760" y="167" font-size="9" fill="#6633cc">charge</text>
+
+  <rect x="685" y="320" width="190" height="70" rx="5" fill="#f5f0ff" stroke="#6633cc" stroke-width="1"/>
+  <text x="780" y="336" text-anchor="middle" font-size="10" font-weight="bold" fill="#6633cc">Flying Capacitor</text>
+  <text x="695" y="350" font-size="9" fill="#2a7a2a">+ Simple control logic</text>
+  <text x="695" y="363" font-size="9" fill="#c00000">− Only adjacent cells</text>
+  <text x="695" y="376" font-size="9" fill="#c00000">− Slow for large packs</text>
+  <text x="695" y="389" font-size="9" fill="#555">Common in consumer devices</text>
+
+  <!-- Bottom comparison table -->
+  <rect x="20" y="415" width="860" height="120" rx="8" fill="#f0f0ff" stroke="#5555cc" stroke-width="1.5"/>
+  <text x="450" y="433" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Quick Comparison</text>
+  <!-- header -->
+  <line x1="20" y1="438" x2="880" y2="438" stroke="#aaa" stroke-width="1"/>
+  <text x="120" y="452" text-anchor="middle" font-size="10" font-weight="bold" fill="#555">Method</text>
+  <text x="270" y="452" text-anchor="middle" font-size="10" font-weight="bold" fill="#555">Efficiency</text>
+  <text x="400" y="452" text-anchor="middle" font-size="10" font-weight="bold" fill="#555">Cost</text>
+  <text x="540" y="452" text-anchor="middle" font-size="10" font-weight="bold" fill="#555">Speed</text>
+  <text x="690" y="452" text-anchor="middle" font-size="10" font-weight="bold" fill="#555">Use Case</text>
+  <line x1="20" y1="456" x2="880" y2="456" stroke="#ddd" stroke-width="1"/>
+
+  <text x="120" y="470" text-anchor="middle" font-size="10" fill="#c00">Passive</text>
+  <text x="270" y="470" text-anchor="middle" font-size="10" fill="#333">60–80%</text>
+  <text x="400" y="470" text-anchor="middle" font-size="10" fill="#2a7a2a">Very Low</text>
+  <text x="540" y="470" text-anchor="middle" font-size="10" fill="#333">Slow</text>
+  <text x="690" y="470" text-anchor="middle" font-size="10" fill="#333">Residential BMS, small packs</text>
+
+  <text x="120" y="486" text-anchor="middle" font-size="10" fill="#1a6eb5">Ind. Shuttle</text>
+  <text x="270" y="486" text-anchor="middle" font-size="10" fill="#333">90–95%</text>
+  <text x="400" y="486" text-anchor="middle" font-size="10" fill="#e07b00">Medium</text>
+  <text x="540" y="486" text-anchor="middle" font-size="10" fill="#333">Fast</text>
+  <text x="690" y="486" text-anchor="middle" font-size="10" fill="#333">EV modules (adjacent)</text>
+
+  <text x="120" y="502" text-anchor="middle" font-size="10" fill="#1a7a50">Transformer</text>
+  <text x="270" y="502" text-anchor="middle" font-size="10" fill="#333">88–93%</text>
+  <text x="400" y="502" text-anchor="middle" font-size="10" fill="#c00">High</text>
+  <text x="540" y="502" text-anchor="middle" font-size="10" fill="#2a7a2a">Very Fast</text>
+  <text x="690" y="502" text-anchor="middle" font-size="10" fill="#333">Grid storage, racing</text>
+
+  <text x="120" y="518" text-anchor="middle" font-size="10" fill="#6633cc">Cap Shuttle</text>
+  <text x="270" y="518" text-anchor="middle" font-size="10" fill="#333">80–90%</text>
+  <text x="400" y="518" text-anchor="middle" font-size="10" fill="#2a7a2a">Low-Med</text>
+  <text x="540" y="518" text-anchor="middle" font-size="10" fill="#333">Med</text>
+  <text x="690" y="518" text-anchor="middle" font-size="10" fill="#333">Consumer electronics</text>
+</svg>

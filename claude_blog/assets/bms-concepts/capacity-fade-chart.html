@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Capacity Fade vs Cycle Count</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 20px; }
+  h2 { text-align: center; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 16px; }
+  .controls { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+  .ctrl { display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #555; gap: 4px; }
+  input[type=range] { width: 150px; }
+  .val { font-weight: bold; color: #1a6eb5; font-size: 13px; }
+  .container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .chart-box { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
+  .legend-box { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 10px 0; }
+  .leg { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+  .leg-dot { width: 16px; height: 4px; border-radius: 2px; }
+  .info-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+  .info-card { background: white; border-radius: 6px; padding: 10px 16px; font-size: 11px;
+               box-shadow: 0 1px 4px rgba(0,0,0,0.1); min-width: 170px; }
+  .info-card strong { display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<h2>Capacity Fade vs Cycle Count</h2>
+<p class="subtitle">NMC vs LFP across different temperatures and depth of discharge</p>
+
+<div class="controls">
+  <div class="ctrl">
+    <span>Depth of Discharge (%)</span>
+    <input type="range" id="dod" min="20" max="100" step="5" value="80"/>
+    <span class="val" id="dodVal">80% DoD</span>
+  </div>
+  <div class="ctrl">
+    <span>Storage temperature (°C)</span>
+    <input type="range" id="tempStore" min="-10" max="45" step="5" value="25"/>
+    <span class="val" id="tempStoreVal">25°C</span>
+  </div>
+  <div class="ctrl">
+    <span>C-rate (charge)</span>
+    <input type="range" id="cr" min="0.2" max="3" step="0.1" value="1"/>
+    <span class="val" id="crVal">1.0C</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="chart-box"><canvas id="fadeChart" width="720" height="380"></canvas></div>
+</div>
+
+<div class="info-row">
+  <div class="info-card">
+    <strong style="color:#1a6eb5">NMC characteristics</strong>
+    High energy density (250+ Wh/kg)<br>
+    Faster fade at high T and high DoD<br>
+    Cobalt/Nickel chemistry<br>
+    Typical EoL: 700–1500 cycles
+  </div>
+  <div class="info-card">
+    <strong style="color:#2a8a2a">LFP characteristics</strong>
+    Lower energy density (~160 Wh/kg)<br>
+    Very stable olivine structure<br>
+    Excellent thermal stability<br>
+    Typical EoL: 2000–4000 cycles
+  </div>
+  <div class="info-card">
+    <strong style="color:#e07b00">Temperature effect</strong>
+    Every 10°C rise doubles SEI rate<br>
+    Cold storage slows calendar aging<br>
+    Tesla recommends: store at 20–25°C<br>
+    Optimal charge temp: 15–35°C
+  </div>
+  <div class="info-card">
+    <strong style="color:#c00">DoD effect</strong>
+    100% DoD: maximum stress<br>
+    80% DoD: +40–60% more cycles<br>
+    Many EVs limit to 20–80% for<br>
+    daily use (BMS configurable)
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('input[type=range]').forEach(el => el.addEventListener('input', draw));
+document.getElementById('dod').addEventListener('input', function() {
+  document.getElementById('dodVal').textContent = this.value + '% DoD';
+});
+document.getElementById('tempStore').addEventListener('input', function() {
+  document.getElementById('tempStoreVal').textContent = this.value + '°C';
+});
+document.getElementById('cr').addEventListener('input', function() {
+  document.getElementById('crVal').textContent = parseFloat(this.value).toFixed(1) + 'C';
+});
+
+function capFade(N, chemistry, dod, T, crate) {
+  // Simple empirical model:
+  // fade = k_cycle * N^0.5 * dod_factor * crate_factor + k_cal * N * T_factor
+  const dodFactor = 0.5 + (dod / 100) * 0.5; // 1.0 at 100% DoD
+  const cFactor = 1 + Math.max(0, crate - 1) * 0.15;
+  const Tref = 25;
+  const TFactor = Math.exp((T - Tref) * 0.035); // doubles ~per 20°C
+
+  let k_cycle, k_cal;
+  if (chemistry === 'nmc') {
+    k_cycle = 0.00025;
+    k_cal = 0.000008;
+  } else { // lfp
+    k_cycle = 0.00008;
+    k_cal = 0.000003;
+  }
+
+  const cycleFade = k_cycle * Math.pow(N, 0.6) * dodFactor * cFactor;
+  const calFade = k_cal * N * TFactor;
+  const totalFade = cycleFade + calFade;
+  return Math.max(0, 100 - totalFade * 100);
+}
+
+function draw() {
+  const dod = parseFloat(document.getElementById('dod').value);
+  const T = parseFloat(document.getElementById('tempStore').value);
+  const crate = parseFloat(document.getElementById('cr').value);
+
+  const maxN = 3000;
+  const step = 20;
+  const labels = [];
+  const nmcData = [], lfpData = [], nmcBestData = [];
+
+  for (let N = 0; N <= maxN; N += step) {
+    labels.push(N);
+    nmcData.push(+capFade(N, 'nmc', dod, T, crate).toFixed(2));
+    lfpData.push(+capFade(N, 'lfp', dod, T, crate).toFixed(2));
+    // NMC best case: 80% DoD, 25°C, 0.5C
+    nmcBestData.push(+capFade(N, 'nmc', 80, 25, 0.5).toFixed(2));
+  }
+
+  if (window._chart) window._chart.destroy();
+  const ctx = document.getElementById('fadeChart').getContext('2d');
+  window._chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'NMC (current params)',
+          data: nmcData,
+          borderColor: '#1a6eb5',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          tension: 0.3
+        },
+        {
+          label: 'NMC best-case (80% DoD, 25°C, 0.5C)',
+          data: nmcBestData,
+          borderColor: '#1a6eb5',
+          borderWidth: 1.5,
+          borderDash: [6, 4],
+          pointRadius: 0,
+          tension: 0.3
+        },
+        {
+          label: 'LFP (current params)',
+          data: lfpData,
+          borderColor: '#2a8a2a',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          tension: 0.3
+        }
+      ]
+    },
+    options: {
+      responsive: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        title: {
+          display: true,
+          text: `Capacity fade | DoD=${dod}% | T=${T}°C | C-rate=${parseFloat(crate).toFixed(1)}C`,
+          font: { size: 13 }
+        },
+        legend: { position: 'top' },
+        annotation: {
+          annotations: {
+            eol: {
+              type: 'line',
+              yMin: 80, yMax: 80,
+              borderColor: '#c00',
+              borderWidth: 1.5,
+              borderDash: [5, 3],
+              label: { display: true, content: 'EoL = 80% SOH', position: 'start', color: '#c00', font: { size: 10 } }
+            }
+          }
+        }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Cycle Count (full cycles)' }, ticks: { maxTicksLimit: 12 } },
+        y: {
+          title: { display: true, text: 'Remaining Capacity (%)' },
+          min: 50, max: 105,
+          ticks: { callback: v => v + '%' }
+        }
+      }
+    }
+  });
+}
+
+draw();
+</script>
+</body>
+</html>

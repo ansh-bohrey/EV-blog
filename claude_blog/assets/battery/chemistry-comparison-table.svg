@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="900" height="380" font-family="Arial, Helvetica, sans-serif">
+
+  <!-- Background -->
+  <rect width="900" height="380" fill="#f8f9fb"/>
+
+  <!-- Title -->
+  <text x="450" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a1a2e">Li-ion Chemistry Comparison</text>
+
+  <!-- ===== TABLE LAYOUT =====
+       Outer border: x=20, y=48, w=860, h=308  (to y=356)
+       7 columns: Chemistry | Nom.V | Energy Density | Cycle Life | Thermal Safety | Cost | Key Use
+       col widths: 85 | 75 | 140 | 110 | 115 | 85 | 250
+       col starts (x=20): 20 | 105 | 180 | 320 | 430 | 545 | 630
+       header row height: 38
+       data row height: 38 each, 6 rows → 228px
+       total: 38 + 228 = 266 height of data
+  -->
+
+  <!-- ===== OUTER ROUNDED BORDER ===== -->
+  <rect x="20" y="48" width="860" height="310" rx="10" ry="10" fill="white" stroke="#d0d4e8" stroke-width="1.5"/>
+
+  <!-- ===== HEADER ROW ===== -->
+  <rect x="20" y="48" width="860" height="38" rx="10" ry="10" fill="#1a1a2e"/>
+  <!-- Fix bottom corners of header (rectangle over rounded to square them) -->
+  <rect x="20" y="72" width="860" height="14" fill="#1a1a2e"/>
+
+  <!-- Header text -->
+  <text x="63"  y="71" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Chemistry</text>
+  <text x="143" y="71" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Nom. Voltage</text>
+  <text x="251" y="68" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Energy Density</text>
+  <text x="251" y="81" text-anchor="middle" font-size="10" fill="#ccd">(Wh/kg)</text>
+  <text x="376" y="71" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Cycle Life</text>
+  <text x="489" y="71" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Thermal Safety</text>
+  <text x="591" y="71" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Cost</text>
+  <text x="742" y="71" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Key Use</text>
+
+  <!-- Column dividers in header -->
+  <line x1="105" y1="48" x2="105" y2="86" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <line x1="180" y1="48" x2="180" y2="86" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <line x1="322" y1="48" x2="322" y2="86" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <line x1="430" y1="48" x2="430" y2="86" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <line x1="546" y1="48" x2="546" y2="86" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <line x1="632" y1="48" x2="632" y2="86" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+  <!-- ===== DATA ROWS =====
+       Row y positions (top of row): 86, 124, 162, 200, 238, 276
+       Each row h=38
+  -->
+
+  <!-- ROW 1: LCO — light gray -->
+  <rect x="21" y="86" width="858" height="38" fill="#f8f9fb"/>
+  <text x="63"  y="110" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a1a2e">LCO</text>
+  <text x="143" y="110" text-anchor="middle" font-size="12" fill="#333">3.6 V</text>
+  <text x="251" y="110" text-anchor="middle" font-size="12" fill="#333">150–200</text>
+  <!-- Cycle life: ~500 → orange pill -->
+  <rect x="328" y="94" width="96" height="22" rx="11" fill="#e07b39"/>
+  <text x="376" y="109" text-anchor="middle" font-size="11" fill="white">~500</text>
+  <!-- Thermal safety: Low → red pill -->
+  <rect x="440" y="94" width="98" height="22" rx="11" fill="#d62828"/>
+  <text x="489" y="109" text-anchor="middle" font-size="11" fill="white">Low</text>
+  <!-- Cost: High -->
+  <text x="591" y="110" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="bold">High</text>
+  <text x="742" y="110" text-anchor="middle" font-size="12" fill="#555">Phones / Laptops</text>
+
+  <!-- ROW 2: NMC 532 — white -->
+  <rect x="21" y="124" width="858" height="38" fill="white"/>
+  <text x="63"  y="148" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a1a2e">NMC 532</text>
+  <text x="143" y="148" text-anchor="middle" font-size="12" fill="#333">3.6 V</text>
+  <text x="251" y="148" text-anchor="middle" font-size="12" fill="#333">170–220</text>
+  <!-- Cycle life: 1000–2000 → yellow-green pill -->
+  <rect x="322" y="132" width="108" height="22" rx="11" fill="#82b84a"/>
+  <text x="376" y="147" text-anchor="middle" font-size="11" fill="white">1,000–2,000</text>
+  <!-- Thermal safety: Medium → orange pill -->
+  <rect x="440" y="132" width="98" height="22" rx="11" fill="#e08c3a"/>
+  <text x="489" y="147" text-anchor="middle" font-size="11" fill="white">Medium</text>
+  <!-- Cost: Medium -->
+  <text x="591" y="148" text-anchor="middle" font-size="12" fill="#e08c3a" font-weight="bold">Medium</text>
+  <text x="742" y="148" text-anchor="middle" font-size="12" fill="#555">EVs (most common)</text>
+
+  <!-- ROW 3: NMC 811 — light gray -->
+  <rect x="21" y="162" width="858" height="38" fill="#f8f9fb"/>
+  <text x="63"  y="186" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a1a2e">NMC 811</text>
+  <text x="143" y="186" text-anchor="middle" font-size="12" fill="#333">3.6 V</text>
+  <text x="251" y="186" text-anchor="middle" font-size="12" fill="#333">200–260</text>
+  <!-- Cycle life: 1000–1500 → light green -->
+  <rect x="322" y="170" width="108" height="22" rx="11" fill="#99c44a"/>
+  <text x="376" y="185" text-anchor="middle" font-size="11" fill="white">1,000–1,500</text>
+  <!-- Thermal safety: Med-Low → yellow-orange pill -->
+  <rect x="435" y="170" width="108" height="22" rx="11" fill="#cc7722"/>
+  <text x="489" y="185" text-anchor="middle" font-size="11" fill="white">Med-Low</text>
+  <!-- Cost: Medium -->
+  <text x="591" y="186" text-anchor="middle" font-size="12" fill="#e08c3a" font-weight="bold">Medium</text>
+  <text x="742" y="186" text-anchor="middle" font-size="12" fill="#555">High-range EVs</text>
+
+  <!-- ROW 4: NCA — white -->
+  <rect x="21" y="200" width="858" height="38" fill="white"/>
+  <text x="63"  y="224" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a1a2e">NCA</text>
+  <text x="143" y="224" text-anchor="middle" font-size="12" fill="#333">3.6 V</text>
+  <text x="251" y="224" text-anchor="middle" font-size="12" fill="#333">200–260</text>
+  <!-- Cycle life: 1000–2000 -->
+  <rect x="322" y="208" width="108" height="22" rx="11" fill="#82b84a"/>
+  <text x="376" y="223" text-anchor="middle" font-size="11" fill="white">1,000–2,000</text>
+  <!-- Thermal safety: Med-Low -->
+  <rect x="435" y="208" width="108" height="22" rx="11" fill="#cc7722"/>
+  <text x="489" y="223" text-anchor="middle" font-size="11" fill="white">Med-Low</text>
+  <!-- Cost: High -->
+  <text x="591" y="224" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="bold">High</text>
+  <text x="742" y="224" text-anchor="middle" font-size="12" fill="#555">Tesla (legacy packs)</text>
+
+  <!-- ROW 5: LFP — light gray -->
+  <rect x="21" y="238" width="858" height="38" fill="#f8f9fb"/>
+  <text x="63"  y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a1a2e">LFP</text>
+  <text x="143" y="262" text-anchor="middle" font-size="12" fill="#333">3.2 V</text>
+  <text x="251" y="262" text-anchor="middle" font-size="12" fill="#333">120–165</text>
+  <!-- Cycle life: 2000–4000+ → green pill -->
+  <rect x="317" y="246" width="118" height="22" rx="11" fill="#2e9e4e"/>
+  <text x="376" y="261" text-anchor="middle" font-size="11" fill="white">2,000–4,000+</text>
+  <!-- Thermal safety: High → green -->
+  <rect x="438" y="246" width="102" height="22" rx="11" fill="#2e9e4e"/>
+  <text x="489" y="261" text-anchor="middle" font-size="11" fill="white">High</text>
+  <!-- Cost: Low-Med -->
+  <text x="591" y="262" text-anchor="middle" font-size="12" fill="#2e9e4e" font-weight="bold">Low–Med</text>
+  <text x="742" y="262" text-anchor="middle" font-size="12" fill="#555">Budget EVs / Storage</text>
+
+  <!-- ROW 6: LTO — white (last row, bottom corners rounded) -->
+  <rect x="21" y="276" width="858" height="81" fill="white"/>
+  <!-- Re-round only bottom corners -->
+  <rect x="21" y="276" width="858" height="72" fill="white"/>
+  <path d="M 21 276 L 879 276 L 879 348 Q 879 358 869 358 L 31 358 Q 21 358 21 348 Z" fill="white"/>
+  <text x="63"  y="302" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a1a2e">LTO</text>
+  <text x="143" y="302" text-anchor="middle" font-size="12" fill="#333">2.4 V</text>
+  <text x="251" y="302" text-anchor="middle" font-size="12" fill="#333">60–80</text>
+  <!-- Cycle life: >10,000 → dark green pill -->
+  <rect x="320" y="288" width="112" height="22" rx="11" fill="#1a7a3a"/>
+  <text x="376" y="303" text-anchor="middle" font-size="11" fill="white">&gt;10,000</text>
+  <!-- Thermal safety: Very High → dark green -->
+  <rect x="432" y="288" width="114" height="22" rx="11" fill="#1a7a3a"/>
+  <text x="489" y="303" text-anchor="middle" font-size="11" fill="white">Very High</text>
+  <!-- Cost: Very High -->
+  <text x="591" y="302" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="bold">Very High</text>
+  <text x="742" y="302" text-anchor="middle" font-size="12" fill="#555">Buses / Grid storage</text>
+
+  <!-- ===== COLUMN DIVIDERS (full height) ===== -->
+  <line x1="105" y1="86" x2="105" y2="357" stroke="#e0e4ee" stroke-width="1"/>
+  <line x1="180" y1="86" x2="180" y2="357" stroke="#e0e4ee" stroke-width="1"/>
+  <line x1="322" y1="86" x2="322" y2="357" stroke="#e0e4ee" stroke-width="1"/>
+  <line x1="430" y1="86" x2="430" y2="357" stroke="#e0e4ee" stroke-width="1"/>
+  <line x1="546" y1="86" x2="546" y2="357" stroke="#e0e4ee" stroke-width="1"/>
+  <line x1="632" y1="86" x2="632" y2="357" stroke="#e0e4ee" stroke-width="1"/>
+
+  <!-- ===== ROW DIVIDERS ===== -->
+  <line x1="21" y1="124" x2="879" y2="124" stroke="#e0e4ee" stroke-width="1"/>
+  <line x1="21" y1="162" x2="879" y2="162" stroke="#e0e4ee" stroke-width="1"/>
+  <line x1="21" y1="200" x2="879" y2="200" stroke="#e0e4ee" stroke-width="1"/>
+  <line x1="21" y1="238" x2="879" y2="238" stroke="#e0e4ee" stroke-width="1"/>
+  <line x1="21" y1="276" x2="879" y2="276" stroke="#e0e4ee" stroke-width="1"/>
+
+  <!-- ===== LEGEND ===== -->
+  <text x="20" y="374" font-size="10" fill="#777">Thermal Safety:  </text>
+  <rect x="134" y="363" width="12" height="12" rx="6" fill="#d62828"/>
+  <text x="150" y="374" font-size="10" fill="#777">Low</text>
+  <rect x="184" y="363" width="12" height="12" rx="6" fill="#cc7722"/>
+  <text x="200" y="374" font-size="10" fill="#777">Med-Low</text>
+  <rect x="256" y="363" width="12" height="12" rx="6" fill="#e08c3a"/>
+  <text x="272" y="374" font-size="10" fill="#777">Medium</text>
+  <rect x="330" y="363" width="12" height="12" rx="6" fill="#2e9e4e"/>
+  <text x="346" y="374" font-size="10" fill="#777">High</text>
+  <rect x="382" y="363" width="12" height="12" rx="6" fill="#1a7a3a"/>
+  <text x="398" y="374" font-size="10" fill="#777">Very High</text>
+
+  <text x="580" y="374" font-size="10" fill="#777">Cycle Life:</text>
+  <rect x="638" y="363" width="12" height="12" rx="6" fill="#e07b39"/>
+  <text x="654" y="374" font-size="10" fill="#777">Short</text>
+  <rect x="694" y="363" width="12" height="12" rx="6" fill="#82b84a"/>
+  <text x="710" y="374" font-size="10" fill="#777">Medium</text>
+  <rect x="762" y="363" width="12" height="12" rx="6" fill="#1a7a3a"/>
+  <text x="778" y="374" font-size="10" fill="#777">Long</text>
+
+</svg>

@@ -1,0 +1,132 @@
+<svg viewBox="0 0 820 500" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="820" height="500" fill="#f8f9fa"/>
+  <text x="410" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a1a2e">HPPC Test — Extracting R₀ and R_RC for SOP Estimation</text>
+  <text x="410" y="48" text-anchor="middle" font-size="11" fill="#555">Hybrid Pulse Power Characterization — the standard method to identify ECM parameters</text>
+
+  <!-- ── Current waveform (top half) ── -->
+  <!-- axes -->
+  <line x1="80" y1="185" x2="750" y2="185" stroke="#333" stroke-width="1.5"/>
+  <line x1="80" y1="80" x2="80" y2="185" stroke="#333" stroke-width="1.5"/>
+  <text x="45" y="135" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90,45,135)">Current (A)</text>
+  <text x="390" y="205" text-anchor="middle" font-size="10" fill="#555">Time →</text>
+
+  <!-- current: 0 → -60A (discharge pulse) → 0 → +30A (regen) → 0 -->
+  <!-- Timeline: rest, discharge pulse 10s, rest 40s, regen pulse 10s, rest -->
+  <!-- x: 80=t0, 150=t_pulse_start, 250=t_pulse_end, 450=t_regen_start, 550=t_regen_end, 700=tend -->
+  <!-- y: baseline at 185, -60A at 90, +30A at 155 -->
+
+  <!-- rest before -->
+  <line x1="80" y1="185" x2="150" y2="185" stroke="#c00" stroke-width="2.5"/>
+  <!-- down step: discharge -->
+  <line x1="150" y1="185" x2="150" y2="90" stroke="#c00" stroke-width="2.5"/>
+  <!-- discharge pulse -->
+  <line x1="150" y1="90" x2="250" y2="90" stroke="#c00" stroke-width="2.5"/>
+  <!-- back to 0 -->
+  <line x1="250" y1="90" x2="250" y2="185" stroke="#c00" stroke-width="2.5"/>
+  <!-- rest -->
+  <line x1="250" y1="185" x2="450" y2="185" stroke="#c00" stroke-width="2.5"/>
+  <!-- regen up step -->
+  <line x1="450" y1="185" x2="450" y2="155" stroke="#2a8a2a" stroke-width="2.5"/>
+  <!-- regen pulse -->
+  <line x1="450" y1="155" x2="550" y2="155" stroke="#2a8a2a" stroke-width="2.5"/>
+  <!-- back to 0 -->
+  <line x1="550" y1="155" x2="550" y2="185" stroke="#2a8a2a" stroke-width="2.5"/>
+  <!-- final rest -->
+  <line x1="550" y1="185" x2="700" y2="185" stroke="#2a8a2a" stroke-width="2.5"/>
+
+  <!-- current labels -->
+  <text x="75" y="88" text-anchor="end" font-size="9" fill="#c00">−60 A</text>
+  <line x1="76" y1="90" x2="80" y2="90" stroke="#c00" stroke-width="1"/>
+  <text x="75" y="158" text-anchor="end" font-size="9" fill="#2a8a2a">+30 A</text>
+  <line x1="76" y1="155" x2="80" y2="155" stroke="#2a8a2a" stroke-width="1"/>
+  <text x="75" y="187" text-anchor="end" font-size="9" fill="#555">0 A</text>
+
+  <!-- time labels under current -->
+  <text x="150" y="198" text-anchor="middle" font-size="9" fill="#555">t₀</text>
+  <text x="250" y="198" text-anchor="middle" font-size="9" fill="#555">t₀+10s</text>
+  <text x="450" y="198" text-anchor="middle" font-size="9" fill="#555">t₀+50s</text>
+  <text x="550" y="198" text-anchor="middle" font-size="9" fill="#555">t₀+60s</text>
+
+  <!-- Pulse labels -->
+  <text x="200" y="80" text-anchor="middle" font-size="9" fill="#c00" font-weight="bold">Discharge Pulse (10 s)</text>
+  <text x="500" y="145" text-anchor="middle" font-size="9" fill="#2a8a2a" font-weight="bold">Regen Pulse (10 s)</text>
+
+  <!-- ── Voltage waveform (bottom half) ── -->
+  <!-- axes -->
+  <line x1="80" y1="440" x2="750" y2="440" stroke="#333" stroke-width="1.5"/>
+  <line x1="80" y1="225" x2="80" y2="440" stroke="#333" stroke-width="1.5"/>
+  <text x="45" y="335" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90,45,335)">Voltage (V)</text>
+
+  <!-- V_OCV baseline at y=350 (3.6V), drop: instant to y=395 (V0), then RC decay to y=380 (ΔV_RC) -->
+  <!-- rest before: flat at OCV -->
+  <line x1="80" y1="350" x2="150" y2="350" stroke="#1a6eb5" stroke-width="2.5"/>
+  <!-- instant ohmic drop: t₀ to V0 -->
+  <line x1="150" y1="350" x2="150" y2="395" stroke="#1a6eb5" stroke-width="2.5"/>
+  <!-- RC portion during pulse: continue falling from 395 to 415 (curved approx with polyline) -->
+  <polyline points="150,395 165,400 180,405 200,408 225,410 250,413" stroke="#1a6eb5" stroke-width="2.5" fill="none"/>
+  <!-- instant ohmic recovery at end of pulse -->
+  <line x1="250" y1="413" x2="250" y2="370" stroke="#1a6eb5" stroke-width="2.5"/>
+  <!-- RC recovery during rest (back to OCV): curved polyline -->
+  <polyline points="250,370 280,363 320,357 370,353 420,351 450,350" stroke="#1a6eb5" stroke-width="2.5" fill="none"/>
+  <!-- regen: instant rise, then slow -->
+  <line x1="450" y1="350" x2="450" y2="325" stroke="#1a6eb5" stroke-width="2.5"/>
+  <polyline points="450,325 470,321 490,319 510,318 530,318 550,318" stroke="#1a6eb5" stroke-width="2.5" fill="none"/>
+  <!-- instant drop back at end of regen -->
+  <line x1="550" y1="318" x2="550" y2="343" stroke="#1a6eb5" stroke-width="2.5"/>
+  <!-- settle back to OCV -->
+  <polyline points="550,343 580,347 620,349 660,350 700,350" stroke="#1a6eb5" stroke-width="2.5" fill="none"/>
+
+  <!-- V axis ticks -->
+  <text x="75" y="354" text-anchor="end" font-size="9" fill="#555">OCV</text>
+  <line x1="76" y1="350" x2="80" y2="350" stroke="#555" stroke-width="1"/>
+  <text x="75" y="399" text-anchor="end" font-size="9" fill="#c00">V₀</text>
+  <line x1="76" y1="395" x2="80" y2="395" stroke="#c00" stroke-width="1"/>
+  <text x="75" y="420" text-anchor="end" font-size="9" fill="#1a6eb5">V_end</text>
+  <line x1="76" y1="417" x2="80" y2="417" stroke="#1a6eb5" stroke-width="1"/>
+  <text x="75" y="328" text-anchor="end" font-size="9" fill="#2a8a2a">V_regen</text>
+  <line x1="76" y1="325" x2="80" y2="325" stroke="#2a8a2a" stroke-width="1"/>
+
+  <!-- Annotation arrows and labels -->
+  <!-- R0 at discharge start -->
+  <defs>
+    <marker id="hpparr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#c00"/>
+    </marker>
+    <marker id="hpparr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#e07b00"/>
+    </marker>
+  </defs>
+
+  <!-- ΔV_R0 braces -->
+  <line x1="155" y1="350" x2="155" y2="395" stroke="#c00" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="170" y="373" font-size="10" fill="#c00" font-weight="bold">ΔV_R₀</text>
+  <text x="170" y="385" font-size="9" fill="#555">= I × R₀</text>
+  <text x="170" y="397" font-size="8" fill="#888">(ohmic, instant)</text>
+
+  <!-- ΔV_RC (additional sag during pulse) -->
+  <line x1="252" y1="395" x2="252" y2="413" stroke="#e07b00" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="265" y="407" font-size="10" fill="#e07b00" font-weight="bold">ΔV_RC</text>
+  <text x="265" y="419" font-size="9" fill="#555">= I × R_RC</text>
+  <text x="265" y="432" font-size="8" fill="#888">(1−e^{−t/τ})</text>
+
+  <!-- Time constant annotation -->
+  <line x1="250" y1="440" x2="450" y2="440" stroke="#1a6eb5" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="350" y="456" text-anchor="middle" font-size="9" fill="#1a6eb5">τ = R_RC × C_RC (fits RC recovery curve)</text>
+
+  <!-- Formula box -->
+  <rect x="480" y="245" width="260" height="110" rx="6" fill="#f0f0ff" stroke="#5555cc" stroke-width="1.5"/>
+  <text x="610" y="262" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Parameter extraction</text>
+  <text x="610" y="278" text-anchor="middle" font-size="10" fill="#333">R₀ = ΔV_R₀ / I_pulse</text>
+  <text x="610" y="294" text-anchor="middle" font-size="10" fill="#333">R_RC = (ΔV_total − ΔV_R₀) / I_pulse</text>
+  <text x="610" y="310" text-anchor="middle" font-size="10" fill="#333">τ = fit V(t) = V₀ × e^{−t/τ}</text>
+  <text x="610" y="326" text-anchor="middle" font-size="10" fill="#333">C_RC = τ / R_RC</text>
+  <text x="610" y="346" text-anchor="middle" font-size="9" fill="#777">Repeat at each SOC point (10%, 20%,...)</text>
+  <text x="610" y="358" text-anchor="middle" font-size="9" fill="#777">to build the ECM lookup table</text>
+
+  <!-- SOP computation note -->
+  <rect x="480" y="370" width="260" height="68" rx="6" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="610" y="388" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a5a1a">SOP from R₀, R_RC</text>
+  <text x="610" y="404" text-anchor="middle" font-size="10" fill="#333">P_max_dch = V_OCV² / (4 × R₀)</text>
+  <text x="610" y="420" text-anchor="middle" font-size="10" fill="#333">(voltage constraint: V_min ≤ V_term)</text>
+  <text x="610" y="436" text-anchor="middle" font-size="9" fill="#555">Re-evaluated every 100 ms by BMS</text>
+</svg>

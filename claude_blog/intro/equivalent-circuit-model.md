@@ -130,7 +130,7 @@ When current stops:
 
 The interactive chart below lets you adjust R₀, R₁, C₁, and the current step magnitude, and see the resulting terminal voltage in real time. Use it to build intuition for how each parameter affects the waveform shape before reading the Level 3 section.
 
-> **Interactive:** [ECM voltage response — adjust parameters live](../../assets/claude_assetsplan/intro/ecm-voltage-waveform.html)
+> **Interactive:** [ECM voltage response — adjust parameters live](../assets/claude_assetsplan/intro/ecm-voltage-waveform.html)
 
 With the 1RC model, a discharge pulse followed by a rest looks like this:
 
@@ -158,7 +158,7 @@ OCV┤────────────────────────�
 
 The diagram below shows all four levels of the ECM side by side — from the bare OCV source to the full 2RC Thevenin model. Use it as a reference while reading the sections above.
 
-![ECM circuit progression — Level 0 through Level 3](../../assets/claude_assetsplan/intro/ecm-circuit-progression.svg)
+![ECM circuit progression — Level 0 through Level 3](../assets/claude_assetsplan/intro/ecm-circuit-progression.svg)
 
 In reality, the voltage recovery after removing load is not a single exponential — if you plot it carefully, you can see two distinct timescales:
 
@@ -219,7 +219,7 @@ The model is only useful if its five parameters (R₀, R₁, C₁, R₂, C₂) a
 
 HPPC stands for Hybrid Pulse Power Characterisation, the standard test protocol from the US Advanced Battery Consortium.
 
-![HPPC pulse test — current waveform and voltage response with R₀, R₁, C₁ extraction annotations](../../assets/claude_assetsplan/intro/hppc-parameter-extraction.svg)
+![HPPC pulse test — current waveform and voltage response with R₀, R₁, C₁ extraction annotations](../assets/claude_assetsplan/intro/hppc-parameter-extraction.svg)
 
 1. Rest the cell at a known SOC for at least 2 hours (V_C₁ and V_C₂ decay to zero; per USCAR HPPC procedures)
 2. Apply a current step (typically 1C or 2C discharge) for 10–30 seconds

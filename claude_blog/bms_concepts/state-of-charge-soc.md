@@ -85,7 +85,7 @@ The GPS analogy is exact: a GPS receiver uses dead reckoning (integrating veloci
 - **Landmark fix**: measured terminal voltage, compared to the ECM's prediction, provides a correction signal
 - **Weighting**: Kalman gain determines how much to trust the voltage correction vs the prediction, based on noise estimates
 
-![SOC estimation pipeline — OCV initialisation, Coulomb counting, EKF correction loop](../../assets/claude_assetsplan/bms-concepts/soc-estimation-flowchart.svg)
+![SOC estimation pipeline — OCV initialisation, Coulomb counting, EKF correction loop](../assets/claude_assetsplan/bms-concepts/soc-estimation-flowchart.svg)
 
 The EKF state vector is x = [SOC, V_C₁, V_C₂] — the SOC and the two capacitor voltages from the 2RC Thevenin model. At each timestep:
 

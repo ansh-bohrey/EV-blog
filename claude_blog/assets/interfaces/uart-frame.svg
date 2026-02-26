@@ -1,0 +1,186 @@
+<svg viewBox="0 0 820 500" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="820" height="500" fill="#f8f9fa"/>
+  <text x="410" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a2e">UART Frame Anatomy</text>
+  <text x="410" y="46" text-anchor="middle" font-size="11" fill="#555">Asynchronous serial: no shared clock — start bit syncs receiver, stop bit marks end</text>
+
+  <!-- ===== FRAME BOXES ===== -->
+  <!-- IDLE line -->
+  <text x="16" y="80" font-size="11" font-weight="bold" fill="#555">IDLE</text>
+  <line x1="16" y1="90" x2="60" y2="90" stroke="#555" stroke-width="2" stroke-dasharray="4,2"/>
+
+  <!-- START BIT -->
+  <rect x="60" y="76" width="68" height="60" rx="3" fill="#ffe0e0" stroke="#c00" stroke-width="2"/>
+  <text x="94" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#c00">START</text>
+  <text x="94" y="116" text-anchor="middle" font-size="18" font-weight="bold" fill="#c00">0</text>
+  <text x="94" y="128" text-anchor="middle" font-size="8" fill="#c00">always LOW</text>
+
+  <!-- D0 -->
+  <rect x="130" y="76" width="64" height="60" rx="3" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="162" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a6eb5">D0</text>
+  <text x="162" y="116" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a6eb5">?</text>
+  <text x="162" y="128" text-anchor="middle" font-size="8" fill="#555">LSB first</text>
+
+  <!-- D1 -->
+  <rect x="196" y="76" width="64" height="60" rx="3" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="228" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a6eb5">D1</text>
+  <text x="228" y="116" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a6eb5">?</text>
+
+  <!-- D2 -->
+  <rect x="262" y="76" width="64" height="60" rx="3" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="294" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a6eb5">D2</text>
+  <text x="294" y="116" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a6eb5">?</text>
+
+  <!-- D3 -->
+  <rect x="328" y="76" width="64" height="60" rx="3" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="360" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a6eb5">D3</text>
+  <text x="360" y="116" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a6eb5">?</text>
+
+  <!-- D4 -->
+  <rect x="394" y="76" width="64" height="60" rx="3" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="426" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a6eb5">D4</text>
+  <text x="426" y="116" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a6eb5">?</text>
+
+  <!-- D5 -->
+  <rect x="460" y="76" width="64" height="60" rx="3" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="492" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a6eb5">D5</text>
+  <text x="492" y="116" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a6eb5">?</text>
+
+  <!-- D6 -->
+  <rect x="526" y="76" width="64" height="60" rx="3" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="558" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a6eb5">D6</text>
+  <text x="558" y="116" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a6eb5">?</text>
+
+  <!-- D7 -->
+  <rect x="592" y="76" width="64" height="60" rx="3" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="624" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a6eb5">D7</text>
+  <text x="624" y="116" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a6eb5">?</text>
+  <text x="624" y="128" text-anchor="middle" font-size="8" fill="#555">MSB last</text>
+
+  <!-- PARITY (optional) -->
+  <rect x="658" y="76" width="52" height="60" rx="3" fill="#e8d0ff" stroke="#6633cc" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="684" y="97" text-anchor="middle" font-size="9" font-weight="bold" fill="#6633cc">PARITY</text>
+  <text x="684" y="110" text-anchor="middle" font-size="9" fill="#6633cc">(opt.)</text>
+  <text x="684" y="128" text-anchor="middle" font-size="8" fill="#555">E/O/N</text>
+
+  <!-- STOP BIT -->
+  <rect x="712" y="76" width="60" height="60" rx="3" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="2"/>
+  <text x="742" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#2a8a2a">STOP</text>
+  <text x="742" y="116" text-anchor="middle" font-size="18" font-weight="bold" fill="#2a8a2a">1</text>
+  <text x="742" y="128" text-anchor="middle" font-size="8" fill="#2a8a2a">always HIGH</text>
+
+  <!-- IDLE after -->
+  <line x1="772" y1="90" x2="806" y2="90" stroke="#555" stroke-width="2" stroke-dasharray="4,2"/>
+
+  <!-- Brace: 8 data bits -->
+  <line x1="130" y1="143" x2="655" y2="143" stroke="#1a6eb5" stroke-width="1.5"/>
+  <line x1="130" y1="140" x2="130" y2="146" stroke="#1a6eb5" stroke-width="1.5"/>
+  <line x1="655" y1="140" x2="655" y2="146" stroke="#1a6eb5" stroke-width="1.5"/>
+  <text x="392" y="158" text-anchor="middle" font-size="10" fill="#1a6eb5">8 data bits (5–9 configurable, 8 most common)</text>
+
+  <!-- ===== WAVEFORM ===== -->
+  <text x="16" y="184" font-size="12" font-weight="bold" fill="#1a1a2e">Waveform — example byte 0x41 = 'A' = 01000001b</text>
+  <text x="16" y="198" font-size="10" fill="#555">LSB sent first: bit order on wire = 1,0,0,0,0,0,1,0 (D0→D7), then parity, then stop</text>
+
+  <rect x="16" y="205" width="790" height="100" rx="4" fill="white" stroke="#ddd" stroke-width="1"/>
+  <line x1="16" y1="255" x2="806" y2="255" stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="6" y="258" text-anchor="end" font-size="9" fill="#888">0</text>
+  <text x="6" y="219" text-anchor="end" font-size="9" fill="#888">1</text>
+
+  <!-- IDLE high -->
+  <line x1="16" y1="215" x2="60" y2="215" stroke="#555" stroke-width="2"/>
+  <!-- start bit: falling edge then low -->
+  <line x1="60" y1="215" x2="60" y2="260" stroke="#c00" stroke-width="2"/>
+  <line x1="60" y1="260" x2="118" y2="260" stroke="#c00" stroke-width="2"/>
+  <!-- D0=1: rising -->
+  <line x1="118" y1="260" x2="118" y2="215" stroke="#1a6eb5" stroke-width="2"/>
+  <line x1="118" y1="215" x2="176" y2="215" stroke="#1a6eb5" stroke-width="2"/>
+  <!-- D1=0: falling -->
+  <line x1="176" y1="215" x2="176" y2="260" stroke="#1a6eb5" stroke-width="2"/>
+  <line x1="176" y1="260" x2="234" y2="260" stroke="#1a6eb5" stroke-width="2"/>
+  <!-- D2=0 -->
+  <line x1="234" y1="260" x2="292" y2="260" stroke="#1a6eb5" stroke-width="2"/>
+  <!-- D3=0 -->
+  <line x1="292" y1="260" x2="350" y2="260" stroke="#1a6eb5" stroke-width="2"/>
+  <!-- D4=0 -->
+  <line x1="350" y1="260" x2="408" y2="260" stroke="#1a6eb5" stroke-width="2"/>
+  <!-- D5=0 -->
+  <line x1="408" y1="260" x2="466" y2="260" stroke="#1a6eb5" stroke-width="2"/>
+  <!-- D6=1: rising -->
+  <line x1="466" y1="260" x2="466" y2="215" stroke="#1a6eb5" stroke-width="2"/>
+  <line x1="466" y1="215" x2="524" y2="215" stroke="#1a6eb5" stroke-width="2"/>
+  <!-- D7=0: falling -->
+  <line x1="524" y1="215" x2="524" y2="260" stroke="#1a6eb5" stroke-width="2"/>
+  <line x1="524" y1="260" x2="582" y2="260" stroke="#1a6eb5" stroke-width="2"/>
+  <!-- Parity=1 (even parity of 0x41 which has 2 ones = even → parity=0, but let's use odd for illustration) -->
+  <!-- parity=0 for even: stay low -->
+  <line x1="582" y1="260" x2="640" y2="260" stroke="#6633cc" stroke-width="2"/>
+  <!-- STOP: high -->
+  <line x1="640" y1="260" x2="640" y2="215" stroke="#2a8a2a" stroke-width="2"/>
+  <line x1="640" y1="215" x2="700" y2="215" stroke="#2a8a2a" stroke-width="2"/>
+  <!-- IDLE -->
+  <line x1="700" y1="215" x2="806" y2="215" stroke="#555" stroke-width="2"/>
+
+  <!-- Bit labels below waveform -->
+  <text x="38" y="300" text-anchor="middle" font-size="9" fill="#555">IDLE</text>
+  <text x="89" y="300" text-anchor="middle" font-size="9" fill="#c00">START</text>
+  <text x="147" y="300" text-anchor="middle" font-size="9" fill="#1a6eb5">D0=1</text>
+  <text x="205" y="300" text-anchor="middle" font-size="9" fill="#1a6eb5">D1=0</text>
+  <text x="263" y="300" text-anchor="middle" font-size="9" fill="#1a6eb5">D2=0</text>
+  <text x="321" y="300" text-anchor="middle" font-size="9" fill="#1a6eb5">D3=0</text>
+  <text x="379" y="300" text-anchor="middle" font-size="9" fill="#1a6eb5">D4=0</text>
+  <text x="437" y="300" text-anchor="middle" font-size="9" fill="#1a6eb5">D5=0</text>
+  <text x="495" y="300" text-anchor="middle" font-size="9" fill="#1a6eb5">D6=1</text>
+  <text x="553" y="300" text-anchor="middle" font-size="9" fill="#1a6eb5">D7=0</text>
+  <text x="611" y="300" text-anchor="middle" font-size="9" fill="#6633cc">PAR</text>
+  <text x="670" y="300" text-anchor="middle" font-size="9" fill="#2a8a2a">STOP</text>
+  <text x="753" y="300" text-anchor="middle" font-size="9" fill="#555">IDLE</text>
+
+  <!-- Bit period label -->
+  <line x1="118" y1="315" x2="176" y2="315" stroke="#555" stroke-width="1"/>
+  <line x1="118" y1="312" x2="118" y2="318" stroke="#555" stroke-width="1"/>
+  <line x1="176" y1="312" x2="176" y2="318" stroke="#555" stroke-width="1"/>
+  <text x="147" y="330" text-anchor="middle" font-size="9" fill="#555">1 bit period = 1/baud</text>
+  <text x="147" y="342" text-anchor="middle" font-size="9" fill="#555">e.g. 115200 baud → 8.68 µs</text>
+
+  <!-- ===== INFO CARDS ===== -->
+  <rect x="16" y="358" width="185" height="130" rx="6" fill="white" stroke="#c00" stroke-width="1.5"/>
+  <text x="108" y="374" text-anchor="middle" font-size="11" font-weight="bold" fill="#c00">Start bit mechanics</text>
+  <text x="26" y="390" font-size="9" fill="#333">Idle line is HIGH (mark state).</text>
+  <text x="26" y="403" font-size="9" fill="#333">Start bit: forced LOW (space).</text>
+  <text x="26" y="416" font-size="9" fill="#333">Receiver detects falling edge,</text>
+  <text x="26" y="429" font-size="9" fill="#333">starts internal timer at ½ bit</text>
+  <text x="26" y="442" font-size="9" fill="#333">period to sample at centre of</text>
+  <text x="26" y="455" font-size="9" fill="#555">each subsequent bit.</text>
+  <text x="26" y="475" font-size="9" fill="#c00">No clock wire needed — async.</text>
+
+  <rect x="213" y="358" width="185" height="130" rx="6" fill="white" stroke="#6633cc" stroke-width="1.5"/>
+  <text x="305" y="374" text-anchor="middle" font-size="11" font-weight="bold" fill="#6633cc">Parity options</text>
+  <text x="223" y="390" font-size="9" fill="#333">None (8N1): most common for MCU</text>
+  <text x="223" y="403" font-size="9" fill="#333">Even (8E1): parity=1 if odd bits set</text>
+  <text x="223" y="416" font-size="9" fill="#333">Odd  (8O1): inverse of even</text>
+  <text x="223" y="432" font-size="9" fill="#555">0x41='A' has 2 ones (even count)</text>
+  <text x="223" y="445" font-size="9" fill="#555">→ even parity bit = 0</text>
+  <text x="223" y="458" font-size="9" fill="#555">→ odd parity bit = 1</text>
+  <text x="223" y="474" font-size="9" fill="#c00">Detects single-bit errors only.</text>
+
+  <rect x="410" y="358" width="185" height="130" rx="6" fill="white" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="502" y="374" text-anchor="middle" font-size="11" font-weight="bold" fill="#2a8a2a">Stop bit(s)</text>
+  <text x="420" y="390" font-size="9" fill="#333">Marks end of frame: HIGH.</text>
+  <text x="420" y="403" font-size="9" fill="#333">1 stop bit: standard for high baud</text>
+  <text x="420" y="416" font-size="9" fill="#333">2 stop bits: legacy / slow devices</text>
+  <text x="420" y="429" font-size="9" fill="#333">Gives receiver time to process</text>
+  <text x="420" y="442" font-size="9" fill="#333">before next start edge arrives.</text>
+  <text x="420" y="458" font-size="9" fill="#555">Framing error = stop bit reads LOW</text>
+  <text x="420" y="474" font-size="9" fill="#555">(baud mismatch is common cause).</text>
+
+  <rect x="607" y="358" width="195" height="130" rx="6" fill="white" stroke="#e07b00" stroke-width="1.5"/>
+  <text x="704" y="374" text-anchor="middle" font-size="11" font-weight="bold" fill="#e07b00">UART in BMS context</text>
+  <text x="617" y="390" font-size="9" fill="#333">BMS MCU ↔ debug terminal:</text>
+  <text x="617" y="403" font-size="9" fill="#555">  115200 8N1, log output</text>
+  <text x="617" y="418" font-size="9" fill="#333">BMS ↔ Bluetooth module:</text>
+  <text x="617" y="431" font-size="9" fill="#555">  9600 8N1, AT commands</text>
+  <text x="617" y="446" font-size="9" fill="#333">BMS ↔ JTAG debugger:</text>
+  <text x="617" y="459" font-size="9" fill="#555">  SWO pin (SWD variant)</text>
+  <text x="617" y="474" font-size="9" fill="#c00">Not used for pack CAN — that</text>
+  <text x="617" y="487" font-size="9" fill="#c00">requires differential RS-485/CAN.</text>
+</svg>

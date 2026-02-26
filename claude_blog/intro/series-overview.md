@@ -36,7 +36,7 @@ Depth is always flagged. When a section goes technical, it says so. When it's ac
 
 The diagram below shows the full dependency graph — arrows indicate "should be read before". Dashed arrows are soft dependencies (helpful but not required). Use it to plan your reading order or to understand why a post references another.
 
-![Series dependency map — all posts and how they connect](../../assets/claude_assetsplan/intro/series-overview.svg)
+![Series dependency map — all posts and how they connect](../assets/claude_assetsplan/intro/series-overview.svg)
 
 ### Introduction (Start Here)
 
@@ -102,7 +102,7 @@ These posts build on each other. Reading order matters.
 
 ## Three Suggested Reading Paths
 
-![Three reading paths — enthusiast, student, engineer](../../assets/claude_assetsplan/intro/reading-paths.svg)
+![Three reading paths — enthusiast, student, engineer](../assets/claude_assetsplan/intro/reading-paths.svg)
 
 ### Path A — "I want to understand my EV" (enthusiast, ~6 posts)
 

@@ -42,7 +42,7 @@ The fundamental challenge of measuring cells in a series string is that each cel
 
 The AFE solves this with **differential measurement**: it measures the potential difference between V+ and V− of each individual cell, independent of where that cell sits in the stack. The absolute voltage relative to ground is irrelevant — only the cell's own 2.5–4.2 V span matters.
 
-![AFE internal architecture — cell voltage mux, delta-sigma ADC, current sense amplifier, thermistor measurement, balancing FET drivers, digital interface to MCU (I2C for TI BQ769x0; isoSPI for ADI LTC family)](../../assets/claude_assetsplan/bms-concepts/afe-block-diagram.svg)
+![AFE internal architecture — cell voltage mux, delta-sigma ADC, current sense amplifier, thermistor measurement, balancing FET drivers, digital interface to MCU (I2C for TI BQ769x0; isoSPI for ADI LTC family)](../assets/claude_assetsplan/bms-concepts/afe-block-diagram.svg)
 
 The ADC topology used in almost every production AFE is the **delta-sigma** converter. Unlike successive-approximation (SAR) ADCs that are common in microcontrollers, delta-sigma converters operate by massively oversampling the input — hundreds of times above Nyquist — and using a digital decimation filter to extract a high-resolution result. This trades conversion speed for noise rejection and resolution. It is the right trade for battery voltage measurement, where the signal changes slowly (seconds to minutes) but must be resolved to 100 µV or better to be useful for SOC estimation.
 
@@ -156,7 +156,7 @@ The OV (overvoltage) and UV (undervoltage) thresholds loaded during initialisati
 
 A single AFE chip handles 5–18 cells. A production EV pack may have 90S, 96S, or 108S cells — far beyond one chip. The solution is a **daisy-chain**: multiple AFE chips wired in series, each monitoring its module, with data flowing up and down the chain to a single MCU interface point.
 
-![6× AFE chips in isoSPI daisy-chain for a 90S pack — each chip floats at its module potential, transformers provide isolation across the chain](../../assets/claude_assetsplan/bms-concepts/afe-daisy-chain.svg)
+![6× AFE chips in isoSPI daisy-chain for a 90S pack — each chip floats at its module potential, transformers provide isolation across the chain](../assets/claude_assetsplan/bms-concepts/afe-daisy-chain.svg)
 
 The challenge with daisy-chaining is isolation. Each AFE chip floats at its module's high-voltage potential relative to the BMS MCU. The AFE for module 6 in a 90S pack sits at roughly 300 V above ground. Running a direct SPI bus between that AFE and the MCU is impossible without isolation.
 

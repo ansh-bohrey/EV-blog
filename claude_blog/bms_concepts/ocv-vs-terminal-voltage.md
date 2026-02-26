@@ -52,7 +52,7 @@ When current stops, voltage does not jump instantly back to OCV. It **relaxes** 
 
 The Thevenin equivalent circuit model captures all three components in a practical circuit representation.
 
-![Thevenin equivalent circuit: OCV source + R0 + two RC pairs](../../assets/claude_assetsplan/bms-concepts/thevenin-circuit.svg)
+![Thevenin equivalent circuit: OCV source + R0 + two RC pairs](../assets/claude_assetsplan/bms-concepts/thevenin-circuit.svg)
 
 The circuit has:
 - An **OCV voltage source** — the equilibrium potential, a function of SOC and temperature
@@ -64,7 +64,7 @@ Every component value depends on SOC, temperature, and SOH. At low temperature, 
 
 This model is not an academic exercise. It is the backbone of production BMS SOC and SOP estimators. The BMS maintains a running estimate of the state of each RC pair, uses it to predict terminal voltage under load, and corrects its SOC estimate based on the difference between predicted and measured voltage. More on this in the [SOC post](./state-of-charge-soc.md).
 
-<iframe src="../../assets/claude_assetsplan/bms-concepts/ocv-terminal-voltage-animation.html" width="100%" height="400" frameborder="0"></iframe>
+<iframe src="../assets/claude_assetsplan/bms-concepts/ocv-terminal-voltage-animation.html" width="100%" height="400" frameborder="0"></iframe>
 
 ---
 
@@ -74,7 +74,7 @@ Most OCV discussions assume a single OCV–SOC curve. For NMC, that is adequate.
 
 LFP's phase-transition lithiation mechanism produces a measurable difference between the OCV you get after charging to a given SOC and the OCV you get after discharging to the same SOC. The charge-side OCV curve sits roughly 5–20 mV above the discharge-side curve across the flat voltage plateau (Safari & Delacourt 2011 — see Further Reading; magnitude varies by cell and SOC). This is OCV **hysteresis**.
 
-![LFP OCV hysteresis: charge OCV curve vs discharge OCV curve across the SOC range](../../assets/claude_assetsplan/bms-concepts/lfp-hysteresis.svg)
+![LFP OCV hysteresis: charge OCV curve vs discharge OCV curve across the SOC range](../assets/claude_assetsplan/bms-concepts/lfp-hysteresis.svg)
 
 The practical consequence: if your BMS uses a single OCV–SOC lookup table, it will give the wrong SOC answer every time the cell transitions between charging and discharging. For a chemistry whose entire plateau spans only ~100 mV, a 20 mV hysteresis is not a rounding error.
 
@@ -103,7 +103,7 @@ The **CV phase of charging** provides another OCV-adjacent opportunity: as charg
 
 When a BMS powers up after the vehicle has been parked, it faces the question: how long has the car been sitting, and is the voltage reading now reliable?
 
-<iframe src="../../assets/claude_assetsplan/bms-concepts/voltage-relaxation.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../assets/claude_assetsplan/bms-concepts/voltage-relaxation.html" width="100%" height="380" frameborder="0"></iframe>
 
 The relaxation curve has a characteristic shape — fast initial recovery followed by a long slow tail. BMS firmware can use the slope and curvature of this trajectory to estimate how much further the voltage will move, allowing a reasonably accurate SOC estimate even before full equilibration. Some implementations pattern-match the relaxation trajectory to a database of known curves.
 

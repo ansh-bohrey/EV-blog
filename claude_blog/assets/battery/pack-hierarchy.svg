@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600" font-family="Arial, Helvetica, sans-serif">
+
+  <!-- Background -->
+  <rect width="900" height="600" fill="#f0f2f8"/>
+
+  <!-- Title -->
+  <text x="450" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">Battery Pack Hierarchy</text>
+  <text x="450" y="50" text-anchor="middle" font-size="11" fill="#666">Cell → Module → Pack → Cell-to-Pack (CTP)</text>
+
+  <!-- ======================================================
+       4 sections, each ~200px wide, separated by arrows
+       Sections centered at x: 90, 295, 520, 760
+       Main content y range: 70 – 520
+  ====================================================== -->
+
+  <!-- ═══════════════════════════════════════════════
+       BOX 1: CELL (x=20–165)
+  ═══════════════════════════════════════════════ -->
+  <rect x="20" y="68" width="145" height="430" rx="10" fill="white" stroke="#4a90d9" stroke-width="2"/>
+  <!-- Section label -->
+  <rect x="20" y="68" width="145" height="34" rx="10" fill="#4a90d9"/>
+  <rect x="20" y="88" width="145" height="14" fill="#4a90d9"/>
+  <text x="93" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Cell</text>
+
+  <!-- Single cell drawing — centered in box -->
+  <!-- Cell body -->
+  <rect x="58" y="145" width="68" height="200" rx="6" fill="#bbd6f5" stroke="#4a90d9" stroke-width="2"/>
+  <!-- Positive terminal (top) -->
+  <rect x="75" y="132" width="34" height="16" rx="3" fill="#4a90d9"/>
+  <text x="92" y="143" text-anchor="middle" font-size="11" fill="white" font-weight="bold">+</text>
+  <!-- Negative terminal (bottom) -->
+  <rect x="75" y="343" width="34" height="14" rx="3" fill="#2a70b9"/>
+  <text x="92" y="354" text-anchor="middle" font-size="11" fill="white" font-weight="bold">−</text>
+  <!-- Cell label lines (internal structure suggestion) -->
+  <line x1="58" y1="185" x2="126" y2="185" stroke="rgba(74,144,217,0.2)" stroke-width="1"/>
+  <line x1="58" y1="215" x2="126" y2="215" stroke="rgba(74,144,217,0.2)" stroke-width="1"/>
+  <line x1="58" y1="245" x2="126" y2="245" stroke="rgba(74,144,217,0.2)" stroke-width="1"/>
+  <line x1="58" y1="275" x2="126" y2="275" stroke="rgba(74,144,217,0.2)" stroke-width="1"/>
+  <line x1="58" y1="305" x2="126" y2="305" stroke="rgba(74,144,217,0.2)" stroke-width="1"/>
+
+  <!-- Labels below cell -->
+  <text x="93" y="382" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a1a2e">~3.6 V nom.</text>
+  <text x="93" y="398" text-anchor="middle" font-size="11" fill="#555">~5 Ah (typ.)</text>
+  <text x="93" y="414" text-anchor="middle" font-size="10" fill="#888">NMC 21700</text>
+  <text x="93" y="430" text-anchor="middle" font-size="10" fill="#888">example</text>
+  <text x="93" y="470" text-anchor="middle" font-size="10" fill="#4a90d9">Chemistry determines</text>
+  <text x="93" y="483" text-anchor="middle" font-size="10" fill="#4a90d9">all higher-level specs</text>
+
+  <!-- ═══════════════════════════════════════════════
+       ARROW 1 → (Cell to Module)
+  ═══════════════════════════════════════════════ -->
+  <g fill="#555" stroke="#555" stroke-width="1.5">
+    <line x1="168" y1="283" x2="195" y2="283"/>
+    <polygon points="195,277 208,283 195,289"/>
+  </g>
+  <text x="188" y="274" text-anchor="middle" font-size="9" fill="#777">×N</text>
+  <text x="188" y="296" text-anchor="middle" font-size="9" fill="#777">series /</text>
+  <text x="188" y="308" text-anchor="middle" font-size="9" fill="#777">parallel</text>
+
+  <!-- ═══════════════════════════════════════════════
+       BOX 2: MODULE (x=210–430)
+  ═══════════════════════════════════════════════ -->
+  <rect x="210" y="68" width="220" height="430" rx="10" fill="white" stroke="#2a9d8f" stroke-width="2"/>
+  <rect x="210" y="68" width="220" height="34" rx="10" fill="#2a9d8f"/>
+  <rect x="210" y="88" width="220" height="14" fill="#2a9d8f"/>
+  <text x="320" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Module</text>
+
+  <!-- 6S2P = 12 cells in a 6-column × 2-row grid -->
+  <!-- Module frame -->
+  <rect x="222" y="115" width="195" height="150" rx="6" fill="#e8f5f3" stroke="#2a9d8f" stroke-width="1.5"/>
+  <text x="320" y="112" text-anchor="middle" font-size="9" fill="#2a9d8f">Module enclosure</text>
+
+  <!-- Cell grid: 6 cols × 2 rows
+       Cell size: 26w × 56h, gap 5
+       Total width: 6*26 + 5*5 = 181px  → start x=229
+       Total height: 2*56 + 1*8 = 120px → start y=122 -->
+  <g>
+    <!-- Row 1 -->
+    <rect x="229" y="122" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <rect x="260" y="122" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <rect x="291" y="122" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <rect x="322" y="122" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <rect x="353" y="122" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <rect x="384" y="122" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <!-- Row 2 -->
+    <rect x="229" y="185" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <rect x="260" y="185" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <rect x="291" y="185" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <rect x="322" y="185" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <rect x="353" y="185" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+    <rect x="384" y="185" width="24" height="56" rx="3" fill="#bbd6f5" stroke="#4a90d9" stroke-width="1"/>
+  </g>
+
+  <!-- Parallel connectors (horizontal bars connecting row1 to row2 within same column) -->
+  <g stroke="#e07b39" stroke-width="2" fill="none">
+    <line x1="241" y1="178" x2="241" y2="185"/>
+    <line x1="272" y1="178" x2="272" y2="185"/>
+    <line x1="303" y1="178" x2="303" y2="185"/>
+    <line x1="334" y1="178" x2="334" y2="185"/>
+    <line x1="365" y1="178" x2="365" y2="185"/>
+    <line x1="396" y1="178" x2="396" y2="185"/>
+  </g>
+  <!-- Parallel label -->
+  <text x="320" y="183" text-anchor="middle" font-size="8" fill="#e07b39">║ 2P</text>
+
+  <!-- Series bus bars (between columns at top) -->
+  <g stroke="#4a90d9" stroke-width="2">
+    <line x1="253" y1="122" x2="260" y2="122"/>
+    <line x1="284" y1="122" x2="291" y2="122"/>
+    <line x1="315" y1="122" x2="322" y2="122"/>
+    <line x1="346" y1="122" x2="353" y2="122"/>
+    <line x1="377" y1="122" x2="384" y2="122"/>
+  </g>
+
+  <!-- S/P labels -->
+  <text x="222" y="295" font-size="10" fill="#1a1a2e" font-weight="bold">6S2P configuration:</text>
+  <text x="222" y="311" font-size="10" fill="#555">Voltage = 6 × 3.6 V = <tspan font-weight="bold">21.6 V</tspan></text>
+  <text x="222" y="325" font-size="10" fill="#555">Capacity = 2 × 5 Ah = <tspan font-weight="bold">10 Ah</tspan></text>
+  <text x="222" y="339" font-size="10" fill="#555">Energy = 21.6 V × 10 Ah = <tspan font-weight="bold">216 Wh</tspan></text>
+
+  <text x="222" y="365" font-size="10" fill="#888">Each module has:</text>
+  <text x="222" y="379" font-size="10" fill="#888">• Cell voltage monitoring</text>
+  <text x="222" y="393" font-size="10" fill="#888">• Temperature sensors</text>
+  <text x="222" y="407" font-size="10" fill="#888">• Structural frame &amp; cooling</text>
+
+  <!-- ═══════════════════════════════════════════════
+       ARROW 2 → (Module to Pack)
+  ═══════════════════════════════════════════════ -->
+  <g fill="#555" stroke="#555" stroke-width="1.5">
+    <line x1="433" y1="283" x2="460" y2="283"/>
+    <polygon points="460,277 473,283 460,289"/>
+  </g>
+  <text x="453" y="274" text-anchor="middle" font-size="9" fill="#777">×16</text>
+  <text x="453" y="296" text-anchor="middle" font-size="9" fill="#777">modules</text>
+
+  <!-- ═══════════════════════════════════════════════
+       BOX 3: PACK (x=480–680)
+  ═══════════════════════════════════════════════ -->
+  <rect x="480" y="68" width="200" height="430" rx="10" fill="white" stroke="#1a1a2e" stroke-width="2"/>
+  <rect x="480" y="68" width="200" height="34" rx="10" fill="#1a1a2e"/>
+  <rect x="480" y="88" width="200" height="14" fill="#1a1a2e"/>
+  <text x="580" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Pack</text>
+
+  <!-- Stacked module boxes (×4 shown for space) -->
+  <g>
+    <rect x="498" y="110" width="164" height="28" rx="3" fill="#d0eaf8" stroke="#2a9d8f" stroke-width="1.5"/>
+    <text x="580" y="128" text-anchor="middle" font-size="10" fill="#1a6a60">Module 1</text>
+    <rect x="498" y="143" width="164" height="28" rx="3" fill="#d0eaf8" stroke="#2a9d8f" stroke-width="1.5"/>
+    <text x="580" y="161" text-anchor="middle" font-size="10" fill="#1a6a60">Module 2</text>
+    <rect x="498" y="176" width="164" height="28" rx="3" fill="#d0eaf8" stroke="#2a9d8f" stroke-width="1.5"/>
+    <text x="580" y="194" text-anchor="middle" font-size="10" fill="#1a6a60">Module 3</text>
+    <!-- dots indicating more modules -->
+    <text x="580" y="220" text-anchor="middle" font-size="14" fill="#aaa">⋮</text>
+    <rect x="498" y="228" width="164" height="28" rx="3" fill="#d0eaf8" stroke="#2a9d8f" stroke-width="1.5"/>
+    <text x="580" y="246" text-anchor="middle" font-size="10" fill="#1a6a60">Module 16</text>
+  </g>
+
+  <!-- BMS PCB -->
+  <rect x="498" y="270" width="70" height="28" rx="4" fill="#2e8b57" stroke="#1a5c3a" stroke-width="1.5"/>
+  <text x="533" y="285" text-anchor="middle" font-size="9" fill="white" font-weight="bold">BMS PCB</text>
+  <!-- Contactor symbol (right side) -->
+  <g stroke="#e07b39" stroke-width="2">
+    <line x1="592" y1="275" x2="620" y2="275"/>
+    <circle cx="628" cy="275" r="3" fill="none" stroke="#e07b39"/>
+    <circle cx="638" cy="275" r="3" fill="none" stroke="#e07b39"/>
+    <line x1="641" y1="275" x2="656" y2="275"/>
+  </g>
+  <text x="624" y="290" text-anchor="middle" font-size="8" fill="#e07b39">contactor</text>
+  <!-- MSD symbol -->
+  <rect x="592" y="298" width="42" height="18" rx="3" fill="#cc3333" stroke="#aa1111" stroke-width="1.5"/>
+  <text x="613" y="311" text-anchor="middle" font-size="8" fill="white">MSD</text>
+  <!-- Cooling plate indication -->
+  <rect x="498" y="325" width="164" height="14" rx="3" fill="#aad4e8" stroke="#5599bb" stroke-width="1"/>
+  <text x="580" y="336" text-anchor="middle" font-size="9" fill="#336688">Cooling plate</text>
+
+  <!-- Pack specs -->
+  <text x="498" y="358" font-size="11" fill="#1a1a2e" font-weight="bold">96S3P total:</text>
+  <text x="498" y="373" font-size="10" fill="#555">Voltage ≈ 350 V nom.</text>
+  <text x="498" y="387" font-size="10" fill="#555">Capacity ≈ 150 Ah</text>
+  <text x="498" y="401" font-size="10" fill="#555">Energy ≈ 52 kWh</text>
+  <text x="498" y="420" font-size="9" fill="#888">+ BMS, contactors, MSD,</text>
+  <text x="498" y="433" font-size="9" fill="#888">  cooling, HV harness</text>
+  <text x="498" y="470" font-size="10" fill="#e07b39">Orange = power components</text>
+
+  <!-- ═══════════════════════════════════════════════
+       ARROW 3 → (Pack to CTP)
+  ═══════════════════════════════════════════════ -->
+  <g fill="#555" stroke="#555" stroke-width="1.5">
+    <line x1="683" y1="283" x2="710" y2="283"/>
+    <polygon points="710,277 723,283 710,289"/>
+  </g>
+  <text x="703" y="274" text-anchor="middle" font-size="9" fill="#777">next-</text>
+  <text x="703" y="286" text-anchor="middle" font-size="9" fill="#777">gen</text>
+
+  <!-- ═══════════════════════════════════════════════
+       BOX 4: CTP (x=728–880)
+  ═══════════════════════════════════════════════ -->
+  <rect x="728" y="68" width="155" height="430" rx="10" fill="white" stroke="#e07b39" stroke-width="2"/>
+  <rect x="728" y="68" width="155" height="34" rx="10" fill="#e07b39"/>
+  <rect x="728" y="88" width="155" height="14" fill="#e07b39"/>
+  <text x="806" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="white">CTP</text>
+
+  <!-- Blade-style long flat cells going directly into pack -->
+  <!-- Each blade cell: ~130px wide × 22px tall -->
+  <g>
+    <rect x="742" y="110" width="126" height="20" rx="3" fill="#ffd080" stroke="#c9a800" stroke-width="1.5"/>
+    <rect x="742" y="135" width="126" height="20" rx="3" fill="#ffd080" stroke="#c9a800" stroke-width="1.5"/>
+    <rect x="742" y="160" width="126" height="20" rx="3" fill="#ffd080" stroke="#c9a800" stroke-width="1.5"/>
+    <rect x="742" y="185" width="126" height="20" rx="3" fill="#ffd080" stroke="#c9a800" stroke-width="1.5"/>
+    <rect x="742" y="210" width="126" height="20" rx="3" fill="#ffd080" stroke="#c9a800" stroke-width="1.5"/>
+    <rect x="742" y="235" width="126" height="20" rx="3" fill="#ffd080" stroke="#c9a800" stroke-width="1.5"/>
+    <rect x="742" y="260" width="126" height="20" rx="3" fill="#ffd080" stroke="#c9a800" stroke-width="1.5"/>
+  </g>
+  <!-- No module frame indicator -->
+  <line x1="728" y1="290" x2="883" y2="290" stroke="#e07b39" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="806" y="305" text-anchor="middle" font-size="9" fill="#e07b39">No module layer</text>
+
+  <!-- Pack outer shell for CTP -->
+  <rect x="738" y="106" width="134" height="178" rx="4" fill="none" stroke="#cc6600" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="806" y="102" text-anchor="middle" font-size="9" fill="#cc6600">Pack shell (structural)</text>
+
+  <!-- CTP labels -->
+  <text x="742" y="330" font-size="11" fill="#1a1a2e" font-weight="bold">CATL Blade / CTP:</text>
+  <text x="742" y="346" font-size="10" fill="#555">• Cells bond directly</text>
+  <text x="742" y="360" font-size="10" fill="#555">  to pack shell</text>
+  <text x="742" y="374" font-size="10" fill="#555">• No module housing</text>
+  <text x="742" y="388" font-size="10" fill="#555">• +15–20% volumetric</text>
+  <text x="742" y="402" font-size="10" fill="#555">  efficiency vs. modular</text>
+  <text x="742" y="420" font-size="10" fill="#888">Used by: CATL, BYD,</text>
+  <text x="742" y="434" font-size="10" fill="#888">Tesla (4680 structural)</text>
+  <text x="742" y="460" font-size="9" fill="#e07b39">Trade-off: repairability</text>
+  <text x="742" y="473" font-size="9" fill="#e07b39">vs. energy density</text>
+
+  <!-- Bottom legend bar -->
+  <rect x="20" y="514" width="860" height="72" rx="8" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="30" y="532" font-size="11" font-weight="bold" fill="#1a1a2e">Key components shown:</text>
+  <rect x="30" y="540" width="12" height="12" rx="2" fill="#bbd6f5" stroke="#4a90d9"/>
+  <text x="47" y="551" font-size="10" fill="#333">Cell</text>
+  <rect x="80" y="540" width="12" height="12" rx="2" fill="#d0eaf8" stroke="#2a9d8f"/>
+  <text x="97" y="551" font-size="10" fill="#333">Module</text>
+  <rect x="150" y="540" width="12" height="12" rx="2" fill="#2e8b57"/>
+  <text x="167" y="551" font-size="10" fill="#333">BMS PCB</text>
+  <rect x="228" y="540" width="12" height="12" rx="2" fill="#cc3333"/>
+  <text x="245" y="551" font-size="10" fill="#333">MSD (Manual Service Disconnect)</text>
+  <rect x="430" y="540" width="12" height="12" rx="2" fill="#aad4e8"/>
+  <text x="447" y="551" font-size="10" fill="#333">Cooling plate</text>
+  <rect x="520" y="540" width="12" height="12" rx="2" fill="#ffd080" stroke="#c9a800"/>
+  <text x="537" y="551" font-size="10" fill="#333">Blade cell (CTP)</text>
+  <text x="30" y="575" font-size="10" fill="#888">xSyP notation: x cells in series (voltage multiplies), y cells in parallel (capacity multiplies). Example: 96S3P = 96 series groups, each group has 3 parallel cells.</text>
+</svg>

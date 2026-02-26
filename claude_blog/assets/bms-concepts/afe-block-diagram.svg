@@ -1,0 +1,139 @@
+<svg viewBox="0 0 860 580" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="860" height="580" fill="#f8f9fa"/>
+  <text x="430" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a1a2e">AFE (Analog Front-End) IC — Internal Block Diagram</text>
+  <text x="430" y="48" text-anchor="middle" font-size="11" fill="#555">e.g. Texas Instruments BQ76940 — 9 to 15 cell stack monitor</text>
+
+  <defs>
+    <marker id="aarr" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#555"/>
+    </marker>
+    <marker id="aarr2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#1a6eb5"/>
+    </marker>
+  </defs>
+
+  <!-- Outer AFE chip boundary -->
+  <rect x="220" y="60" width="480" height="440" rx="10" fill="white" stroke="#1a6eb5" stroke-width="3" stroke-dasharray="6,3"/>
+  <text x="460" y="78" text-anchor="middle" font-size="11" fill="#1a6eb5" font-style="italic">AFE IC (BQ76940)</text>
+
+  <!-- Cell inputs (left) -->
+  <text x="100" y="90" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Cell Stack</text>
+  <!-- 5 cell taps -->
+  <line x1="30" y1="110" x2="220" y2="110" stroke="#c00" stroke-width="1.5" marker-end="url(#aarr)"/>
+  <text x="15" y="114" font-size="9" fill="#c00">VC5+</text>
+  <line x1="30" y1="145" x2="220" y2="145" stroke="#c00" stroke-width="1.5" marker-end="url(#aarr)"/>
+  <text x="15" y="149" font-size="9" fill="#c00">VC4</text>
+  <line x1="30" y1="180" x2="220" y2="180" stroke="#c00" stroke-width="1.5" marker-end="url(#aarr)"/>
+  <text x="15" y="184" font-size="9" fill="#c00">VC3</text>
+  <line x1="30" y1="215" x2="220" y2="215" stroke="#c00" stroke-width="1.5" marker-end="url(#aarr)"/>
+  <text x="15" y="219" font-size="9" fill="#c00">VC2</text>
+  <line x1="30" y1="250" x2="220" y2="250" stroke="#c00" stroke-width="1.5" marker-end="url(#aarr)"/>
+  <text x="15" y="254" font-size="9" fill="#c00">VC1−</text>
+
+  <!-- Cell selection mux -->
+  <rect x="230" y="95" width="90" height="180" rx="5" fill="#ffe0d0" stroke="#c04000" stroke-width="2"/>
+  <text x="275" y="120" text-anchor="middle" font-size="10" font-weight="bold" fill="#802000">Cell</text>
+  <text x="275" y="134" text-anchor="middle" font-size="10" font-weight="bold" fill="#802000">Select</text>
+  <text x="275" y="149" text-anchor="middle" font-size="10" fill="#802000">MUX</text>
+  <text x="275" y="165" text-anchor="middle" font-size="9" fill="#555">High-voltage</text>
+  <text x="275" y="178" text-anchor="middle" font-size="9" fill="#555">analog mux</text>
+  <text x="275" y="193" text-anchor="middle" font-size="9" fill="#555">selects one</text>
+  <text x="275" y="206" text-anchor="middle" font-size="9" fill="#555">cell at a time</text>
+  <text x="275" y="221" text-anchor="middle" font-size="9" fill="#555">for ADC</text>
+  <text x="275" y="246" text-anchor="middle" font-size="9" fill="#555">±1 mV typ</text>
+  <text x="275" y="260" text-anchor="middle" font-size="9" fill="#555">accuracy</text>
+
+  <!-- MUX → ADC arrow -->
+  <line x1="320" y1="185" x2="365" y2="185" stroke="#555" stroke-width="1.5" marker-end="url(#aarr)"/>
+
+  <!-- ADC block -->
+  <rect x="366" y="145" width="90" height="80" rx="5" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="411" y="172" text-anchor="middle" font-size="11" font-weight="bold" fill="#003a7a">ADC</text>
+  <text x="411" y="187" text-anchor="middle" font-size="9" fill="#333">16-bit delta-sigma</text>
+  <text x="411" y="200" text-anchor="middle" font-size="9" fill="#333">100–250 sps</text>
+  <text x="411" y="215" text-anchor="middle" font-size="9" fill="#333">per cell</text>
+
+  <!-- ADC → Digital core arrow -->
+  <line x1="456" y1="185" x2="490" y2="185" stroke="#555" stroke-width="1.5" marker-end="url(#aarr)"/>
+
+  <!-- Temperature inputs (mid left) -->
+  <text x="100" y="305" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">NTC Thermistors</text>
+  <line x1="30" y1="320" x2="220" y2="340" stroke="#e07b00" stroke-width="1.5" marker-end="url(#aarr)"/>
+  <text x="15" y="324" font-size="9" fill="#e07b00">TS1</text>
+  <line x1="30" y1="345" x2="220" y2="355" stroke="#e07b00" stroke-width="1.5" marker-end="url(#aarr)"/>
+  <text x="15" y="349" font-size="9" fill="#e07b00">TS2</text>
+  <line x1="30" y1="370" x2="220" y2="370" stroke="#e07b00" stroke-width="1.5" marker-end="url(#aarr)"/>
+  <text x="15" y="374" font-size="9" fill="#e07b00">TS3</text>
+
+  <!-- Temp ADC -->
+  <rect x="230" y="310" width="90" height="80" rx="5" fill="#fff0d0" stroke="#e07b00" stroke-width="2"/>
+  <text x="275" y="340" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a3a00">Temp</text>
+  <text x="275" y="354" text-anchor="middle" font-size="10" fill="#7a3a00">ADC</text>
+  <text x="275" y="368" text-anchor="middle" font-size="9" fill="#555">10-bit</text>
+  <text x="275" y="380" text-anchor="middle" font-size="9" fill="#555">±1°C</text>
+  <line x1="320" y1="350" x2="410" y2="350" stroke="#555" stroke-width="1.5"/>
+  <line x1="410" y1="350" x2="410" y2="300" stroke="#555" stroke-width="1.5"/>
+  <line x1="410" y1="300" x2="490" y2="285" stroke="#555" stroke-width="1.5" marker-end="url(#aarr)"/>
+
+  <!-- Digital core / register map -->
+  <rect x="491" y="115" width="140" height="280" rx="6" fill="#e8d0ff" stroke="#6633cc" stroke-width="2"/>
+  <text x="561" y="140" text-anchor="middle" font-size="11" font-weight="bold" fill="#330080">Digital Core</text>
+  <text x="561" y="157" text-anchor="middle" font-size="9" fill="#330080">Register map</text>
+  <line x1="491" y1="165" x2="631" y2="165" stroke="#9966cc" stroke-width="1"/>
+  <text x="561" y="180" text-anchor="middle" font-size="9" fill="#333">OV/UV thresholds</text>
+  <text x="561" y="194" text-anchor="middle" font-size="9" fill="#333">OT/UT thresholds</text>
+  <text x="561" y="208" text-anchor="middle" font-size="9" fill="#333">OCC/DSC limits</text>
+  <text x="561" y="222" text-anchor="middle" font-size="9" fill="#333">Alert pin control</text>
+  <line x1="491" y1="230" x2="631" y2="230" stroke="#9966cc" stroke-width="1"/>
+  <text x="561" y="246" text-anchor="middle" font-size="10" font-weight="bold" fill="#330080">Protection</text>
+  <text x="561" y="260" text-anchor="middle" font-size="10" font-weight="bold" fill="#330080">Logic</text>
+  <text x="561" y="278" text-anchor="middle" font-size="9" fill="#333">HW watchdog</text>
+  <text x="561" y="292" text-anchor="middle" font-size="9" fill="#333">comparators</text>
+  <text x="561" y="306" text-anchor="middle" font-size="9" fill="#333">fire CHG/DSG</text>
+  <text x="561" y="320" text-anchor="middle" font-size="9" fill="#333">FET off instantly</text>
+  <line x1="491" y1="330" x2="631" y2="330" stroke="#9966cc" stroke-width="1"/>
+  <text x="561" y="346" text-anchor="middle" font-size="9" fill="#333">Balance FET</text>
+  <text x="561" y="360" text-anchor="middle" font-size="9" fill="#333">driver (passive)</text>
+  <text x="561" y="374" text-anchor="middle" font-size="9" fill="#333">resistor discharge</text>
+
+  <!-- Current sense inputs (bottom left) -->
+  <text x="100" y="440" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Current Sensor</text>
+  <line x1="30" y1="460" x2="220" y2="445" stroke="#2a8a2a" stroke-width="1.5" marker-end="url(#aarr)"/>
+  <text x="15" y="462" font-size="9" fill="#2a8a2a">SRP/SRN</text>
+  <text x="15" y="473" font-size="9" fill="#555">(shunt)</text>
+
+  <!-- Coulomb counter -->
+  <rect x="230" y="420" width="90" height="70" rx="5" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="2"/>
+  <text x="275" y="444" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a5a1a">Coulomb</text>
+  <text x="275" y="458" text-anchor="middle" font-size="10" fill="#1a5a1a">Counter</text>
+  <text x="275" y="472" text-anchor="middle" font-size="9" fill="#555">±0.1% typ</text>
+  <text x="275" y="484" text-anchor="middle" font-size="9" fill="#555">integrates I</text>
+  <line x1="320" y1="455" x2="460" y2="390" stroke="#555" stroke-width="1.5" marker-end="url(#aarr)"/>
+
+  <!-- SPI/I2C output (right side) -->
+  <line x1="631" y1="255" x2="700" y2="255" stroke="#1a6eb5" stroke-width="2" marker-end="url(#aarr2)"/>
+  <rect x="700" y="220" width="130" height="70" rx="6" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="765" y="244" text-anchor="middle" font-size="11" font-weight="bold" fill="#003a7a">SPI / I²C</text>
+  <text x="765" y="260" text-anchor="middle" font-size="9" fill="#333">to MCU / host</text>
+  <text x="765" y="274" text-anchor="middle" font-size="9" fill="#333">read cell voltages</text>
+  <text x="765" y="288" text-anchor="middle" font-size="9" fill="#333">write config regs</text>
+
+  <!-- CHG/DSG FET control (right) -->
+  <line x1="631" y1="340" x2="700" y2="340" stroke="#c00" stroke-width="2" marker-end="url(#aarr)"/>
+  <rect x="700" y="310" width="130" height="60" rx="6" fill="#ffe0d0" stroke="#c04000" stroke-width="2"/>
+  <text x="765" y="334" text-anchor="middle" font-size="10" font-weight="bold" fill="#802000">CHG / DSG</text>
+  <text x="765" y="348" text-anchor="middle" font-size="9" fill="#802000">FET Gate Drive</text>
+  <text x="765" y="361" text-anchor="middle" font-size="9" fill="#555">opens on fault</text>
+
+  <!-- ALERT pin (right bottom) -->
+  <line x1="631" y1="200" x2="700" y2="170" stroke="#e07b00" stroke-width="2" marker-end="url(#aarr)"/>
+  <rect x="700" y="145" width="130" height="48" rx="5" fill="#fff0d0" stroke="#e07b00" stroke-width="2"/>
+  <text x="765" y="165" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a3a00">ALERT pin</text>
+  <text x="765" y="180" text-anchor="middle" font-size="9" fill="#555">wakes MCU on fault</text>
+  <text x="765" y="192" text-anchor="middle" font-size="9" fill="#555">open-drain output</text>
+
+  <!-- Daisy chain / COMM pin note (bottom) -->
+  <rect x="220" y="510" width="480" height="48" rx="6" fill="#f0f0ff" stroke="#5555cc" stroke-width="1.5"/>
+  <text x="460" y="528" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Daisy-chain comms (BQ76940)</text>
+  <text x="460" y="548" text-anchor="middle" font-size="10" fill="#555">Up to 3 ICs stacked for 15–45 cells — COMMLOW/COMMHIGH differential pins — 1 Mbps, isolated</text>
+</svg>

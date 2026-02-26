@@ -1,0 +1,106 @@
+<svg viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="800" height="560" fill="#f8f9fa"/>
+  <text x="400" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a1a2e">BMS Communication Interfaces — Overview</text>
+  <text x="400" y="48" text-anchor="middle" font-size="11" fill="#555">External vs internal communication roles in an EV BMS</text>
+
+  <!-- Central BMS box -->
+  <rect x="290" y="215" width="220" height="130" rx="10" fill="#e8d0ff" stroke="#6633cc" stroke-width="3"/>
+  <text x="400" y="240" text-anchor="middle" font-size="13" font-weight="bold" fill="#330080">BMS</text>
+  <text x="400" y="258" text-anchor="middle" font-size="9" fill="#555">(Main MCU)</text>
+  <line x1="290" y1="265" x2="510" y2="265" stroke="#9966cc" stroke-width="1"/>
+  <text x="400" y="280" text-anchor="middle" font-size="9" fill="#333">• Coulomb counting</text>
+  <text x="400" y="293" text-anchor="middle" font-size="9" fill="#333">• SOC / SOH / SOP calc</text>
+  <text x="400" y="306" text-anchor="middle" font-size="9" fill="#333">• Protection logic</text>
+  <text x="400" y="320" text-anchor="middle" font-size="9" fill="#333">• Fault management</text>
+  <text x="400" y="333" text-anchor="middle" font-size="9" fill="#333">• Balancing control</text>
+
+  <defs>
+    <marker id="carr" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#555"/>
+    </marker>
+    <marker id="dbarr" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#1a6eb5"/>
+    </marker>
+  </defs>
+
+  <!-- ── CAN bus (top) ── -->
+  <rect x="150" y="60" width="500" height="36" rx="6" fill="#d0e8ff" stroke="#1a6eb5" stroke-width="2"/>
+  <text x="400" y="83" text-anchor="middle" font-size="12" font-weight="bold" fill="#003a7a">CAN Bus (J1939 / ISO 15765) — 500 kbps</text>
+
+  <!-- BMS → CAN line -->
+  <line x1="400" y1="96" x2="400" y2="215" stroke="#1a6eb5" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="412" y="160" font-size="9" fill="#1a6eb5">TX: SOC, SOH, SOP, T_max</text>
+  <text x="412" y="172" font-size="9" fill="#1a6eb5">TX: cell voltages (all)</text>
+  <text x="412" y="184" font-size="9" fill="#1a6eb5">RX: VCU commands</text>
+  <text x="412" y="196" font-size="9" fill="#1a6eb5">RX: OBC charge current req</text>
+
+  <!-- CAN nodes (top row) -->
+  <rect x="30" y="60" width="110" height="36" rx="5" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="85" y="83" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a5a1a">VCU</text>
+  <line x1="140" y1="78" x2="150" y2="78" stroke="#1a6eb5" stroke-width="2" marker-end="url(#dbarr)"/>
+
+  <rect x="660" y="60" width="110" height="36" rx="5" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="1.5"/>
+  <text x="715" y="83" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a5a1a">OBC</text>
+  <line x1="650" y1="78" x2="660" y2="78" stroke="#1a6eb5" stroke-width="2" marker-end="url(#dbarr)"/>
+
+  <!-- Gateway (middle of CAN bus) -->
+  <rect x="310" y="105" width="180" height="32" rx="5" fill="#f0f0f0" stroke="#888" stroke-width="1.5"/>
+  <text x="400" y="125" text-anchor="middle" font-size="10" fill="#555">CAN gateway / telematics ECU</text>
+
+  <!-- ── Right side: Instrument cluster + DC-DC + PDU ── -->
+  <!-- Right CAN nodes -->
+  <rect x="660" y="168" width="120" height="36" rx="5" fill="#ffe0d0" stroke="#c04000" stroke-width="1.5"/>
+  <text x="720" y="186" text-anchor="middle" font-size="10" font-weight="bold" fill="#802000">Instrument</text>
+  <text x="720" y="198" text-anchor="middle" font-size="9" fill="#802000">Cluster</text>
+  <line x1="510" y1="270" x2="660" y2="186" stroke="#1a6eb5" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#dbarr)"/>
+  <text x="590" y="218" text-anchor="middle" font-size="8" fill="#1a6eb5">SOC%</text>
+
+  <rect x="660" y="300" width="120" height="36" rx="5" fill="#ffe0d0" stroke="#c04000" stroke-width="1.5"/>
+  <text x="720" y="318" text-anchor="middle" font-size="10" font-weight="bold" fill="#802000">DC-DC</text>
+  <text x="720" y="330" text-anchor="middle" font-size="9" fill="#802000">Converter</text>
+  <line x1="510" y1="290" x2="660" y2="318" stroke="#1a6eb5" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#dbarr)"/>
+
+  <!-- ── Left side: AFE, SPI, RS-485 ── -->
+  <!-- SPI to AFE -->
+  <rect x="20" y="215" width="120" height="60" rx="6" fill="#fff0d0" stroke="#e07b00" stroke-width="2"/>
+  <text x="80" y="238" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a3a00">AFE IC</text>
+  <text x="80" y="253" text-anchor="middle" font-size="9" fill="#7a3a00">(BQ76940)</text>
+  <text x="80" y="267" text-anchor="middle" font-size="9" fill="#555">SPI / daisy-chain</text>
+  <line x1="140" y1="245" x2="290" y2="262" stroke="#e07b00" stroke-width="2" marker-end="url(#carr)"/>
+  <text x="215" y="247" text-anchor="middle" font-size="9" fill="#e07b00">SPI (4-wire)</text>
+  <text x="215" y="258" text-anchor="middle" font-size="9" fill="#e07b00">1–4 Mbps</text>
+
+  <!-- RS-485 to sub-BMS / charger -->
+  <rect x="20" y="360" width="130" height="60" rx="6" fill="#d0ffd0" stroke="#2a8a2a" stroke-width="2"/>
+  <text x="85" y="381" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a5a1a">Sub-BMS /</text>
+  <text x="85" y="395" text-anchor="middle" font-size="9" fill="#1a5a1a">Slave modules</text>
+  <text x="85" y="408" text-anchor="middle" font-size="9" fill="#555">RS-485 / Modbus</text>
+  <line x1="150" y1="390" x2="290" y2="310" stroke="#2a8a2a" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#carr)"/>
+  <text x="222" y="358" text-anchor="middle" font-size="9" fill="#2a8a2a">RS-485</text>
+  <text x="222" y="370" text-anchor="middle" font-size="9" fill="#2a8a2a">115 kbps</text>
+
+  <!-- UART / debug port -->
+  <rect x="20" y="430" width="130" height="50" rx="6" fill="#f0f0f0" stroke="#888" stroke-width="1.5"/>
+  <text x="85" y="452" text-anchor="middle" font-size="10" font-weight="bold" fill="#555">Debug Port</text>
+  <text x="85" y="466" text-anchor="middle" font-size="9" fill="#555">UART / J-Tag</text>
+  <line x1="150" y1="455" x2="290" y2="340" stroke="#888" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#carr)"/>
+
+  <!-- LIN (optional for smart sensors) -->
+  <rect x="660" y="400" width="120" height="50" rx="6" fill="#f0f0f0" stroke="#888" stroke-width="1.5"/>
+  <text x="720" y="422" text-anchor="middle" font-size="10" font-weight="bold" fill="#555">LIN (optional)</text>
+  <text x="720" y="436" text-anchor="middle" font-size="9" fill="#555">Smart sensors</text>
+  <line x1="510" y1="310" x2="660" y2="425" stroke="#888" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#carr)"/>
+
+  <!-- Summary table at bottom -->
+  <rect x="30" y="490" width="740" height="58" rx="8" fill="#f0f0ff" stroke="#5555cc" stroke-width="1.5"/>
+  <text x="400" y="507" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Interface Summary</text>
+  <line x1="30" y1="511" x2="770" y2="511" stroke="#ddd" stroke-width="1"/>
+  <text x="115" y="524" text-anchor="middle" font-size="9" font-weight="bold" fill="#1a6eb5">CAN (external)</text>
+  <text x="115" y="536" text-anchor="middle" font-size="9" fill="#555">BMS↔VCU, OBC, cluster</text>
+  <text x="290" y="524" text-anchor="middle" font-size="9" font-weight="bold" fill="#e07b00">SPI (internal)</text>
+  <text x="290" y="536" text-anchor="middle" font-size="9" fill="#555">MCU↔AFE IC(s)</text>
+  <text x="450" y="524" text-anchor="middle" font-size="9" font-weight="bold" fill="#2a8a2a">RS-485 (optional)</text>
+  <text x="450" y="536" text-anchor="middle" font-size="9" fill="#555">Master BMS↔slave modules</text>
+  <text x="620" y="524" text-anchor="middle" font-size="9" font-weight="bold" fill="#888">UART/JTAG (debug)</text>
+  <text x="620" y="536" text-anchor="middle" font-size="9" fill="#555">Factory cal, firmware update</text>
+</svg>

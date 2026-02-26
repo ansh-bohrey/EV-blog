@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Heat Pump vs PTC Heater</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 20px; }
+  h2 { text-align: center; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 16px; }
+  .container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+  .chart-box { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
+  .controls { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+  .ctrl { display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #555; gap: 4px; }
+  input[type=range] { width: 150px; }
+  .val { font-weight: bold; color: #1a6eb5; font-size: 13px; }
+  .info-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+  .info-card { background: white; border-radius: 8px; padding: 14px 18px; font-size: 11px;
+               box-shadow: 0 1px 4px rgba(0,0,0,0.1); max-width: 280px; }
+  .info-card strong { display: block; margin-bottom: 6px; font-size: 13px; }
+</style>
+</head>
+<body>
+<h2>Heat Pump vs PTC Heater — Range Impact</h2>
+<p class="subtitle">COP (Coefficient of Performance) determines how much battery energy is consumed for cabin heating</p>
+
+<div class="controls">
+  <div class="ctrl">
+    <span>Ambient temperature (°C)</span>
+    <input type="range" id="temp" min="-20" max="10" step="1" value="-5"/>
+    <span class="val" id="tempVal">−5°C</span>
+  </div>
+  <div class="ctrl">
+    <span>Heat demand (kW)</span>
+    <input type="range" id="heat" min="1" max="8" step="0.5" value="4"/>
+    <span class="val" id="heatVal">4.0 kW</span>
+  </div>
+  <div class="ctrl">
+    <span>Nominal range (km)</span>
+    <input type="range" id="nom" min="200" max="600" step="20" value="400"/>
+    <span class="val" id="nomVal">400 km</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="chart-box"><canvas id="copChart" width="500" height="320"></canvas></div>
+  <div class="chart-box"><canvas id="rangeChart" width="500" height="320"></canvas></div>
+</div>
+
+<div class="info-row">
+  <div class="info-card">
+    <strong style="color:#c00">PTC (Positive Temperature Coefficient)</strong>
+    Simple resistive heater — like a kettle<br>
+    COP = 1.0 always (100% efficiency)<br>
+    4 kW heat = 4 kW drawn from battery<br>
+    Cheap, reliable, works at any temperature<br>
+    Used in: older Leaf, early EVs<br>
+    <em style="color:#c00">→ Major range penalty in cold weather</em>
+  </div>
+  <div class="info-card">
+    <strong style="color:#2a8a2a">Heat Pump (Refrigeration cycle reversed)</strong>
+    Moves heat from outside air → cabin<br>
+    COP = 2–4 at mild temperatures<br>
+    4 kW heat ≈ 1–2 kW drawn from battery<br>
+    COP drops as temp falls (less heat to extract)<br>
+    Below −15°C: often falls back to PTC assist<br>
+    Used in: Tesla Model Y (2021+), VW ID.4, Hyundai Ioniq 5<br>
+    <em style="color:#2a8a2a">→ Significantly better winter range</em>
+  </div>
+  <div class="info-card">
+    <strong style="color:#e07b00">BMS role in cabin heating</strong>
+    BMS monitors battery temperature<br>
+    If battery &lt;15°C, must warm cells before charge<br>
+    Coolant loop: heater ↔ battery ↔ cabin<br>
+    Battery self-heating from current also helps<br>
+    Pre-conditioning: heat battery + cabin while plugged in<br>
+    <em style="color:#e07b00">→ Pre-conditioning while plugged = free range</em>
+  </div>
+</div>
+
+<script>
+document.getElementById('temp').addEventListener('input', function() {
+  document.getElementById('tempVal').textContent = (this.value > 0 ? '+' : '') + this.value + '°C';
+  update();
+});
+document.getElementById('heat').addEventListener('input', function() {
+  document.getElementById('heatVal').textContent = parseFloat(this.value).toFixed(1) + ' kW';
+  update();
+});
+document.getElementById('nom').addEventListener('input', function() {
+  document.getElementById('nomVal').textContent = this.value + ' km';
+  update();
+});
+
+// Heat pump COP vs ambient temperature model
+// COP decreases as temperature drops; typically 3.5 at 10°C → 1.5 at -10°C → ~1.0 at -20°C
+function hpCOP(T) {
+  if (T >= 10) return 3.8;
+  if (T >= 0) return 3.8 - (10 - T) * 0.16; // 3.8 to 2.2
+  if (T >= -10) return 2.2 - (-T) * 0.07;    // 2.2 to 1.5
+  if (T >= -15) return 1.5 - (-T - 10) * 0.08; // 1.5 to 1.1
+  return 1.0; // pure PTC assist mode
+}
+
+function rangeAfterHeating(heatingKW, cop, nomRange) {
+  const baseConsumption = 0.15; // kW per km
+  const avgSpeed = 70; // km/h
+  const heatFromBattery = heatingKW / cop;
+  const addedKWh_per_km = heatFromBattery / avgSpeed;
+  const totalKWh_per_km = baseConsumption + addedKWh_per_km;
+  // Total energy = nomRange * baseConsumption
+  const totalEnergy = nomRange * baseConsumption;
+  return totalEnergy / totalKWh_per_km;
+}
+
+let chart1 = null, chart2 = null;
+
+function update() {
+  const T = parseFloat(document.getElementById('temp').value);
+  const heatKW = parseFloat(document.getElementById('heat').value);
+  const nomRange = parseFloat(document.getElementById('nom').value);
+
+  // COP vs temp data
+  const temps = [];
+  const ptcCOP = [], hpCOPs = [];
+  for (let t = -20; t <= 15; t++) {
+    temps.push(t);
+    ptcCOP.push(1.0);
+    hpCOPs.push(+hpCOP(t).toFixed(2));
+  }
+
+  if (chart1) chart1.destroy();
+  chart1 = new Chart(document.getElementById('copChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: temps,
+      datasets: [
+        {
+          label: 'Heat Pump COP',
+          data: hpCOPs,
+          borderColor: '#2a8a2a',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          fill: true,
+          backgroundColor: 'rgba(42,138,42,0.1)',
+          tension: 0.3
+        },
+        {
+          label: 'PTC COP (always 1.0)',
+          data: ptcCOP,
+          borderColor: '#c00',
+          borderWidth: 2,
+          pointRadius: 0,
+          borderDash: [6, 3]
+        }
+      ]
+    },
+    options: {
+      responsive: false,
+      plugins: {
+        title: { display: true, text: 'Heating COP vs Ambient Temperature', font: { size: 13 } },
+        legend: { position: 'top' }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Ambient Temp (°C)' } },
+        y: { title: { display: true, text: 'COP (heat output / electrical input)' }, min: 0, max: 5 }
+      }
+    }
+  });
+
+  // Range vs temp for both systems
+  const rangesPTC = [], rangesHP = [];
+  for (let t = -20; t <= 15; t++) {
+    rangesPTC.push(+rangeAfterHeating(heatKW, 1.0, nomRange).toFixed(1));
+    rangesHP.push(+rangeAfterHeating(heatKW, hpCOP(t), nomRange).toFixed(1));
+  }
+
+  if (chart2) chart2.destroy();
+  chart2 = new Chart(document.getElementById('rangeChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: temps,
+      datasets: [
+        {
+          label: 'Range with Heat Pump (km)',
+          data: rangesHP,
+          borderColor: '#2a8a2a',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          fill: true,
+          backgroundColor: 'rgba(42,138,42,0.08)',
+          tension: 0.3
+        },
+        {
+          label: 'Range with PTC heater (km)',
+          data: rangesPTC,
+          borderColor: '#c00',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: true,
+          backgroundColor: 'rgba(200,0,0,0.05)',
+          tension: 0
+        },
+        {
+          label: 'Nominal (no heating)',
+          data: temps.map(() => nomRange),
+          borderColor: '#888',
+          borderWidth: 1.5,
+          pointRadius: 0,
+          borderDash: [4, 3]
+        }
+      ]
+    },
+    options: {
+      responsive: false,
+      plugins: {
+        title: {
+          display: true,
+          text: `Range vs Temp | Heat demand=${heatKW}kW | Nominal=${nomRange}km`,
+          font: { size: 12 }
+        },
+        legend: { position: 'top' }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Ambient Temp (°C)' } },
+        y: { title: { display: true, text: 'Range (km)' }, min: 0 }
+      }
+    }
+  });
+}
+
+update();
+</script>
+</body>
+</html>
