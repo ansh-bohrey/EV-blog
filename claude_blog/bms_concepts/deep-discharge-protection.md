@@ -85,7 +85,7 @@ The second approach — acting on estimated OCV rather than raw terminal voltage
 
 After opening the contactor, the BMS performs an **OCV recovery check**: with no load, the cell is allowed to rest for a configurable period (30–120 seconds). If the terminal voltage recovers above V_min, the sag was the cause and the cell may be healthy. If the open-circuit voltage remains below V_min, the cell is genuinely discharged to or past the safe limit and requires recovery charging or removal from service.
 
-![Deep discharge detection and recovery decision flowchart](../assets/claude_assetsplan/bms-concepts/deep-discharge-recovery-flowchart.svg)
+![Deep discharge detection and recovery decision flowchart](../assets/bms-concepts/deep-discharge-recovery-flowchart.svg)
 
 ---
 
@@ -93,7 +93,7 @@ After opening the contactor, the BMS performs an **OCV recovery check**: with no
 
 A cell left on the shelf loses charge slowly even with no external load. This **self-discharge** occurs through parasitic reactions at the electrode-electrolyte interface and through microscopic electronic conduction through the separator. The rate depends on chemistry, temperature, and cell age.
 
-<iframe src="../assets/claude_assetsplan/bms-concepts/self-discharge-chart.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../assets/bms-concepts/self-discharge-chart.html" width="100%" height="380" frameborder="0"></iframe>
 
 Typical self-discharge rates at 25°C run 1–3% SOC per month for NMC and NCA cells, and somewhat lower for LFP. Temperature accelerates the rate significantly — a cell stored at 40°C may self-discharge two to four times faster than one stored at 20°C.
 
@@ -119,7 +119,7 @@ The recovery protocol is a **low-rate pre-charge phase**:
 4. If cell voltage reaches 3.0 V within the timeout window and temperature is normal, transition to normal CC-CV charging.
 5. If cell voltage does not reach 3.0 V within 30 minutes of pre-charge, or temperature rises abnormally at any point: the cell has sustained irreversible damage. Remove from service. Do not return to pack without capacity testing and safety verification.
 
-![Recovery charging flowchart: UV detection → OCV check → trickle pre-charge → pass/fail criteria](../assets/claude_assetsplan/bms-concepts/deep-discharge-recovery-flowchart.svg)
+![Recovery charging flowchart: UV detection → OCV check → trickle pre-charge → pass/fail criteria](../assets/bms-concepts/deep-discharge-recovery-flowchart.svg)
 
 See the [Charging Algorithm post](./charging-algorithm.md) for how the standard CC-CV protocol integrates with this pre-charge phase, and the [Error Handling post](./error-handling-fault-reporting.md) for how UV faults are logged and communicated upstream.
 

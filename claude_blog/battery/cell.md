@@ -37,7 +37,7 @@ During discharge, lithium ions leave the anode (graphite), travel through the el
 
 Because intercalation does not involve dissolving or depositing electrode material the way older chemistries do, lithium-ion cells can survive thousands of charge cycles. The mechanisms that limit cycle life — SEI growth, particle cracking, lithium plating — are all secondary effects, not the primary reaction. This is why Li-ion batteries last years rather than hundreds of cycles.
 
-![Li-ion cell cross-section — anode, cathode, separator, electrolyte layers](../assets/claude_assetsplan/battery/cell-cross-section.svg)
+![Li-ion cell cross-section — anode, cathode, separator, electrolyte layers](../assets/battery/cell-cross-section.svg)
 
 ---
 
@@ -69,7 +69,7 @@ This is where chemistries diverge in ways that directly affect BMS strategy, the
 
 ## Chemistry Comparison
 
-![Cell chemistry comparison — voltage, energy density, cycle life, thermal safety, cost](../assets/claude_assetsplan/battery/chemistry-comparison-table.svg)
+![Cell chemistry comparison — voltage, energy density, cycle life, thermal safety, cost](../assets/battery/chemistry-comparison-table.svg)
 
 | Chemistry | Nom. Voltage | Wh/kg (cell) | Cycle Life | Thermal Safety | Cobalt-free? | Key EV Use |
 |---|---|---|---|---|---|---|
@@ -82,7 +82,7 @@ This is where chemistries diverge in ways that directly affect BMS strategy, the
 
 The interactive chart below lets you explore the OCV-SOC curves for NMC and LFP side by side — the most important practical difference between them from a BMS perspective. Note how LFP's curve is nearly flat between 20% and 80% SOC while NMC's is clearly sloped.
 
-> **Interactive:** [OCV-SOC curves — NMC vs LFP, adjustable temperature and C-rate](../assets/claude_assetsplan/battery/ocv-soc-curves.html)
+> **Interactive:** [OCV-SOC curves — NMC vs LFP, adjustable temperature and C-rate](../assets/battery/ocv-soc-curves.html)
 
 ---
 
@@ -90,7 +90,7 @@ The interactive chart below lets you explore the OCV-SOC curves for NMC and LFP 
 
 How the electrodes, separator, and electrolyte are packaged determines cell form factor, cost, and how it integrates into a pack. Three main formats dominate; one proprietary variant deserves mention.
 
-![Cell format comparison — cylindrical, prismatic, pouch, blade](../assets/claude_assetsplan/battery/cell-format-comparison.svg)
+![Cell format comparison — cylindrical, prismatic, pouch, blade](../assets/battery/cell-format-comparison.svg)
 
 ### Cylindrical
 

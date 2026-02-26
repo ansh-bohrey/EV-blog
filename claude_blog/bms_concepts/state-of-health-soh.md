@@ -43,7 +43,7 @@ End-of-life criteria in practice: typically 80% SOH_C *or* 200% of initial inter
 
 SOH decline is not a single process. It is the cumulative result of several parallel degradation mechanisms, each triggered by different stresses.
 
-![Degradation mechanisms inside a lithium-ion cell — SEI, lithium plating, particle cracking, electrolyte decomposition](../assets/claude_assetsplan/bms-concepts/soh-degradation-mechanisms.svg)
+![Degradation mechanisms inside a lithium-ion cell — SEI, lithium plating, particle cracking, electrolyte decomposition](../assets/bms-concepts/soh-degradation-mechanisms.svg)
 
 **SEI growth** is the dominant mechanism in most real-world usage. A **Solid Electrolyte Interphase (SEI)** layer forms on the graphite anode surface at first charge and is supposed to be stable thereafter. In reality, it continues to grow slowly throughout the cell's life, consuming lithium from the cathode and depositing it permanently in the SEI. This lithium is no longer available for charge storage — it represents irreversible capacity loss. SEI growth is faster at high temperatures and high SOC, and continues even when the cell is not being cycled (calendar aging).
 
@@ -89,7 +89,7 @@ Estimating SOH is harder than estimating SOC. SOC changes continuously during us
 
 **Data-driven prediction** is represented by the landmark Severson et al. 2019 *Nature Energy* paper: features extracted from early-cycle voltage curves (discharge curve shape, variance of dQ/dV) predict remaining cycle life with high accuracy, well before conventional capacity fade becomes measurable. This approach is more relevant to fleet management and second-life decisions than to continuous in-vehicle estimation.
 
-<iframe src="../assets/claude_assetsplan/bms-concepts/capacity-fade-chart.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../assets/bms-concepts/capacity-fade-chart.html" width="100%" height="380" frameborder="0"></iframe>
 
 ---
 

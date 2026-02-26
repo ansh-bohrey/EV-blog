@@ -66,7 +66,7 @@ Within a module, the cells in the centre are surrounded by neighbours and have n
 
 ## Four Cooling Architectures
 
-![Cooling architectures — passive, air, liquid bottom plate, immersion](../assets/claude_assetsplan/battery/cooling-architectures.svg)
+![Cooling architectures — passive, air, liquid bottom plate, immersion](../assets/battery/cooling-architectures.svg)
 
 ### Passive Cooling
 
@@ -131,7 +131,7 @@ T_coolant_wall
 T_coolant_bulk
 ```
 
-![Thermal resistance chain — cell to coolant, with TIM as the dominant resistance](../assets/claude_assetsplan/battery/cooling-thermal-resistance.svg)
+![Thermal resistance chain — cell to coolant, with TIM as the dominant resistance](../assets/battery/cooling-thermal-resistance.svg)
 
 The TIM is frequently the largest resistance in this chain — larger than the aluminium plate's conduction resistance, and often larger than the convective resistance of flowing coolant. Improving TIM conductivity from 2 W/m·K to 6 W/m·K can reduce cell operating temperature by 3–5°C at the same coolant temperature and flow rate. This translates directly to slower ageing.
 

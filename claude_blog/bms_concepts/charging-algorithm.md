@@ -29,7 +29,7 @@ This is the physical foundation for everything that follows.
 
 The charging algorithm used in virtually every production lithium-ion charger is **Constant Current – Constant Voltage (CC-CV)**. Its shape is elegant precisely because it respects the cell's own physics rather than fighting against it.
 
-<iframe src="../assets/claude_assetsplan/bms-concepts/cc-cv-charge-profile.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../assets/bms-concepts/cc-cv-charge-profile.html" width="100%" height="380" frameborder="0"></iframe>
 
 **CC phase**: The charger delivers a fixed current — typically 0.5C to 1C for standard charging, up to 3–4C for DC fast charging — while the cell voltage rises steadily from its resting value. The voltage rise reflects the increasing SOC (via the OCV-SOC relationship) plus the resistive and dynamic voltage drops across R₀ and the RC network of the Thevenin equivalent. Most of the cell's capacity — typically 70–80% — is delivered during this phase. The CC phase continues until the cell voltage reaches its maximum permitted value: 4.2 V for most NMC chemistries, 4.35 V for NMC811, 3.65 V for LFP.
 

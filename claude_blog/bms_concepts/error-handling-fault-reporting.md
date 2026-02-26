@@ -21,7 +21,7 @@ This post explains how that works.
 
 Not all faults are equal. A BMS that treats every deviation the same way — always opening contactors at the first sign of trouble — would strand drivers constantly and damage contactors through unnecessary cycling. A BMS that is too conservative about when to act would let dangerous conditions develop. The solution is a structured taxonomy.
 
-![Fault taxonomy tree — cell-level faults (OV, UV, OCD, OCC, OT, UTC), system-level faults (comm, contactor, sensor, memory), safety faults (insulation, HVIL)](../assets/claude_assetsplan/bms-concepts/fault-taxonomy-tree.svg)
+![Fault taxonomy tree — cell-level faults (OV, UV, OCD, OCC, OT, UTC), system-level faults (comm, contactor, sensor, memory), safety faults (insulation, HVIL)](../assets/bms-concepts/fault-taxonomy-tree.svg)
 
 ### Cell-Level Faults
 
@@ -80,7 +80,7 @@ Declaring a fault from a single sensor sample would produce constant nuisance tr
 
 Every detected fault is classified into a severity level that determines the BMS's response. The mapping is not arbitrary — it is designed to keep the pack operating as long as safety permits while escalating forcefully when it does not.
 
-![Fault severity flowchart — fault detected, severity classification, response actions (derate / stop charge / open contactors)](../assets/claude_assetsplan/bms-concepts/fault-severity-flowchart.svg)
+![Fault severity flowchart — fault detected, severity classification, response actions (derate / stop charge / open contactors)](../assets/bms-concepts/fault-severity-flowchart.svg)
 
 **Level 1 — Warning**: approaching a limit but not there yet. The BMS informs the driver and vehicle, logs the event, and may derate slightly, but does not interrupt operation. Example: cell temperature at 43°C approaching the 45°C charge derate threshold — the BMS reduces charge current by 20% and logs the event. The vehicle continues driving and charging, just with reduced performance.
 

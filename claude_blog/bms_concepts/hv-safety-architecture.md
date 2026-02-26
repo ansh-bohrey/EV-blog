@@ -13,7 +13,7 @@ Yet EV technicians work on live vehicles. Crash responders cut open accident-dam
 
 This is not luck, and it is not a single safety device. It is a deliberately engineered **defence-in-depth architecture** with six independent protection layers, each designed to catch the failure modes the previous layer might miss.
 
-![Six HV safety layers: battery → fuse → contactors → HVIL → isolation monitoring → MSD → safe state](../assets/claude_assetsplan/bms-concepts/hv-safety-six-layers.svg)
+![Six HV safety layers: battery → fuse → contactors → HVIL → isolation monitoring → MSD → safe state](../assets/bms-concepts/hv-safety-six-layers.svg)
 
 This post traces every layer from the cell terminals outward, explains what failure mode each one addresses, and describes how they interact during both normal operation and fault conditions.
 
@@ -71,7 +71,7 @@ The safety-relevant behaviour of the pre-charge circuit:
 
 **How it works**: When all HV connectors are properly mated and all covers are closed, a small current flows continuously around the HVIL loop. The BMS monitors this current return with a dedicated hardware comparator — not a software poll. Any break in the loop — a disconnected HV connector, an opened access cover, a removed MSD, a wiring harness fault from crash damage — interrupts the loop. The comparator fires in under 1 ms, immediately opening the main contactors.
 
-![HVIL circuit: BMS drives a 12V signal through connector pin A → cable through connector body → connector pin B → back to BMS](../assets/claude_assetsplan/bms-concepts/hvil-loop.svg)
+![HVIL circuit: BMS drives a 12V signal through connector pin A → cable through connector body → connector pin B → back to BMS](../assets/bms-concepts/hvil-loop.svg)
 
 The HVIL loop routing is deliberate. It passes through the mechanical path of every HV connector such that the loop cannot remain closed if the connector is disconnected. This means the HV pins of that connector are mechanically protected by their housing — but even if someone forced a connector apart, the HVIL would fire before the pins could separate enough to arc to a body part.
 

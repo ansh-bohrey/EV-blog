@@ -35,7 +35,7 @@ These effects are cumulative. A pack that starts with ±2% capacity spread, expe
 
 The capacity loss effect is the most visible consequence, but safety is the more urgent concern.
 
-![Series cell string with one weak cell limiting pack capacity at both charge and discharge endpoints](../assets/claude_assetsplan/bms-concepts/cell-balancing-imbalance.svg)
+![Series cell string with one weak cell limiting pack capacity at both charge and discharge endpoints](../assets/bms-concepts/cell-balancing-imbalance.svg)
 
 **Capacity loss**: in a balanced 100 Ah pack, the usable window runs from the pack's minimum SOC to its maximum. With a 5% imbalance, the weakest cell's minimum is hit before the others are depleted, and the strongest cell's maximum is hit before the others are full. The effective usable capacity shrinks by roughly 1–3× the imbalance percentage — so a 5% imbalance costs 5–15 Ah from a 100 Ah pack, depending on how the cells have diverged in their OCV-SOC curves.
 
@@ -51,7 +51,7 @@ Per-cell monitoring by the [AFE](./analog-front-end-afe.md) catches both failure
 
 The simpler and more common approach is **passive balancing**: bleed excess charge from high-SOC cells through a resistor until all cells converge to the lowest SOC in the string.
 
-![Passive balancing circuit: shunt resistor and MOSFET switch per cell, controlled by BMS](../assets/claude_assetsplan/bms-concepts/passive-balancing-circuit.svg)
+![Passive balancing circuit: shunt resistor and MOSFET switch per cell, controlled by BMS](../assets/bms-concepts/passive-balancing-circuit.svg)
 
 The circuit is minimal. Each cell has a bleed path consisting of a resistor in series with a MOSFET switch. The BMS closes the switch on any cell whose voltage exceeds the target, allowing current to flow through the resistor and dissipate the excess charge as heat. When that cell's voltage drops to match the target, the switch opens.
 
@@ -69,7 +69,7 @@ The implementation is straightforward enough to integrate directly into AFE ICs 
 
 **Active balancing** transfers charge from high-SOC cells to low-SOC cells rather than dissipating it. No energy is wasted as heat — the charge that leaves a high cell arrives at a low cell. In principle, 100% efficient; in practice, conversion losses mean 85–95% transfer efficiency, which is still dramatically better than passive balancing's 0%.
 
-![Active balancing topologies: capacitor shuttling, inductor/flyback, and transformer-based cross-cell transfer](../assets/claude_assetsplan/bms-concepts/active-balancing-topologies.svg)
+![Active balancing topologies: capacitor shuttling, inductor/flyback, and transformer-based cross-cell transfer](../assets/bms-concepts/active-balancing-topologies.svg)
 
 Three main topologies are used in practice.
 
@@ -107,7 +107,7 @@ The basic logic:
 5. Suspend balancing if any cell's temperature exceeds a limit (typically 40–45°C) — bleed resistors in passive systems can heat adjacent cells, and active converters produce switching losses that add to pack thermal load.
 6. Resume balancing automatically when conditions allow.
 
-<iframe src="../assets/claude_assetsplan/bms-concepts/cell-voltage-convergence.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../assets/bms-concepts/cell-voltage-convergence.html" width="100%" height="380" frameborder="0"></iframe>
 
 The convergence animation above shows a typical CV-phase balancing session: cells start spread across a 50 mV window, bleed balancing activates on the high cells, and all voltages converge to the target over the course of the CV phase. Note that convergence is not instantaneous — the 50–200 mA bleed current is small relative to the cell capacity, and meaningful convergence requires sustained balancing across multiple charge cycles.
 

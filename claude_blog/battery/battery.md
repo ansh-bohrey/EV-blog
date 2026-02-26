@@ -62,7 +62,7 @@ Example: **96S3P** with 5 Ah cells:
 
 The two diagrams below show the series and parallel wiring topologies, and how they combine in a real xSyP pack.
 
-![Series, parallel, and series-parallel cell wiring topologies](../assets/claude_assetsplan/battery/series-parallel-diagrams.svg)
+![Series, parallel, and series-parallel cell wiring topologies](../assets/battery/series-parallel-diagrams.svg)
 
 ---
 
@@ -88,7 +88,7 @@ Going above 800 V has diminishing returns: component costs (inverter switches, i
 
 Modern EV packs are organised in three levels — or two, in the newer cell-to-pack designs.
 
-![Pack hierarchy — cell, module, pack, and cell-to-pack (CTP)](../assets/claude_assetsplan/battery/pack-hierarchy.svg)
+![Pack hierarchy — cell, module, pack, and cell-to-pack (CTP)](../assets/battery/pack-hierarchy.svg)
 
 ### Cell
 
