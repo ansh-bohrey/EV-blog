@@ -135,6 +135,7 @@ The MSD serves the technician. Contactors can be closed and opened by the BMS �
 5. Pack is split into two segments. Each segment is at half (or some fraction) of the total pack voltage.
 
 **Technician service sequence**:
+
 1. Power off ignition. Wait for BMS to enter sleep.
 2. Wait 5 minutes for inverter DC link capacitors to discharge through bleed resistors.
 3. Verify HV with a calibrated CAT III rated meter at defined test points before touching anything.
@@ -217,6 +218,7 @@ The [ISO 26262 post](../standards/ISO-26262_standard.md) and [AIS-004 post](../s
 **Materials**: Arduino Uno or Nano, pushbutton (simulating HV connector pull), LED (simulating contactor state), 10 kΩ pull-up resistor, oscilloscope or second Arduino measuring response time
 
 **Procedure**:
+
 1. Wire a 5V loop from the Arduino's 5V pin, through the pushbutton (normally closed), to a digital input pin with a pull-up resistor.
 2. Program the Arduino: while the input reads high (loop intact), output pin A is high (LED on, contactors "closed"). When input goes low (loop broken), set output pin A low immediately in an interrupt service routine (ISR), print "HVIL fault" to serial.
 3. Measure the time from the button opening to the output pin going low using an oscilloscope triggered on the input pin falling edge.
@@ -231,6 +233,7 @@ The [ISO 26262 post](../standards/ISO-26262_standard.md) and [AIS-004 post](../s
 **Materials**: 9V battery, resistors (10 MΩ, 1 MΩ, 500 kΩ, 100 kΩ — carbon film, standard tolerance), multimeter, breadboard
 
 **Procedure**:
+
 1. Build the "healthy system" circuit: 9V battery with neither terminal connected to a common ground rail (breadboard ground rail). Measure resistance from 9V+ to breadboard ground and from 9V− to breadboard ground. Both should read near open (your multimeter's over-range).
 2. Introduce "insulation fault 1": connect a 10 MΩ resistor from 9V+ to breadboard ground. Measure resistance from 9V+ to ground (10 MΩ). Compute leakage current at 400 V: I = 400 V / 10 MΩ = 40 µA — below perception threshold.
 3. Introduce "fault 2": replace with 1 MΩ. Compute I = 400 V / 1 MΩ = 400 µA — the warning threshold level. Still below most perception thresholds.
@@ -246,6 +249,7 @@ The [ISO 26262 post](../standards/ISO-26262_standard.md) and [AIS-004 post](../s
 **Materials**: 12V power supply, two relay modules (simulating main contactor and pre-charge contactor), 100 µF electrolytic capacitor (simulating inverter), 47 Ω 2W resistor (pre-charge resistor), INA219 current sensor + Arduino, oscilloscope
 
 **Procedure**:
+
 1. **Without pre-charge**: connect 12V supply through main relay directly to the capacitor (discharged). Close the main relay. Capture the current spike with the INA219 sampled as fast as possible (or oscilloscope current probe). Note the peak inrush magnitude and duration.
 2. Discharge the capacitor (through a 1 kΩ resistor to safe discharge). Reconnect.
 3. **With pre-charge**: connect 12V → pre-charge relay → 47 Ω resistor → capacitor. Close pre-charge relay. Log voltage across capacitor every 5 ms. When voltage reaches 11V (92% of 12V), close main relay and simultaneously open pre-charge relay. Capture inrush at main relay closure.

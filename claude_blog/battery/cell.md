@@ -195,6 +195,7 @@ Understanding these mechanisms is the foundation for the SOH post — which cove
 **Materials:** 1× NMC 18650 cell, 1× LFP 18650 cell (e.g., IFR18650), USB charger capable of CC/CV, Arduino + INA219, DMM
 
 **Procedure:**
+
 1. Fully charge both cells per datasheet spec (typically 4.2 V CC/CV for NMC, 3.65 V CC/CV for LFP). Rest 2 hours.
 2. Discharge each cell in steps: apply a C/5 load, track cumulative charge removed, and when you've removed 10% of nominal capacity, pause, rest 30 minutes, and record OCV.
 3. Repeat at 20%, 30%, ... 90% discharged.
@@ -207,6 +208,7 @@ Understanding these mechanisms is the foundation for the SOH post — which cove
 **Materials:** 18650 NMC cell, Arduino + N-channel MOSFET + INA219 as a programmable CC load
 
 **Procedure:**
+
 1. Fully charge cell. Discharge at C/5 to cutoff voltage (2.5 V). Record Ah delivered.
 2. Recharge. Discharge at 1C to cutoff. Record Ah.
 3. Recharge. Discharge at 2C to cutoff. Record Ah.
@@ -219,6 +221,7 @@ Understanding these mechanisms is the foundation for the SOH post — which cove
 **Materials:** 18650 NMC cell at 50% SOC, INA219, MOSFET load switch, NTC thermistor, small insulated container, ice water bath
 
 **Procedure:**
+
 1. At room temperature (~25°C): apply a 1 A pulse, record voltage before and during, compute DCIR = ΔV / ΔI. Rest cell until voltage recovers.
 2. Cool cell to ~5°C (ice water bath, cell sealed in a plastic bag). Stabilise 10 minutes. Repeat measurement.
 3. Optionally repeat at 0°C.

@@ -168,6 +168,7 @@ LTO (lithium titanate anode) is notable for near-complete absence of thermal run
 **Materials**: Arduino Uno, NTC thermistor (10 kΩ at 25°C), 18650 NMC cell, INA219, moderate load resistor (5 Ω), hairdryer as controlled external heat source (for safe above-normal temperature testing without chemical abuse), Arduino serial monitor.
 
 **Procedure**:
+
 1. Wire the NTC thermistor as a voltage divider (thermistor + 10 kΩ fixed resistor from 3.3 V to GND). Read the ADC value at 500 ms intervals. Convert to temperature using the Steinhart-Hart equation or a lookup table.
 2. Implement a dT/dt calculation: (T_now - T_5_samples_ago) / (5 × 0.5 s). Store a rolling buffer of temperature readings.
 3. Set a dT/dt alarm threshold of 1°C/second (safe to test with a hairdryer at 20 cm). Log both absolute temperature and dT/dt to serial.
@@ -182,6 +183,7 @@ LTO (lithium titanate anode) is notable for near-complete absence of thermal run
 **Materials**: Arduino Uno, INA219, NTC thermistor, 18650 cell, adjustable load (potentiometer + power resistor), DMM.
 
 **Procedure**:
+
 1. Log cell voltage (via INA219), cell current, surface temperature, and dV/dt (rolling derivative of voltage) simultaneously at 200 ms intervals.
 2. Implement three independent fault checks: (a) absolute temperature > threshold, (b) dT/dt > threshold, (c) voltage drop rate inconsistent with current (plausibility — if dV/dt is large but current is zero or low, flag as anomalous voltage drop).
 3. Under normal load: observe all three checks reading normal. None should trigger.
@@ -196,6 +198,7 @@ LTO (lithium titanate anode) is notable for near-complete absence of thermal run
 **Materials**: 1× 18650 NMC cell and 1× 26650 LFP cell (both healthy, same capacity in Ah), INA219, NTC thermistor on each cell, identical resistive load, Arduino data logger.
 
 **Procedure**:
+
 1. Discharge both cells to their respective 50% SOC points. Rest 30 minutes.
 2. Connect the same resistive load to each cell in turn. Log temperature rise, voltage sag, and current at 200 ms intervals for a 5-minute moderate discharge.
 3. Increase the load to a higher current (C/1 rate for each cell based on its capacity) and repeat.

@@ -55,6 +55,7 @@ The Thevenin equivalent circuit model captures all three components in a practic
 ![Thevenin equivalent circuit: OCV source + R0 + two RC pairs](../assets/bms-concepts/thevenin-circuit.svg)
 
 The circuit has:
+
 - An **OCV voltage source** — the equilibrium potential, a function of SOC and temperature
 - **R₀** — the series ohmic resistance (instantaneous voltage drop)
 - **R₁‖C₁** — a parallel RC pair capturing charge transfer dynamics (tens of milliseconds to seconds)
@@ -108,6 +109,7 @@ When a BMS powers up after the vehicle has been parked, it faces the question: h
 The relaxation curve has a characteristic shape — fast initial recovery followed by a long slow tail. BMS firmware can use the slope and curvature of this trajectory to estimate how much further the voltage will move, allowing a reasonably accurate SOC estimate even before full equilibration. Some implementations pattern-match the relaxation trajectory to a database of known curves.
 
 Minimum rest times for reliable OCV SOC initialisation:
+
 - **NMC**: 15–30 minutes is adequate for moderate accuracy (±3% SOC) — illustrative; actual minimum depends on prior current and SOC
 - **LFP**: 60–120 minutes, and even then hysteresis adds uncertainty (see Safari & Delacourt 2011)
 
@@ -138,6 +140,7 @@ Putting it together: the BMS manages OCV and terminal voltage by knowing which r
 **Materials**: 18650 NMC cell, INA219 current/voltage logger, adjustable constant-current load (resistor + MOSFET or bench electronic load), Arduino logger
 
 **Procedure**:
+
 1. Charge cell to approximately 50% SOC (3.7 V for NMC), rest 2 hours, record OCV
 2. Apply 0.2 A, log terminal voltage immediately and after 10 s
 3. Stop current, rest 5 minutes, record OCV
@@ -153,6 +156,7 @@ Putting it together: the BMS manages OCV and terminal voltage by knowing which r
 **Materials**: Same setup + real-time logging to laptop, stop-clock or RTC
 
 **Procedure**:
+
 1. Discharge cell at 1C for 30 seconds, then cut load
 2. Log terminal voltage every 5 seconds for 60 minutes
 3. Mark the initial fast relaxation (ohmic + charge transfer recovery) and the slow tail (diffusion)
@@ -167,6 +171,7 @@ Putting it together: the BMS manages OCV and terminal voltage by knowing which r
 **Materials**: LFP 18650 cell (LiFePO₄), precision bench charger/discharger, Arduino logger
 
 **Procedure**:
+
 1. Fully charge LFP cell, rest 2 hours, record OCV (start of discharge OCV curve)
 2. Discharge in 10% SOC steps (by measured Ah), rest 30 minutes at each step, record OCV
 3. Fully discharge, rest, begin charging in 10% steps, rest at each, record OCV

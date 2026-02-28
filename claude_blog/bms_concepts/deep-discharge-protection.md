@@ -78,6 +78,7 @@ The BMS detects deep discharge risk through continuous per-cell voltage monitori
 **The sag problem**: under heavy load, terminal voltage sags below OCV due to the cell's internal resistance. A cell at 50% SOC with 10 mΩ internal resistance under a 200 A pack current sees a local voltage sag of 2 V — the terminal voltage may temporarily read below V_min even though OCV remains well above it. A BMS that acts on instantaneous terminal voltage will cut power prematurely every time the driver applies full throttle.
 
 The solution is **debounce with current awareness**. The BMS applies a UV fault only when:
+
 1. The cell voltage remains below V_min for a configurable dwell time (typically 50–200 ms) — transient sag is shorter than this.
 2. Or the BMS back-calculates estimated OCV from terminal voltage using the Thevenin model: estimated OCV = V_T + I × R₀ + V_RC1 + V_RC2. If estimated OCV is below V_min, the fault is genuine regardless of current.
 
@@ -150,6 +151,7 @@ For LFP, the lower self-discharge rate means storage windows before V_min is rea
 **Materials**: Two 18650 NMC cells (same lot), INA219 + Arduino, DMM, storage at two temperatures (room temperature and a warm location ~35–40°C such as near a heat source)
 
 **Procedure**:
+
 1. Charge both cells to 50% SOC (approximately 3.70 V for NMC). Measure and record OCV after 2 hours of rest.
 2. Store cell A at room temperature (~22°C) and cell B at elevated temperature (~35°C). Do not connect any load.
 3. Measure OCV of each cell every 7 days for 4–6 weeks. Log date, temperature, and OCV.
@@ -164,6 +166,7 @@ For LFP, the lower self-discharge rate means storage windows before V_min is rea
 **Materials**: 18650 NMC cell (partially discharged to ~20% SOC), INA219 + Arduino, small resistive load (10–33 Ω)
 
 **Procedure**:
+
 1. Discharge cell to approximately 20% SOC. Rest 30 minutes, record OCV (should be near 3.4 V for NMC).
 2. Connect the resistive load. Log terminal voltage at 100 ms intervals. Observe the instantaneous sag when the load connects — this is the ohmic drop I × R₀.
 3. Increase load current by switching to a smaller resistor until terminal voltage reads below 3.0 V (the BMS V_min for NMC). Note that OCV has not changed significantly.
@@ -178,6 +181,7 @@ For LFP, the lower self-discharge rate means storage windows before V_min is rea
 **Materials**: 18650 NMC cell intentionally discharged below V_min to ~2.2–2.5 V (discharge at C/10 past the BMS cutoff on a bench charger that allows override), bench charger with current-limit capability, thermistor taped to cell surface, Arduino logger
 
 **Procedure**:
+
 1. Carefully discharge a sacrificial cell to approximately 2.3 V at C/10 on a bench charger with manual cutoff override. This cell is now genuinely deep discharged. (Note: do not discharge below 2.0 V — the experiment requires a mildly over-discharged cell, not one with severe copper dissolution.)
 2. Record OCV. Set the charger to C/20 (100 mA for a 2 Ah cell). Begin charging.
 3. Log terminal voltage and surface temperature every 10 seconds for 30 minutes.

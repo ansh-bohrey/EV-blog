@@ -190,6 +190,7 @@ If you are already familiar with a topic, you can jump in anywhere. If you are n
 **Materials**: 1× 18650 NMC cell, bench power supply with CC/CV mode, INA219 current and voltage sensor + Arduino for logging, NTC thermistor taped to the cell surface, DMM
 
 **Procedure**:
+
 1. Set the power supply to 4.4 V CV, 200 mA CC. Connect the cell and begin logging voltage, current, and temperature at 1-second intervals via the INA219 and Arduino. Run for 15 minutes or until temperature rises more than 5°C above ambient — whichever comes first. Do this in a well-ventilated area with the cell resting on a ceramic tile, not a flammable surface.
 2. Let the cell rest for 30 minutes to cool and equilibrate.
 3. Set the power supply to 4.2 V CV, 500 mA CC. Repeat the logging run for the same duration.
@@ -204,6 +205,7 @@ If you are already familiar with a topic, you can jump in anywhere. If you are n
 **Materials**: A small commercial Li-ion pack — an e-bike battery with an accessible PCB, or a DIY pack with an exposed BMS board. Multimeter. Logic analyser or oscilloscope (optional). CAN USB adapter + laptop with `candump` or SavvyCAN (optional, if the pack has CAN).
 
 **Procedure**:
+
 1. With the pack disconnected from its load, open the case (if safe to do so) or access the exposed BMS PCB.
 2. Identify the cell sense wire connector — the multi-pin connector where individual cell tap wires arrive. Measure the voltage between each adjacent pair of pins; each should read one cell voltage (3.0–4.2 V for NMC, 2.5–3.65 V for LFP).
 3. Find the thermistor connector. Measure resistance between its pins with the pack at room temperature — an NTC thermistor will read 10 kΩ at 25°C for most standard values.
@@ -219,6 +221,7 @@ If you are already familiar with a topic, you can jump in anywhere. If you are n
 **Materials**: Arduino Uno or Nano, INA219 breakout, 1× 18650 cell in a single-cell holder, small NPN transistor (2N2222) or N-channel MOSFET (2N7000), LED + 330 Ω resistor, bench power supply set to CC/CV
 
 **Procedure**:
+
 1. Wire the INA219 in series with the cell, measuring both voltage and current. Wire the transistor/MOSFET as a low-side switch on the cell's discharge path; the LED represents the "contactor open" indicator.
 2. Write a sketch that:
    - Reads cell voltage and current every 500 ms

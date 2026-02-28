@@ -182,6 +182,7 @@ Preconditioning means using grid power to warm the battery and cabin before unpl
 ## Real-World Data Points
 
 Fleet analysis from Recurrent Auto (aggregated from thousands of real-world North American EVs; see recurrentauto.com/research/how-does-cold-weather-affect-ev-range for their published methodology):
+
 - Heat-pump vehicles: approximately 83% range retention in cold conditions (~17% reduction)
 - Resistive-only vehicles: approximately 75% range retention (~25% reduction)
 - Spread varies significantly by model, climate, and driving style
@@ -197,6 +198,7 @@ SAE J1634 (the official US range test procedure) is conducted at 23°C ± 5°C w
 **Materials**: one 18650 NMC cell, Arduino Uno + INA219 current/voltage sensor, a constant-current load (or a 5 Ω power resistor as a fixed load), thermometer, access to a refrigerator.
 
 **Procedure**:
+
 1. Charge the cell fully at room temperature (25°C). Rest 1 hour.
 2. Discharge at a fixed current (0.5–1 A) to cutoff voltage (2.8 V). Record total Ah using the INA219. This is your baseline capacity.
 3. Re-charge. Bring the cell to ~10°C (partial fridge cooling). Re-measure.
@@ -212,6 +214,7 @@ SAE J1634 (the official US range test procedure) is conducted at 23°C ± 5°C w
 **Materials**: same cell and INA219 setup.
 
 **Procedure**:
+
 1. Bring cell to ~50% SOC at each test temperature. Rest 30 minutes for voltage to settle.
 2. Apply a 1A pulse for 10 seconds. Record voltage immediately before the pulse and at the 10-second mark.
 3. DCIR = ΔV / ΔI = (V_rest − V_10s) / 1 A.
@@ -226,6 +229,7 @@ SAE J1634 (the official US range test procedure) is conducted at 23°C ± 5°C w
 **Materials**: NTC thermistor + Arduino, small insulated box (styrofoam cooler), a small PTC heater element (from an inexpensive hand warmer or 12V car heater), 12V power supply or battery, multimeter for power measurement.
 
 **Procedure**:
+
 1. Place thermistor inside the box, set up the heater, measure heater power (V × I).
 2. Start with box at 0°C. Run heater. Log temperature every 30 seconds.
 3. Calculate total energy consumed (power × time in kWh).
@@ -238,15 +242,18 @@ SAE J1634 (the official US range test procedure) is conducted at 23°C ± 5°C w
 ## Further Reading
 
 **Core Papers**
+
 - Pesaran, A.A. (NREL) — "Battery Thermal Management in EVs and HEVs" — NREL technical report, free download; quantifies temperature effects on capacity and power across chemistry types
 - Zhang, S.S. et al. (2003) — "The low temperature performance of Li-ion batteries" — *J. Power Sources* 115 — direct measurement of capacity vs temperature at multiple C-rates
 - Ji, Y. & Wang, C.Y. (2013) — "Heating strategies for Li-ion batteries operated from subzero temperatures" — *Electrochimica Acta* — covers battery heating methods including AC heating and self-heating
 
 **Online / Real-World Data**
+
 - Recurrent Auto — "How Does Cold Weather Affect EV Range?" — fleet data analysis with model-by-model breakdown
 - ADAC — annual winter EV range tests — detailed real-world data for European-market vehicles
 - Battery University — "BU-502: Discharging at High and Low Temperatures"
 
 **Standards**
+
 - IEC 62660-1 — includes cold temperature performance test methods for EV cells
 - SAE J1634 — BEV energy consumption and range test procedure (explains why official figures are 25°C figures)

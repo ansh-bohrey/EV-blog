@@ -212,6 +212,7 @@ The interaction between fault detection, fault classification, and fault escalat
 **Materials**: Arduino Uno or Nano, 9V or 12V power supply, 470 µF to 2200 µF electrolytic capacitor, 47 Ω or 100 Ω resistor (1 W rating), two small relays or MOSFETs, INA219 or voltage divider + Arduino ADC pin
 
 **Procedure**:
+
 1. Build the circuit: power supply → main relay (bypasses resistor, initially open) → capacitor. Add a second relay in series with the resistor across the main relay — this is the pre-charge relay.
 2. Start with both relays open, capacitor discharged (short it briefly through a 1 kΩ resistor to confirm zero volts).
 3. Close the pre-charge relay. Arduino samples voltage across the capacitor every 10 ms via the voltage divider and logs to serial.
@@ -227,6 +228,7 @@ The interaction between fault detection, fault classification, and fault escalat
 **Materials**: Arduino, 3 relay modules (simulating main negative, pre-charge, main positive), 3 LEDs (one per relay for state visualisation), one pushbutton (ignition), one pushbutton (fault injection / HVIL break), logic analyser or oscilloscope
 
 **Procedure**:
+
 1. Wire each relay module to an Arduino output pin and a corresponding LED.
 2. Program the Arduino with the ignition turn-on state machine: sleep → wake → close main negative → close pre-charge → wait 500 ms (simulating pre-charge) → close main positive → open pre-charge → signal ready (LED).
 3. On HVIL button press, immediately open all three relays regardless of current state machine step. Time the response from button press to all-relays-open using the logic analyser.
@@ -241,6 +243,7 @@ The interaction between fault detection, fault classification, and fault escalat
 **Materials**: Arduino Uno or Nano (ATmega328P), AVR sleep library (`avr/sleep.h`), one LED, one pushbutton (ignition signal), oscilloscope or second Arduino measuring wake latency, multimeter for sleep current measurement
 
 **Procedure**:
+
 1. Program the Arduino to enter SLEEP_MODE_PWR_DOWN using the AVR sleep library. Disable all peripherals before sleep. Measure current draw with a multimeter in series with the power supply — target < 5 mA (the Arduino's on-board regulator and USB chip will dominate; a bare ATmega328P with no peripherals draws under 100 µA in power-down mode).
 2. Configure the ignition pushbutton as an external interrupt (INT0 on pin 2).
 3. On wake interrupt, set an output pin high immediately (before any other work), then run a brief self-check sequence and print "BMS ready" to serial. Measure the time from button press to output-pin-high on the oscilloscope.

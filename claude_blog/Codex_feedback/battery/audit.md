@@ -6,16 +6,19 @@ Strong, coherent trio of posts with clear prerequisites/next links and a narrati
 ## File-Specific Feedback
 
 ### claude_blog/battery/cell.md
+
 - Flow and clarity are strong. The chemistry and format sections build nicely into datasheet reading.
 - Depth is appropriate for an overview series; good balance between mechanism and engineering implications.
 - Accuracy is mostly solid. A few statements should be softened to “typical” or “range” to avoid overclaiming.
 
 ### claude_blog/battery/battery.md
+
 - Great conceptual framing of series vs parallel and xSyP. The worked examples are helpful.
 - The pack hierarchy section is clear and useful.
 - Several accuracy issues need correction (see “Evidence-Backed Corrections”).
 
 ### claude_blog/battery/cooling.md
+
 - Very good structure: problem framing → mechanisms → architectures → control → real-world examples.
 - Depth is strong for a blog post, and the TIM section is a standout.
 - A few claims should be qualified or corrected, especially around conductivity and numerical thresholds.
@@ -23,6 +26,7 @@ Strong, coherent trio of posts with clear prerequisites/next links and a narrati
 ## Persona Evaluations
 
 ### A) A- Engineering Student
+
 - Flow: Very good. The prereq/next links and “takeaways” make the sequence easy to follow.
 - Ease of understanding: High. Explanations are direct and contextual; good use of diagrams and worked examples.
 - Depth: Appropriate for senior undergrad; could add a short “math appendix” for the students who want more rigor.
@@ -30,6 +34,7 @@ Strong, coherent trio of posts with clear prerequisites/next links and a narrati
 - What I learned: How pack topology and thermal management map directly to BMS constraints; why LFP SOC estimation is materially harder than NMC due to flat OCV‑SOC.
 
 ### B) EV Enthusiast
+
 - Flow: Engaging and readable; the narrative hooks (“why 400 V/800 V”) work well.
 - Ease of understanding: High, with good analogies and real‑world examples.
 - Depth: The right level—detailed but not overwhelming.
@@ -37,6 +42,7 @@ Strong, coherent trio of posts with clear prerequisites/next links and a narrati
 - What I learned: Why fast charging is constrained by current and cable limits; how CTP trades repairability for density; why the BMS is fundamentally cell‑limited.
 
 ### C) Senior EV Industry Engineer
+
 - Flow: Good; would prefer more precise language in safety/standards sections.
 - Ease of understanding: Solid, but the rigor of some numerical examples needs tightening.
 - Depth: Strong for a blog series; would benefit from clearer delineation between illustrative values and production‑grade requirements.
@@ -104,15 +110,19 @@ Strong, coherent trio of posts with clear prerequisites/next links and a narrati
 **Sources:** Industry practice; consider adding a cell‑format reference or OEM technical brief if you want formal citations.
 
 ## Sources (for evidence)
+
 - ISO 6469‑3:2021 (Electrical safety requirements) — isolation resistance and connector de‑energization requirements.  
   https://standards.iteh.ai/catalog/standards/iso/2ac37725-1fc4-44fa-a35c-1eead0cacb48/iso-6469-3-2021
+
 - BASF GLYSANTIN ELECTRIFIED press release — low electrical conductivity coolant for EV batteries.  
   https://www.basf.com/global/en/media/news-releases/2025/09/p-25-179
+
 - BASF GLYSANTIN G22 ELECTRIFIED product page — low conductivity coolant description.  
   https://www.glysantin.com/global/en/product-finder/glysantin-g22-electrified
 
 ---
 
 ## Status Check (2026-02-26)
+
 - **Implemented:** None confirmed in `claude_blog/battery/*.md` (no edits detected to address the listed corrections).
 - **Still open:** MSD voltage claim, isolation resistance threshold, coolant conductivity wording, pyro‑fuse wording, and “you cannot simply build a bigger cell” phrasing.

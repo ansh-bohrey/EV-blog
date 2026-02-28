@@ -249,6 +249,7 @@ Different protocols for different purposes is not complexity for its own sake �
 ### Experiment 1: Read an AFE Over SPI
 
 **Materials**
+
 - Arduino Uno or Nano
 - TI BQ76920 evaluation board or LTC6804 breakout board
 - 2–4 series-connected 18650 cells (charged to at least 3.0V each)
@@ -257,6 +258,7 @@ Different protocols for different purposes is not complexity for its own sake �
 - Digital multimeter
 
 **Procedure**
+
 1. Wire the I2C connections: Arduino A4 (SDA) to BQ76920 SDA, Arduino A5 (SCL) to BQ76920 SCL. Place 4.7 kΩ pull-up resistors from SDA to 3.3 V and SCL to 3.3 V. Connect GND to GND. Connect BQ76920 VCC to 3.3 V and wire REGSRC as specified in the datasheet's application schematic. The BQ76920 default I2C address is 0x08 (confirmed in the TI BQ76920 datasheet).
 2. Include the Arduino Wire library. Call `Wire.begin()` in setup. Send the BQ76920 wake command: write 0x00 to register 0x00 via I2C to transition the chip from boot to normal mode.
 3. Read VC1_HI (0x0C) and VC1_LO (0x0D): call `Wire.beginTransmission(0x08)`, write the register address, call `Wire.endTransmission(false)` (repeated start), then `Wire.requestFrom(0x08, 2)` and read two bytes. Assemble into a 14-bit raw value; multiply by 382 µV/bit to get cell 1 voltage.
@@ -272,12 +274,14 @@ On the logic analyzer, an I2C start condition (SDA falling while SCL high) is fo
 ### Experiment 2: Transmit BMS Status on CAN Bus
 
 **Materials**
+
 - 2× Arduino Uno (or one Arduino plus a USB-CAN adapter such as CANable and SavvyCAN on a laptop)
 - 2× MCP2515 CAN controller module with TJA1050 transceiver
 - 2× 120 ohm resistors (if MCP2515 modules do not include onboard termination)
 - Jumper wires (3-wire: CAN_H, CAN_L, GND between nodes)
 
 **Procedure**
+
 1. Wire each MCP2515 module to its Arduino over SPI (SCK, MOSI, MISO, CS). Connect CAN_H to CAN_H and CAN_L to CAN_L between the two modules using a twisted pair or parallel wires. Place a 120 ohm resistor between CAN_H and CAN_L at each node.
 2. On Node A (transmitter): initialize MCP2515 at 500 kbps. Every 100 ms, assemble an 8-byte buffer and transmit with arbitration ID 0x064. Encode: Byte 0 = SOC as integer (value × 2 to fit 0–200 in one byte), Bytes 1–2 = pack voltage in mV as uint16 big-endian, Bytes 3–4 = pack current in units of 100 mA as int16, Byte 5 = max temperature as uint8 with -40 offset, Bytes 6–7 = fault flags as uint16.
 3. On Node B (receiver): print each received frame's arbitration ID and data bytes in hex to Serial at 115200 bps. Manually decode Byte 0 to SOC percentage.
@@ -292,12 +296,14 @@ SavvyCAN's DBC-decoded view shows labeled engineering values updating at 10 Hz. 
 ### Experiment 3: Build a DBC File and Decode with Python-CAN
 
 **Materials**
+
 - PC with Python 3.8 or later
 - Libraries: `pip install python-can cantools matplotlib`
 - CANable or equivalent slcan-compatible USB-CAN adapter connected to the Node A CAN bus from Experiment 2
 - Text editor
 
 **Procedure**
+
 1. Write a minimal DBC file named `bms.dbc`. It needs one message block for BMS_Status with arbitration ID 100, and five signal definitions matching your Experiment 2 encoding. Pay careful attention to start bit, length, byte order (@1 for little-endian, @0 for big-endian), signed/unsigned, scale, offset, and unit.
 2. Verify the file parses: `python -c "import cantools; db = cantools.database.load_file('bms.dbc'); print(db)"`. Fix any reported syntax errors before continuing.
 3. Write a Python logging script that opens the CANable with `python-can`, reads frames for 30 seconds, and for each frame with ID 0x064, decodes it with `cantools` and appends the timestamp and signal dictionary to a list.

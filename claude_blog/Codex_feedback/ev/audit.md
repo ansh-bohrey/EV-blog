@@ -6,11 +6,13 @@ The EV posts are engaging and well‑structured, with strong narrative flow and 
 ## File-Specific Feedback
 
 ### claude_blog/ev/ev-nodes.md
+
 - Flow is excellent and the node‑by‑node structure makes a complex system approachable.
 - Depth is right for a blog series; the networking and startup sequencing sections are particularly useful.
 - Accuracy issues are mostly about over‑specific numbers and broad claims presented as universal (ECU counts, SiC adoption timelines, standby current, etc.). These should be softened or sourced.
 
 ### claude_blog/ev/why-range-drops-in-winter.md
+
 - Very strong conceptual framing; the three‑cause breakdown is pedagogically effective.
 - Numerical examples are helpful but many require sourcing; a few numbers appear too specific without evidence.
 - Good linkage between BMS concepts and real‑world driver experience.
@@ -18,6 +20,7 @@ The EV posts are engaging and well‑structured, with strong narrative flow and 
 ## Persona Evaluations
 
 ### A) A‑ Engineering Student
+
 - Flow: High; prerequisites and narrative are easy to follow.
 - Ease of understanding: High; concrete examples help.
 - Depth: Appropriate for senior undergrad, but an appendix for equations/assumptions would help.
@@ -25,6 +28,7 @@ The EV posts are engaging and well‑structured, with strong narrative flow and 
 - What I learned: How node architectures enforce BMS authority and why winter range is a multi‑mechanism problem, not a single “cold battery” effect.
 
 ### B) EV Enthusiast
+
 - Flow: Engaging and intuitive.
 - Ease of understanding: High.
 - Depth: Good balance between explanation and detail.
@@ -32,6 +36,7 @@ The EV posts are engaging and well‑structured, with strong narrative flow and 
 - What I learned: Why early‑drive losses are worse and how preconditioning changes the thermodynamics.
 
 ### C) Senior EV Industry Engineer
+
 - Flow: Good; most sections read like a solid system overview.
 - Ease of understanding: Good, but some sections need more precise language on standards and empirical numbers.
 - Depth: Strong for a blog post; would benefit from source anchoring.
@@ -49,6 +54,7 @@ The EV posts are engaging and well‑structured, with strong narrative flow and 
 “Fleet data from Recurrent reports that EVs with heat pumps retain materially more range in cold conditions than EVs with resistive heating. One summarized split shows roughly ~83% vs ~75% winter range retention (about 17% vs 25% loss), though this varies by model and climate.”
 
 **Sources:**
+
 - Recurrent Auto winter range analysis: https://www.recurrentauto.com/research/how-does-cold-weather-affect-ev-range
 - Recurrent data summary via Yahoo Tech: https://www.yahoo.com/tech/evs-heat-pumps-better-171342219.html
 
@@ -69,6 +75,7 @@ The EV posts are engaging and well‑structured, with strong narrative flow and 
 ## Claims That Need Evidence or Qualification
 
 ### ev-nodes.md
+
 - “A mid‑size BEV contains 50–100 ECUs.” Needs a source or should be softened to “dozens,” as OEM architectures vary widely.
 - “Most EVs produced before 2020 use IGBTs; most designed after 2022 use SiC.” This is a strong market‑wide claim and needs evidence or a softer phrasing.
 - “BMS standby current typically 1–5 mA and 3–6 weeks until 12 V depletion.” Requires evidence; likely varies by OEM and telematics duty cycle.
@@ -78,6 +85,7 @@ The EV posts are engaging and well‑structured, with strong narrative flow and 
 - “OBC AC level power ranges and ‘upper end 22 kW’.” Cite the standard or label as typical.
 
 ### why-range-drops-in-winter.md
+
 - “R₀ doubles for every 15–20°C drop; 2–3× at 0°C.” Needs a citation or chemistry‑specific reference.
 - “Typical capacity loss from this effect: 8–15% at 0°C.” Needs a source (cell test data) or should be marked as example.
 - “Cabin heating 3–5 kW continuous.” Needs citation or marked as typical.
@@ -86,6 +94,7 @@ The EV posts are engaging and well‑structured, with strong narrative flow and 
 - “SAE J1634 is performed at 25°C.” Needs a standard citation.
 
 ## Sources (for evidence)
+
 - Recurrent Auto winter range analysis: https://www.recurrentauto.com/research/how-does-cold-weather-affect-ev-range
 - Recurrent data summary via Yahoo Tech: https://www.yahoo.com/tech/evs-heat-pumps-better-171342219.html
 - ISO 11898‑2:2016 (high‑speed CAN physical layer) PDF summary/extracts: https://www.emcfastpass.com/iso-11898-2-2016-pdf
@@ -94,5 +103,6 @@ The EV posts are engaging and well‑structured, with strong narrative flow and 
 ---
 
 ## Status Check (2026-02-26)
+
 - **Implemented:** None confirmed in `claude_blog/ev/*.md` (no edits detected to address the evidence‑backed corrections or missing‑evidence items).
 - **Still open:** All items under “Claims That Need Evidence or Qualification” remain unaddressed.

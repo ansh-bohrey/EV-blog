@@ -136,6 +136,7 @@ Different AFE families use different digital interfaces; knowing which your chip
 A typical BQ76940 cell voltage read over I2C:
 
 ```
+
 1. Send START + address 0x08 + WRITE bit
 2. Write register address 0x0C (VC1_HI)
 3. Send REPEATED START + address 0x08 + READ bit
@@ -211,6 +212,7 @@ This hardware protection layer is the final backstop: it activates even if the M
 **Materials**: TI BQ76940EVM or BQ76920 breakout board, Arduino Uno, 5 or 15 Li-ion 18650 cells, jumper wires, Arduino serial monitor, precision DMM.
 
 **Procedure**:
+
 1. Wire the eval board per TI's reference schematic: I2C lines (SDA to Arduino A4, SCL to A5) with 4.7 kΩ pull-up resistors to 3.3 V on each line, ALERT pin to a digital input, 12 V supply to board VCC.
 2. Write an Arduino Wire (I2C) driver using the TI BQ76940 register map (datasheet SLUSBK3): read the GAIN and OFFSET calibration registers at startup, then issue a register-address write followed by a 2-byte read for each cell voltage register pair.
 3. Parse the 12-bit raw ADC counts: `V_cell = (raw × GAIN / 1000) + OFFSET` (gain and offset are trimmed values stored in the AFE's own registers — read them first).
@@ -225,6 +227,7 @@ This hardware protection layer is the final backstop: it activates even if the M
 **Materials**: Same AFE setup, plus a precision voltage reference IC (e.g., LT1021 or REF5025), resistors to build a cell simulator network.
 
 **Procedure**:
+
 1. Build a resistor divider network from the precision reference to simulate 5 cell voltages at known values (e.g., 3.800, 3.801, 3.799, 3.802, 3.800 V).
 2. Apply this network to the AFE input pins instead of real cells.
 3. Read and record the AFE's reported values. Compute the error in mV against the known reference values.
@@ -239,6 +242,7 @@ This hardware protection layer is the final backstop: it activates even if the M
 **Materials**: 1× BQ76920 breakout board (5-cell, I2C address 0x08) and 1× BQ76930 breakout board (10-cell, I2C address 0x10), 10× 18650 cells, Arduino, jumper wires with 4.7 kΩ pull-up resistors. (Two BQ76920 chips share address 0x08 and cannot co-exist on the same bus without an I2C multiplexer such as the TCA9548A — using BQ76920 + BQ76930 avoids this constraint.)
 
 **Procedure**:
+
 1. Wire chip 1 (BQ76920, addr 0x08) to cells 1–5, chip 2 (BQ76930, addr 0x10) to cells 6–10. Connect both chips' SDA and SCL to the Arduino A4/A5 bus with shared 4.7 kΩ pull-up resistors.
 2. Write a polling loop: send I2C transactions to addr 0x08, read chip 1 voltages; send I2C transactions to addr 0x10, read chip 2 voltages. Assemble the complete 10-cell voltage array.
 3. Print the full array in a single serial report labelled by cell number.

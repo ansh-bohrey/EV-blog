@@ -204,6 +204,7 @@ SG_ SOC : 0|8@1+ (0.5,0) [0|100] "%" VCU
 ```
 
 Parsing this field by field:
+
 - `SG_` — this is a signal definition
 - `SOC` — signal name
 - `0` — start bit: the signal begins at bit 0 of the data field
@@ -250,12 +251,14 @@ The frame format adds a BRS (Bit Rate Switch) bit after the IDE field signaling 
 ### Experiment 1: Build a Two-Node CAN Bus
 
 **Materials**
+
 - 2x Arduino Uno or Nano
 - 2x MCP2515 CAN controller module with TJA1050 transceiver (widely available as breakout boards)
 - 2x 120 Ω resistors (1/4 W)
 - Jumper wires and breadboard
 
 **Procedure**
+
 1. Wire each MCP2515 module to its Arduino over SPI: CS to pin 10, MOSI to pin 11, MISO to pin 12, SCK to pin 13, INT to pin 2. Connect 5 V and GND.
 2. Connect the CAN_H pin of Node A's MCP2515 to the CAN_H pin of Node B's MCP2515. Repeat for CAN_L. This is your two-wire CAN bus.
 3. Place a 120 Ω resistor between CAN_H and CAN_L at Node A's module. Place a second 120 Ω resistor at Node B's module. These are your bus terminations.
@@ -272,10 +275,12 @@ With both terminations in place at 100 ms interval, communication should be perf
 ### Experiment 2: Arbitration in Action
 
 **Materials**
+
 - Same two-node hardware setup from Experiment 1
 - Logic analyzer with CAN decoding support (Saleae Logic or similar; a cheap 8-channel USB analyzer works at 500 kbps)
 
 **Procedure**
+
 1. Connect the logic analyzer's channel 0 to CAN_H and channel 1 to CAN_L. Connect logic analyzer ground to the CAN bus ground reference.
 2. Configure the logic analyzer's CAN decoder for 500 kbps.
 3. Modify Node A's firmware to transmit ID 0x100 continuously with minimal inter-frame gap. Modify Node B to transmit ID 0x200 with the same timing.
@@ -291,12 +296,14 @@ In the logic analyzer capture, every successfully decoded frame should have ID 0
 ### Experiment 3: Decode a BMS CAN Frame with Python and a DBC File
 
 **Materials**
+
 - CANable USB-to-CAN adapter (open-source hardware, approximately $20) or any SocketCAN-compatible adapter
 - PC running Linux, macOS, or Windows with Python 3.8+
 - python-can and cantools libraries (pip install python-can cantools)
 - Node A Arduino from Experiment 1
 
 **Procedure**
+
 1. Create a minimal DBC file named bms_demo.dbc with the following content:
 
 ```

@@ -22,11 +22,13 @@ Lithium-ion cells have a comfort zone: **15–35°C for best performance, 20–2
 What happens outside it:
 
 **Too hot (>40°C):**
+
 - SEI growth rate roughly doubles for every 10°C rise (Arrhenius relationship). At 45°C, the same calendar ageing that takes a year at 25°C takes six months.
 - Above 60°C: electrolyte decomposition accelerates; above 80°C: exothermic reactions begin that can trigger thermal runaway.
 - At the pack level: cells in the pack interior are always hotter than edge cells. A 10°C internal gradient means centre cells age significantly faster than their neighbours, creating localised capacity imbalance.
 
 **Too cold (<10°C):**
+
 - Electrolyte conductivity drops sharply — ion transport slows, internal resistance rises, and available power falls.
 - Below 5°C during charging: lithium plating risk becomes significant. Lithium ions that cannot intercalate into the graphite anode fast enough deposit as metallic lithium on the anode surface — a potentially irreversible failure mode that can cause dendrite growth and internal shorts. The BMS must limit charge current as temperature falls.
 - Delivered capacity shrinks because the early voltage cutoff (due to high IR drop) terminates discharge before the cell is electrochemically empty.
@@ -83,6 +85,7 @@ A fan forces air over or between cells. Used in the first-generation Nissan Leaf
 **External air (cabin air) cooling:** the simplest implementation. The HVAC system's cabin air is ducted through the pack. No liquid lines, no pump, no heat exchanger.
 
 The Nissan Leaf's degradation issues in hot climates (Arizona, Texas) made the limitations of air cooling widely understood. Three problems:
+
 1. Non-uniform: cells near the inlet are cooler than cells near the outlet, creating a systematic temperature gradient that causes differential ageing.
 2. No heating: cabin air in winter is cold. The pack temperature tracks ambient — with no active heating, cold-weather power and charge rate suffer with no BMS recourse.
 3. Limited capacity: air has low thermal conductivity (0.026 W/m·K) and heat capacity compared to water (0.6 W/m·K, 4× higher heat capacity). Even at high fan speed, the heat removal rate per cell surface area is limited.
@@ -94,6 +97,7 @@ Air cooling remains relevant for lower-power applications and climates where coo
 The dominant approach in modern EVs. Water-glycol coolant (50/50 ethylene glycol in water) flows through a cooling plate in contact with the cells, removing heat continuously.
 
 Water-glycol offers:
+
 - Thermal conductivity ≈ 0.4 W/m·K (15× air)
 - Heat capacity ≈ 3500 J/(kg·K) — excellent energy storage per unit mass
 - Low but non-zero electrical conductivity — standard ethylene glycol mixes are not truly non-conductive, and conductivity rises further with contamination and age. EV battery systems increasingly use dedicated low-conductivity coolant formulations (e.g. BASF GLYSANTIN ELECTRIFIED) and still require isolation monitoring regardless
@@ -167,6 +171,7 @@ The Tesla Model Y's heat pump integration — which moves waste heat from the mo
 ### Battery Preconditioning
 
 Modern EVs (Tesla, Ioniq 5, ID.4) begin heating the battery before the driver arrives at a DC fast charger, triggered by:
+
 - Navigation destination detected as a DC fast charger
 - Scheduled departure time (cold morning plug-in)
 - Driver-initiated preconditioning via phone app
@@ -178,6 +183,7 @@ The energy cost is real: heating the pack from −20°C to 20°C can consume 2�
 ## Temperature Monitoring and BMS Control
 
 The BMS maintains temperature awareness through a network of **NTC (Negative Temperature Coefficient) thermistors** placed at:
+
 - Representative cell surfaces within each module (typically 1–2 per module face)
 - Coolant inlet and outlet
 - Ambient reference (pack exterior)
@@ -239,6 +245,7 @@ The Leaf vs Tesla comparison in hot climates is the most studied real-world evid
 **Materials:** 18650 NMC cell at 50% SOC, NTC thermistor bonded to cell surface with thermal tape, Arduino + INA219, adjustable constant-current load (MOSFET + resistor divider or a programmable load)
 
 **Procedure:**
+
 1. Rest cell at room temperature. Apply C/5 discharge for 5 minutes. Log cell surface temperature every 10 s. Allow cell to cool back to ambient between runs.
 2. Repeat at C/2, 1C, and 2C.
 3. Plot temperature rise (ΔT above ambient) vs time for each C-rate.
@@ -251,6 +258,7 @@ The Leaf vs Tesla comparison in hot climates is the most studied real-world evid
 **Materials:** 4× 18650 cells in 4S string, 4× NTC thermistors (one bonded to each cell), Arduino with analog multiplexer or 4 ADC pins, foam insulation on all sides except one edge
 
 **Procedure:**
+
 1. Charge pack to 80% SOC. Wrap in foam insulation on all sides, leaving the cells accessible.
 2. Discharge at 1C. Log all four cell temperatures every 5 s for 10 minutes.
 3. Repeat with cells oriented so that two cells are in the interior and two are exposed to ambient (no insulation on one side).
@@ -262,6 +270,7 @@ The Leaf vs Tesla comparison in hot climates is the most studied real-world evid
 **Materials:** Small aluminium plate (150 mm × 150 mm × 3 mm), 6 mm copper tube soldered or clamped to the plate back face, 2× 18650 cells, NTC thermistors, peristaltic pump, room-temperature water, Arduino
 
 **Procedure:**
+
 1. Mount cells to the aluminium plate surface with thermal tape. Bond thermistors to the cell surfaces.
 2. Run water through the copper tube at a low flow rate.
 3. Discharge cells at 1C for 5 minutes. Log temperatures.

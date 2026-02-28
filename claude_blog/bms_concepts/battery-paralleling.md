@@ -42,6 +42,7 @@ The physics is not complicated. What matters is that the sequence is followed ex
 ## The Physics of Uncontrolled Paralleling
 
 Consider two packs:
+
 - Pack 1: 400 V, fully charged, on the HV bus powering the inverter
 - Pack 2: 395 V, cooling after a partial discharge, ready to be added
 
@@ -102,6 +103,7 @@ For a 20 Ω pre-charge resistor and a 10 V ΔV tolerance: I_peak = 10 / 20 = 0.5
 This is why the voltage check in Step 1 is not advisory. It is a hard gate. The BMS must refuse the parallel command if ΔV exceeds the limit, regardless of operator or system pressure to proceed.
 
 **Pre-equalisation**: when two packs are at significantly different voltages — one fully charged, one half depleted — the operator must first bring them closer together before paralleling is possible. This means either:
+
 - Charging Pack 2 to match Pack 1 via the onboard charger (if Pack 2 is lower)
 - Discharging Pack 1 through a resistive load or the drive system until it drops to match Pack 2 (uncommon)
 - Accepting a longer, slower pre-charge time with a higher-resistance pre-charge path (impractical for large ΔV)
@@ -175,6 +177,7 @@ String diodes are simple and fail-safe (they cannot create inrush; the diode lim
 **Materials**: 2× 18650 NMC cells at different SOC (one at ~4.0 V, one at ~3.7 V), INA219 + Arduino, 10 Ω pre-charge resistor, a jumper wire as the "main switch", oscilloscope or fast data logger (Arduino at 1 ms sample rate as an approximation).
 
 **Procedure**:
+
 1. Charge Cell A to ~4.0 V and Cell B to ~3.7 V. Measure and record OCV of both.
 2. Connect them in parallel through the INA219's shunt, with no series resistor. Log current at the fastest sample rate the Arduino supports (~1 ms). Record the peak current reading.
 3. Repeat, but insert the 10 Ω resistor in series. Log the current — it should be much lower, rising then decaying as the cells equalise.
@@ -189,6 +192,7 @@ String diodes are simple and fail-safe (they cannot create inrush; the diode lim
 **Materials**: Arduino Uno, INA219, 2× 18650 cells at different SOC, relay module (or MOSFET board) to simulate the pre-charge contactor, 10 Ω resistor, LED as "main contactor closed" indicator.
 
 **Procedure**:
+
 1. Wire Cell 2 through the pre-charge resistor and relay, with Cell 1 representing the "bus". The INA219 monitors current in the pre-charge path.
 2. Write a state machine in Arduino firmware with states: IDLE → VOLTAGE_CHECK → PRECHARGE → EQUALISED → MAIN_CLOSE → PARALLEL_RUNNING.
 3. In VOLTAGE_CHECK: read both cell voltages (estimate from the INA219 and a voltage divider on Cell 2). If ΔV > 0.3 V, refuse the sequence and print "VOLTAGE MISMATCH — PRE-EQUALISE REQUIRED". If ΔV ≤ 0.3 V, advance to PRECHARGE.
@@ -204,6 +208,7 @@ String diodes are simple and fail-safe (they cannot create inrush; the diode lim
 **Materials**: 2× 18650 cells with different internal resistances (an old cell and a new cell), 2× INA219 modules (one per cell), Arduino, matching resistive load.
 
 **Procedure**:
+
 1. Charge both cells to the same voltage (same SOC, ~3.8 V). Measure internal resistance of each using a pulse discharge test: ΔV / ΔI at a known step current.
 2. Connect both cells in parallel through their respective INA219 sensors. Connect a fixed resistive load (5–10 Ω).
 3. Log current from each INA219 simultaneously at 200 ms intervals.

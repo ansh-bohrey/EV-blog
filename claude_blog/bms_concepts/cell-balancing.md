@@ -143,6 +143,7 @@ For further detail on how the AFE enables per-cell measurement at the hardware l
 **Materials**: 3–4 18650 NMC cells of mixed age or source (ideally some that have been cycled more than others), bench charger, INA219 + Arduino, DMM
 
 **Procedure**:
+
 1. Charge all cells individually to 4.2 V (CC-CV). Rest 1 hour. Record OCV for each cell.
 2. Connect cells in series (without a balancing circuit). Discharge the series string at C/5 through a resistive load until the string voltage hits 4 × V_min. Remove the load and rest 30 minutes.
 3. Measure the open-circuit voltage of each cell individually. Record the spread.
@@ -157,6 +158,7 @@ For further detail on how the AFE enables per-cell measurement at the hardware l
 **Materials**: 2–3 18650 NMC cells, N-channel MOSFETs (2N7000 or similar), resistors (10–47 Ω, depending on desired bleed current), Arduino + INA219, breadboard
 
 **Procedure**:
+
 1. Charge one cell to 4.05 V and another to 3.85 V — a deliberate 200 mV imbalance representing a significant SOC spread.
 2. Wire a bleed circuit: MOSFET drain to cell positive, source through resistor to cell negative. Connect the MOSFET gate to an Arduino digital output pin.
 3. Write a simple sketch: read both cell voltages via INA219, turn on the bleed MOSFET for the high cell when its voltage exceeds the low cell by more than 20 mV, turn it off when the gap is less than 5 mV. Log voltages every 5 seconds.
@@ -171,6 +173,7 @@ For further detail on how the AFE enables per-cell measurement at the hardware l
 **Materials**: 2 18650 NMC cells (one well-cycled, one newer), Arduino + INA219, resistive load, bench charger
 
 **Procedure**:
+
 1. Measure individual capacity of each cell: charge to 4.2 V (CC-CV), rest 1 hour, discharge at C/5 to 2.8 V, measure total Ah. Record as Q_cell1 and Q_cell2. This establishes the capacity difference.
 2. Connect the two cells in series. Charge the series string to 2 × 4.2 V = 8.4 V using a two-cell string charger (or charge each cell individually to 4.2 V then reconnect).
 3. Discharge the series string at C/5 (based on the smaller cell's capacity). Stop when either cell hits 2.8 V. Record total Ah discharged.

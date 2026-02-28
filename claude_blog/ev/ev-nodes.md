@@ -50,6 +50,7 @@ You have read fifteen posts about this one. In the node context, what matters is
 The BMS is the **authority on pack state and limits**. No other node has the right to override what the BMS publishes about the pack's condition. If the BMS says charge current limit is zero, the OBC stops. If the BMS says discharge current limit is zero, the VCU requests zero torque. If the BMS opens the contactors, the HV bus goes dead regardless of what any other node wants.
 
 **Key CAN outputs**:
+
 - SOC (%), SOH (%), pack voltage (V), pack current (A)
 - Max discharge current (A) — updated every 10–100 ms based on SOP calculation
 - Max charge current (A)
@@ -115,6 +116,7 @@ A BEV generates heat in the battery pack, the motor windings, and the power elec
 A modern EV has multiple CAN networks operating at different speeds and with different security requirements. The gateway connects these networks and controls what information crosses between them.
 
 **Typical network partition**:
+
 - **Powertrain CAN** (500 kbps–1 Mbps): BMS, VCU, MCU, OBC, DC-DC, TMC. High priority, low latency, most safety-critical.
 - **Body CAN** (250 kbps): BCM (body control module), door ECUs, window motors, exterior lights, horn, power seat ECUs. Many nodes, low time-criticality.
 - **Chassis CAN** (500 kbps): ABS/ESC, electric power steering, air suspension. Safety-critical but separate from powertrain.
@@ -181,6 +183,7 @@ A parked EV must protect its 12 V aux battery. Most nodes are powered off, their
 **BMS standby current**: typically in the low milliamp range from 12 V (exact figures vary by OEM and telematics duty cycle). The constraint is usually the cumulative draw of all always-on nodes combined — BMS, telematics, and gateway together. Most EV owners report aux battery depletion after several weeks of parking without a charge event, with the exact duration depending heavily on whether telematics are active and the ambient temperature.
 
 **Wake triggers**:
+
 - Ignition button or key fob (12 V signal to BCM → BCM wakes full network)
 - Remote start command (telematics ECU → wake frame on low-power CAN segment → BCM → full wake)
 - BMS internal alarm: if a cell reaches a low-voltage threshold during standby self-monitoring, the BMS can wake the telematics ECU to alert the driver
@@ -240,16 +243,19 @@ BMS firmware updates require additional precautions: the vehicle must be parked 
 ## Further Reading
 
 **Textbooks**
+
 - Ehsani, M. et al. — *Modern Electric, Hybrid Electric, and Fuel Cell Vehicles* (3rd ed., CRC Press) — full BEV powertrain architecture
 - Reif, K. (ed.) — *Fundamentals of Automotive and Engine Technology* (Bosch) — ECU architecture reference
 
 **Standards**
+
 - ISO 26262 — functional safety decomposition of ECU responsibilities (covered separately in this series)
 - ISO 15118 — OBC to EVSE communication (V2G and smart charging protocols)
 - ISO 14229 (UDS) — Unified Diagnostic Services: how service tools and OTA systems talk to ECUs
 - UN R155 — vehicle cybersecurity regulation; governs gateway security and OTA update requirements
 
 **Online**
+
 - CSS Electronics — "CAN Bus Multi-Network Architecture Guide" — visual explainer of automotive multi-bus topologies
 - Vector Informatik — E/E Architecture white papers — professional automotive network design resources
 - COVESA Vehicle Signal Specification (VSS) — open naming standard for EV signals including BMS outputs

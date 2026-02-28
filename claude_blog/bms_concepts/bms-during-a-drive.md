@@ -31,6 +31,7 @@ The ignition signal — a 12 V discrete line from the body control module — ar
 **AFE startup**: the analog front-end chip (BQ76940 or similar) initializes its cell-voltage measurement channels. The first voltage scan completes within 50–100 ms. All 96 cell voltages are now available.
 
 **Self-check**: the BMS runs through its startup verification list:
+
 - Are all cell voltages within power-on limits? (Not below 3.0 V, not above 4.2 V)
 - Are all temperatures within operating range? (Not below −20°C, not above 60°C for power-on)
 - Is the High Voltage Interlock Loop continuous? (Service plugs seated, all connectors latched)
@@ -45,6 +46,7 @@ SOC initialized: 81%. The BMS stores this in RAM and begins Coulomb counting fro
 The whole pre-charge takes 200–500 ms depending on the resistor value and the capacitor bank size.
 
 **CAN announcements**: the BMS publishes its first "running" messages:
+
 - SOC: 81%
 - Pack voltage: 395 V
 - Max discharge current: 180 A (OEM-defined example; reduced at 5°C due to elevated cell resistance)
@@ -143,6 +145,7 @@ Something unexpected.
 The AFE scans temperature sensors every 200 ms. Twelve thermistors, distributed across the pack, each measuring a group of 8 cells.
 
 Temperature scan result:
+
 - Groups 1–6: 22–24°C
 - **Group 7: 38°C**
 - Groups 8–12: 22–24°C
@@ -154,12 +157,14 @@ This is a 14°C jump relative to adjacent groups. The BMS has an algorithm for t
 **Debounce**: the BMS does not act on a single anomalous reading. False positives from sensor noise or EMI transients are common. The BMS applies a debounce filter: the condition must persist for N consecutive scans (typically 3–5 scans, equivalent to 600 ms–1 second at 200 ms scan rate). After 3 scans, the anomaly is confirmed as persistent. The BMS escalates.
 
 **Response — Level 1 Warning**:
+
 - Max discharge current reduced by 20%: from 210 A (now that the pack is warm) to 168 A
 - CAN command to thermal management controller: increase coolant pump to maximum speed
 - Fault flag bit 4 set in the BMS status byte: "thermal warning — cell group over-temperature"
 - Event logged to EEPROM with freeze-frame: all 96 cell voltages, all 12 temperatures, pack current, SOC at the moment of detection
 
 **CAN propagation**:
+
 - VCU reads updated fault status and reduced current limit. Scales torque request down.
 - Gateway routes the fault flag to the instrument cluster.
 - Instrument cluster illuminates an amber thermal warning icon. Plays a soft chime.
@@ -199,6 +204,7 @@ The driver pulls into a space, selects Park, presses the power button. The car p
 The ignition signal goes low. The BMS begins its shutdown sequence — the reverse of startup, in the right order.
 
 **HV disconnect sequence**:
+
 1. The BMS ramps down its published max discharge current to 0 A (soft warning to other nodes that HV is about to drop)
 2. Main positive contactor opens
 3. Brief wait (20 ms) — verifies current has ramped to zero and no arc is sustained
@@ -206,6 +212,7 @@ The ignition signal goes low. The BMS begins its shutdown sequence — the rever
 5. HV bus is dead
 
 **Final state logging**: the BMS writes to non-volatile memory:
+
 - Final SOC: 64%
 - Last cell voltage readings (all 96)
 - Last temperature readings
@@ -280,10 +287,12 @@ Log a commute. Plot SOC and current against time. Annotate the plot with the eve
 ## Further Reading
 
 **For the algorithms behind this narrative**
+
 - Plett, G.L. — *Battery Management Systems, Vol. 2* — SOC estimation, SOH tracking, SOP calculation in rigorous mathematical form
 - Andrea, D. — *Battery Management Systems for Large Lithium-Ion Battery Packs* — operational state machine and drive-cycle BMS behavior
 
 **For real-world data**
+
 - Orion BMS User Manual — Section on normal operation; describes exactly this kind of drive-cycle behavior from a production BMS perspective
 - CSS Electronics — "CAN Bus Data Logger" guide — how to capture and visualize the CAN data described in this post
 - Recurrent Auto — published fleet battery data — real SOC, temperature, and range data from thousands of EVs in real conditions

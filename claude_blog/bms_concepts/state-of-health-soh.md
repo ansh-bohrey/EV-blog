@@ -124,6 +124,7 @@ The challenge: repurposing requires knowing the SOH of each individual cell — 
 **Materials**: Two identical 18650 NMC cells, bench charger/discharger, Arduino + INA219
 
 **Procedure**:
+
 1. Baseline capacity test for both cells: full CC-CV charge (1C/4.2 V), 1C discharge to 2.8 V. Record Ah.
 2. Stress cell A: cycle at 1C between 20–80% SOC. Stress cell B: cycle at 1C between 0–100% SOC.
 3. Re-test capacity every 50 cycles using the baseline protocol.
@@ -137,6 +138,7 @@ The challenge: repurposing requires knowing the SOH of each individual cell — 
 **Materials**: Same cells from Experiment 1, high-resolution voltage logging (1 mV resolution or better)
 
 **Procedure**:
+
 1. After baseline and after 100 cycles, discharge each cell at C/10 with 100 ms voltage logging.
 2. Numerically differentiate: compute dQ/dV (or dAh/dV) as a function of voltage.
 3. Plot dQ/dV vs V for new vs cycled cells on the same axes.
@@ -150,6 +152,7 @@ The challenge: repurposing requires knowing the SOH of each individual cell — 
 **Materials**: Three identical fully-charged cells, three different storage temperatures (5°C, 25°C, 40°C — use fridge, room temperature, and a warm enclosed space)
 
 **Procedure**:
+
 1. Charge all three cells to 3.7 V (approximately 50% SOC for minimum storage stress).
 2. Store at their respective temperatures for 4 weeks.
 3. Measure capacity with the baseline discharge protocol (1C from full charge to cutoff).

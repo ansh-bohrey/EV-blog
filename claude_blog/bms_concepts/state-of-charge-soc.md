@@ -153,6 +153,7 @@ SOC is not stored for its own sake. It drives decisions throughout the system:
 **Materials**: 18650 NMC cell, bench charger, INA219 + Arduino, DMM
 
 **Procedure**:
+
 1. Fully charge cell to 4.2 V (CC-CV). Rest 2 hours. Record OCV.
 2. Discharge at C/5 in 10% SOC steps (by Ah). After each step, remove load and rest 30 minutes. Record OCV.
 3. Repeat until cell reaches 2.8 V. Plot OCV vs SOC.
@@ -166,6 +167,7 @@ SOC is not stored for its own sake. It drives decisions throughout the system:
 **Materials**: Arduino + INA219, 18650 cell, CC load resistor
 
 **Procedure**:
+
 1. Fully charge cell. Set SOC = 100%.
 2. Discharge at C/3, logging current and computing Coulomb-counted SOC every 100 ms.
 3. After 50% of capacity discharged, rest 30 minutes and record OCV. Look up OCV-derived SOC. Note the discrepancy.
@@ -180,6 +182,7 @@ SOC is not stored for its own sake. It drives decisions throughout the system:
 **Materials**: Same setup + temperature chamber or fridge, thermistor
 
 **Procedure**:
+
 1. Discharge cell to 50% SOC at 25°C. Rest 1 hour.
 2. Measure OCV. Now cool cell to 5°C. Rest 1 hour. Measure OCV again.
 3. Discharge at C/5 at 5°C until voltage cutoff. Measure total Ah discharged.

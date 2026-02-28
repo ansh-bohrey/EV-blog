@@ -140,6 +140,7 @@ For cells discharged below approximately 3.0 V — deep discharge that damages t
 **Materials**: Bench power supply with CC-CV mode (e.g., Korad KA3005P or similar), 18650 NMC cell, INA219 current sensor module, Arduino Uno, laptop with serial logging.
 
 **Procedure**:
+
 1. Discharge cell to 3.0 V at C/5 to establish a known starting point. Rest 30 minutes.
 2. Set bench supply to CC = 0.5 A (approximately 0.17C for a 3 Ah cell), CV = 4.20 V, current cutoff = 50 mA.
 3. Connect INA219 in series with the cell. Log V_cell and I_charge every 5 seconds to a CSV file.
@@ -155,6 +156,7 @@ For cells discharged below approximately 3.0 V — deep discharge that damages t
 **Materials**: Same CC-CV setup, thermistor taped to the cell, zip-lock bag and ice-water bath for cooling, hair dryer for warming.
 
 **Procedure**:
+
 1. Log a complete CC-CV cycle at room temperature (approximately 23 °C). Record time to 80% SOC (CC phase end), total charge time, and total Ah.
 2. Cool the cell to approximately 10 °C using the ice-water bath. Dry thoroughly. Charge again at the same 0.5 A CC current. Log the profile.
 3. Observe that at 10 °C, the cell voltage rises faster — it reaches 4.2 V earlier in the cycle because the internal resistance is higher at lower temperature. The CC phase is shorter; less capacity is delivered before transitioning to CV.
@@ -169,6 +171,7 @@ For cells discharged below approximately 3.0 V — deep discharge that damages t
 **Materials**: Same setup.
 
 **Procedure**:
+
 1. Fully charge cell to 4.2 V using CC-CV. Record total time and total Ah.
 2. Discharge back to 3.0 V. Rest.
 3. Set CV target to 4.10 V (approximately 90–92% SOC for NMC). Charge to this limit. Record time and Ah.

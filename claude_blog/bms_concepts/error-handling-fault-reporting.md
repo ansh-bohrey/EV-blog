@@ -153,6 +153,7 @@ The functional safety post ([HV Safety Architecture →](./hv-safety-architectur
 **Materials**: Arduino Uno, INA219 current/voltage sensor module, 18650 NMC cell, 10 Ω resistive load, jumper wires, Arduino serial monitor.
 
 **Procedure**:
+
 1. Wire the INA219 to the Arduino over I2C. Connect the cell in series with the shunt resistor and the 10 Ω load through the INA219's sense path.
 2. Write a firmware loop that reads voltage and current at 100 ms intervals. Implement three fault checks: UV (if V < 3.0 V), OT placeholder (always false for now), and OCC (if current > a threshold you set).
 3. Implement a 3-sample debounce: only flag the fault after 3 consecutive threshold violations. Print the debounce counter to serial on each sample.
@@ -167,6 +168,7 @@ The functional safety post ([HV Safety Architecture →](./hv-safety-architectur
 **Materials**: Arduino Uno, MCP2515 CAN shield, a second Arduino + MCP2515 as CAN listener, INA219 as the "BMS sensor", 18650 cell.
 
 **Procedure**:
+
 1. Programme the first Arduino as the "BMS node": reads INA219 voltage and current at 100 ms, builds a 4-byte CAN frame (bytes 0–1: voltage in mV as uint16, bytes 2–3: current in mA as int16), and transmits it on CAN ID 0x300.
 2. Add fault logic: if voltage < 3.0 V or current > limit, set a fault bitmask byte and transmit a fault frame on CAN ID 0x301 with the bitmask.
 3. Programme the second Arduino as the "VCU listener": receive and parse both frames, print decoded values to serial.
@@ -181,6 +183,7 @@ The functional safety post ([HV Safety Architecture →](./hv-safety-architectur
 **Materials**: Arduino Uno, INA219, 18650 cell, DMM, a second voltage divider circuit to simulate an "AFE cell voltage reading".
 
 **Procedure**:
+
 1. Set up the INA219 to measure pack current accurately. Separately, use a voltage divider from the cell to simulate an "AFE reported voltage" to an Arduino analog input (scale so that 0–4.2 V maps to 0–1023 ADC counts).
 2. Write firmware that computes: expected_delta_V = I_measured × R_estimated (use a hardcoded R_internal of 100 mΩ). Compare actual_delta_V (change in reported cell voltage over the last second) to expected_delta_V.
 3. If the discrepancy exceeds a threshold (e.g., actual voltage change is 5× larger than expected from current alone), flag a plausibility fault.

@@ -55,6 +55,7 @@ Connect cells side by side, all positive terminals together, all negative termin
 Real packs combine both. The notation **xSyP** means x cells in series, each series position having y cells in parallel.
 
 Example: **96S3P** with 5 Ah cells:
+
 - Pack voltage: 96 × 3.6 V = 345.6 V
 - Pack capacity: 3 × 5 Ah = 15 Ah
 - Pack energy: 345.6 V × 15 Ah = 5.18 kWh (one module; a full pack would have multiple modules in series)
@@ -71,6 +72,7 @@ The two diagrams below show the series and parallel wiring topologies, and how t
 The system voltage is the most consequential architectural decision in pack design. The physics reason:
 
 For a given power level, P = V × I. Doubling voltage halves current. Lower current means:
+
 - Thinner, lighter copper cables and busbars
 - Less I²R resistive heating in the wiring
 - Smaller, cheaper connectors and contactors
@@ -97,6 +99,7 @@ The fundamental electrochemical unit. Covered in the Cell post. The BMS monitors
 ### Module
 
 A mechanically and electrically contained group of cells. A module typically contains 12–24 cells (some larger) in an xSyP arrangement, with its own:
+
 - Cell holders or compression plates (depending on format)
 - Copper or aluminum busbars welded or bolted to cell terminals
 - Voltage sense wires running to each cell terminal (or each parallel group)
@@ -142,6 +145,7 @@ For cylindrical cells, the CCS often integrates the voltage sense wires as embed
 Prismatic and pouch cells expand as they cycle — lithium intercalation causes the electrode stack to swell by up to 3% in volume over the life of the cell. Left unconstrained, this leads to delamination (electrode layers separating from each other) and reduced cycle life.
 
 Modules and pack structures apply controlled compression:
+
 - **Prismatic:** metal end-plates with springs or tie-rods maintain a calibrated preload force of typically 1–3 MPa on the cell faces throughout the cell's expansion range.
 - **Pouch:** foam or spring compression plates on each side of the cell stack, providing uniform pressure without rigid constraint.
 
@@ -238,6 +242,7 @@ CTP designs make this largely impossible — there is no module-level granularit
 **Materials:** 4× matched 18650 cells (same batch, within 10 mV of each other OCV), plastic cell holders, nickel strip or fine wire for connections, DMM, INA219 + Arduino
 
 **Procedure:**
+
 1. Measure each cell's OCV and DCIR individually.
 2. Assemble in 4S series. Measure pack OCV — verify it equals the sum of cell OCVs.
 3. Measure pack DCIR with a 1 A pulse — verify ≈ sum of cell DCIRs.
@@ -250,6 +255,7 @@ CTP designs make this largely impossible — there is no module-level granularit
 **Materials:** 4× 18650 cells, a way to reconfigure them between 4S1P and 2S2P, INA219
 
 **Procedure:**
+
 1. Charge all cells to the same SOC. Measure total open-circuit energy (sum of V × estimated Ah across all cells).
 2. Configure 4S1P. Discharge at 250 mA to the 4S cutoff voltage. Record total mAh and total Wh.
 3. Re-charge. Configure 2S2P. Discharge at 500 mA (same per-cell current) to the 2S cutoff. Record mAh and Wh.
@@ -261,6 +267,7 @@ CTP designs make this largely impossible — there is no module-level granularit
 **Materials:** 9 V battery (simulating a floating HV pack), two 10 MΩ resistors, a DMM with MΩ range, a 1 MΩ "fault" resistor
 
 **Procedure:**
+
 1. Connect the 9 V battery floating (no connection to any reference). Measure resistance from 9 V+ to your bench ground: should be >100 MΩ (immeasurable on most DMMs — an open circuit).
 2. Connect a 1 MΩ resistor from 9 V+ to bench ground (simulating an insulation fault). Measure resistance again — now reads 1 MΩ.
 3. Calculate implied leakage at 9 V: I = 9 V / 1 MΩ = 9 µA. Scale to a 400 V pack: 400 V / 1 MΩ = 400 µA. Still not fatal to touch — but detectable and reportable by an IMD.

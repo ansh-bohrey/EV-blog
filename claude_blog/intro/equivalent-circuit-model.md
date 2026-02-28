@@ -121,6 +121,7 @@ The time constant of the RC pair is **τ₁ = R₁ × C₁**, typically 10–100
 When a constant current I flows, V_C₁ does not jump instantly — it charges up exponentially with time constant τ₁. While it is charging, the terminal voltage continues to droop even under constant current. That is the slow sag you see after the initial R₀ drop.
 
 When current stops:
+
 - The I × R₀ term instantly disappears (instant partial recovery)
 - V_C₁ then decays exponentially back toward zero with the same time constant τ₁
 
@@ -275,6 +276,7 @@ Knowing the model's limitations is as important as knowing its strengths.
 **Setup:** Wire up: `9V battery → switch → 10kΩ resistor → 1000µF cap → GND`. Log voltage across the capacitor at 1-second intervals.
 
 **Procedure:**
+
 1. Close the switch. Log V_cap vs time for 60 seconds.
 2. Open the switch. Log V_cap vs time for another 60 seconds.
 3. Calculate τ = R × C = 10 kΩ × 1000 µF = 10 s.
@@ -289,6 +291,7 @@ Knowing the model's limitations is as important as knowing its strengths.
 **Setup:** Wire the MOSFET in series with the load resistor across the cell. Use the Arduino to toggle the MOSFET gate and log INA219 readings every 10 ms.
 
 **Procedure:**
+
 1. Rest the cell for at least 1 hour. Record OCV.
 2. Start logging. Close the MOSFET (apply load). Log for 30 seconds.
 3. Open the MOSFET (remove load). Log for 5 minutes.
@@ -301,6 +304,7 @@ R₀ = (OCV − V_at_t=0.01s) / I_measured
 Use the earliest voltage reading after switching on, before the RC dynamics have time to develop.
 
 **What to observe:** The two-phase voltage response is usually clearly visible even at 10 ms sampling:
+
 - Instant drop at load application (R₀)
 - Continued slow droop under constant load (RC dynamics)
 - Instant partial recovery at load removal (R₀)

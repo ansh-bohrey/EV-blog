@@ -24,6 +24,7 @@ The same logic works in reverse: pressing the regen braking paddle on a full bat
 **SOP_charge** is the maximum power the pack can absorb for the same pulse duration without any cell's terminal voltage rising above V_max.
 
 Both are functions of:
+
 - **SOC**: less remaining capacity means less OCV headroom against V_min
 - **SOH**: a degraded cell has higher internal resistance, less voltage headroom for the same current
 - **Temperature**: cold cells have substantially higher resistance; hot cells have reduced thermal margin
@@ -52,6 +53,7 @@ V_T = OCV + I × R_total ≤ V_max
 ```
 
 This shows immediately why SOP shrinks at the extremes of SOC:
+
 - At low SOC, OCV is low → (OCV − V_min) is small → I_max is small → discharge SOP is low
 - At high SOC, OCV is high → (V_max − OCV) is small → I_max is small → charge SOP (regen) is low
 
@@ -74,6 +76,7 @@ DCIR is a strong function of temperature. The Arrhenius relationship governs ion
 <iframe src="../../assets/bms-concepts/rint-temperature-chart.html" width="100%" height="380" frameborder="0"></iframe>
 
 Typical NMC internal resistance values (illustrative ranges from published 21700 cell characterisation; actual values are cell-design and SOC dependent):
+
 - At 25°C: 40–100 mΩ for a single 21700 cell at mid-SOC
 - At 0°C: 80–200 mΩ (roughly 2× increase)
 - At −20°C: 200–500 mΩ (4–10× increase at very low temperature)
@@ -89,6 +92,7 @@ Before a BMS can estimate SOP in the field, the cell's resistance-SOC-temperatur
 ![HPPC test waveform: discharge pulse, rest, regen pulse, rest — repeated at each SOC step](../assets/bms-concepts/sop-hppc-waveform.svg)
 
 The HPPC procedure:
+
 1. Discharge the cell to a known SOC step (e.g., 90%)
 2. Apply a 25A discharge pulse for 10 seconds
 3. Rest for 40 seconds
@@ -167,6 +171,7 @@ A good BMS communicates the available regen SOP to the braking controller, which
 The connection between SOP and thermal management is direct. Heating the battery pack from −10°C to 20°C roughly doubles SOP. This is why performance EVs and vehicles designed for cold climates include battery pre-conditioning: actively heating the pack before a fast-charging session or before a spirited drive.
 
 A BMS that is managing pre-conditioning correctly is simultaneously:
+
 - Running the thermal management system to heat the pack
 - Raising the SOP limit in real-time as temperature rises
 - Scheduling the pre-conditioning start to complete before the user needs peak performance
@@ -182,6 +187,7 @@ The driver presses the "pre-condition" button and the BMS does the physics.
 **Materials**: 18650 NMC cell at 50% SOC, INA219, fixed 1A load resistor, thermometer, fridge, warm water bath
 
 **Procedure**:
+
 1. Bring cell to 50% SOC. Rest 1 hour at 25°C. Record OCV. Apply 1A for 10 s, record terminal voltage. Compute DCIR = (OCV − V_10s) / 1A.
 2. Repeat at 10°C (fridge), 5°C (colder fridge), and 40°C (warm water bath at safe distance from electronics).
 
@@ -194,6 +200,7 @@ The driver presses the "pre-condition" button and the BMS does the physics.
 **Materials**: Arduino + INA219 + MOSFET load, 18650 cell
 
 **Procedure**:
+
 1. Program Arduino to execute: 10 s discharge pulse at 1A → 40 s rest → 10 s charge pulse (use current-limited bench supply at 0.5A) → 40 s rest. Log V and I at 100 ms intervals.
 2. Repeat at each 10% SOC step from 90% to 20%.
 3. Extract DCIR at each SOC from the voltage step at pulse start.
@@ -207,6 +214,7 @@ The driver presses the "pre-condition" button and the BMS does the physics.
 **Materials**: Arduino, small DC motor, PWM controller, 3-cell Li-ion pack, NTC thermistor for temperature sensing
 
 **Procedure**:
+
 1. Run motor at fixed PWM at 25°C. Log speed and current.
 2. Cool pack to 5°C (fridge). Re-run at same PWM. Observe speed difference.
 3. Implement a software current limit in Arduino that scales with temperature (reduce limit by 2% per degree below 20°C). Apply limit and re-run at 5°C.

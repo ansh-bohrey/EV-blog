@@ -6,11 +6,13 @@ The intro materials are clear, structured, and do a good job setting expectation
 ## File-Specific Feedback
 
 ### claude_blog/intro/series-overview.md
+
 - Flow is excellent; the dependency graph and reading paths are valuable.
 - No obvious factual errors; most statements are about structure and intent.
 - The hardware kit list is practical and useful, but specific part choices should be labeled as examples rather than implied standards.
 
 ### claude_blog/intro/equivalent-circuit-model.md
+
 - Strong pedagogy: the “mysteries → model levels” approach works well.
 - Depth is appropriate for an intermediate reader.
 - Accuracy is mostly solid, but several numeric claims need evidence or should be explicitly labeled as typical/illustrative (see below).
@@ -18,6 +20,7 @@ The intro materials are clear, structured, and do a good job setting expectation
 ## Persona Evaluations
 
 ### A) A‑ Engineering Student
+
 - Flow: Very high; the ECM walkthrough builds intuition quickly.
 - Ease of understanding: High; math is introduced progressively.
 - Depth: Good; would benefit from a short “parameter ranges by chemistry” appendix with sources.
@@ -25,6 +28,7 @@ The intro materials are clear, structured, and do a good job setting expectation
 - What I learned: Why voltage recovery requires RC dynamics and how ECM parameters map to physical processes.
 
 ### B) EV Enthusiast
+
 - Flow: Great; curiosity hooks are effective.
 - Ease of understanding: High.
 - Depth: Appropriate; takes the reader just deep enough to understand SOC/SOP.
@@ -32,6 +36,7 @@ The intro materials are clear, structured, and do a good job setting expectation
 - What I learned: Why voltage bounces under load and why SOC needs a model, not just a voltmeter.
 
 ### C) Senior EV Industry Engineer
+
 - Flow: Good; framing is clear and lightweight.
 - Ease of understanding: High.
 - Depth: Adequate for a blog; would benefit from citations to anchor claims.
@@ -45,6 +50,7 @@ No clear factual errors found in the intro files. The main improvements are to l
 ## Claims That Need Evidence or Qualification
 
 ### equivalent-circuit-model.md
+
 - “The ECM runs inside your BMS every 10 ms.” Implementation‑dependent; should be “typical 10–100 ms” or “implementation‑dependent.”
 - “R₀ can be 2–5× higher at −10°C.” Needs citation.
 - “2RC Thevenin model is the standard in production.” Needs citation (common, but should be sourced).
@@ -61,5 +67,6 @@ These are suggested sources to anchor the quantitative ECM claims if you want to
 ---
 
 ## Status Check (2026-02-26)
+
 - **Implemented:** No changes detected in `claude_blog/intro/*.md` to address the quantitative sourcing recommendations.
 - **Still open:** All items under “Claims That Need Evidence or Qualification” remain unaddressed.

@@ -146,6 +146,7 @@ Every post follows the same format:
 **Takeaways** — Plain-English summary of the key points. If a section was too technical, the takeaways give you the essentials.
 
 **Experiments** — 2–3 hands-on experiments with a consistent low-cost hardware kit used throughout the series:
+
 - Arduino Uno/Nano + INA219 (current and voltage logging)
 - 18650 Li-ion cells (NMC and LFP where chemistry comparison matters)
 - NTC thermistors
