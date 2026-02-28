@@ -79,35 +79,42 @@ Three main topologies are used in practice.
 
 **Transformer-based isolation** uses a multi-winding transformer to allow any cell to transfer charge to any other cell in the string, including across large voltage differentials. This enables "any-to-any" balancing and is the most flexible topology. Cost and size are the barriers — a multi-winding transformer for a 100-cell string is a significant component.
 
-Active balancing's advantages are most pronounced in large packs — truck and bus applications where pack size makes passive balancing energy losses economically significant, and where the balancing currents needed for meaningful correction within a reasonable time frame would produce unacceptable heat in a passive system. In smaller passenger EV packs, the cost and complexity premium of active balancing is harder to justify, which is why passive balancing remains dominant in that segment as of the mid-2020s.
+Active balancing's advantages are most pronounced in large packs — truck and bus applications where pack size makes passive balancing energy losses economically significant, and where the balancing currents needed for meaningful correction within a reasonable time frame would produce unacceptable heat in a passive system. In smaller passenger EV packs, the cost and complexity premium of active balancing is harder to justify, which is why passive balancing remains dominant in that segment as of 2026.
 
 ---
 
 ## Top Balancing vs Bottom Balancing
 
-The balancing target matters as much as the balancing method.
+The SOC level at which cells are equalised — the balancing target — matters as much as the balancing method.
 
-**Top balancing** equalises cell SOCs at the top of the charge window — all cells are driven to 100% SOC (or the BMS's configured upper limit) at the end of each full charge. This is the most common approach in EVs. Its advantage is that pack capacity is fully utilised: at the start of each discharge, all cells are at the same high SOC and the pack can deliver its full rated energy before any cell hits its minimum. Its disadvantage is that all cells reach their minimum voltage at approximately the same time during discharge — the discharge endpoint is not determined by one weak cell, it is reached by all cells roughly simultaneously.
+**Top balancing** equalises cell SOCs at the top of the charge window. The BMS bleeds charge from higher-SOC cells during the CV phase until all cells end the charge cycle at the same voltage (at or near Vmax). At the start of every discharge, every cell is at its maximum SOC.
 
-**Bottom balancing** equalises cells at 0% SOC — all cells reach their minimum voltage simultaneously at the end of a full discharge. This was historically used in applications where deep discharge was the more dangerous failure mode (some industrial energy storage and grid applications). Its disadvantage for EVs is that cells will be at different SOCs at the top of the charge window, meaning the highest-SOC cell limits the charge endpoint and the full pack energy is not accessible.
+The advantage is that the pack is as full as possible at the beginning of each discharge, maximising available range. The limitation is that top balancing cannot prevent the weakest cell from running out first during discharge. Cells with smaller capacities — whether from manufacturing variation or aging — have less Ah to give at the same current. Even if all cells start a discharge at identical SOC, the weakest cell depletes its SOC faster, reaches Vmin first, and forces the pack to stop. The stronger cells still have energy remaining at that point. Top balancing equalises the starting SOC but does not remove the underlying capacity mismatch.
 
-Modern EV BMS designs use top balancing universally. The argument is straightforward: overcharge (the risk at the top) is managed by per-cell overvoltage monitoring anyway, and pack energy is maximised by having all cells matched at full SOC.
+**Bottom balancing** takes the opposite approach: cells are arranged so they all reach Vmin simultaneously at the end of a full discharge. To make cells with different capacities arrive at empty together, the stronger cells must start each discharge at a lower SOC than they are capable of reaching. In practice this means the charger must stop when the weakest cell hits Vmax during charging — before the larger-capacity cells are fully filled. The pack can never be charged to its full energy potential; the strong cells spend their lives partially under-charged.
+
+Bottom balancing was historically used in applications where driving any individual cell into deep discharge was the primary risk (some stationary storage and industrial systems). For EVs it is the wrong trade: you give up the ability to fully charge the pack, and the weak-cell discharge limit still exists (now it is the weak cell that the charge was designed around, not an outlier that drifted).
+
+Modern EV BMS designs use top balancing universally. It is straightforward to implement (balancing runs naturally during the CV phase), it ensures all cells begin each drive at maximum SOC, and per-cell overvoltage monitoring handles the early-Vmax event that stops the charge. The discharge limitation — weakest cell hits Vmin first — is accepted and managed through cell sorting at pack assembly and consistent balancing across many charge cycles.
 
 ---
 
 ## The Balancing Algorithm
 
-The BMS balancing algorithm runs as a background task, informed by the AFE's per-cell voltage measurements.
+The BMS balancing algorithm runs as a background task during the CV phase of charging, cycling through a measure–decide–bleed loop:
 
-The basic logic:
-1. Read all cell voltages from the AFE. Convert voltages to estimated SOC using the OCV-SOC lookup.
-2. Compute the target — for top balancing, the target is typically the minimum cell voltage in the string (balance everything down to match the lowest, during the CV phase).
-3. Enable the balancing path (FET or active converter) for each cell that exceeds the target by more than the balancing threshold — typically **10–30 mV** above the target.
-4. Apply hysteresis: stop balancing on a cell when it falls to within a smaller window (typically 5–10 mV) of the target. Avoid chattering the FET on and off at the threshold.
-5. Suspend balancing if any cell's temperature exceeds a limit (typically 40–45°C) — bleed resistors in passive systems can heat adjacent cells, and active converters produce switching losses that add to pack thermal load.
-6. Resume balancing automatically when conditions allow.
+1. **Stop all active bleed paths** — open all balancing FETs. A 50 mA bleed current through a 100 Ω resistor creates a voltage drop that corrupts the cell voltage reading; measurement must happen with the bleeds off.
+2. **Wait for voltages to settle** — 50–200 ms is typically sufficient for cell voltages to stabilise after the FETs open.
+3. **Read all cell voltages** from the AFE.
+4. **Check preconditions** — only proceed if: pack is in CV phase, pack temperature is below the thermal limit (typically 40–45 °C), and no cell voltage is below a safety floor. If any condition fails, hold balancing off and check again on the next cycle.
+5. **Identify the target** — for passive top balancing, the target is the lowest cell voltage in the string. All higher-voltage cells will balance down toward it.
+6. **Mark cells for balancing** — any cell whose voltage exceeds the target by more than the start threshold (typically 10–30 mV) is flagged for bleed.
+7. **Enable bleed paths** for all flagged cells simultaneously — assert gate signals, bleed current flows through the resistors.
+8. **Run for a fixed bleed interval** (typically 10–30 seconds), then return to step 1 and re-measure.
 
-<iframe src="../../assets/bms-concepts/cell-voltage-convergence.html" width="100%" height="380" frameborder="0"></iframe>
+The stop threshold (typically 5–10 mV) is tighter than the start threshold. This hysteresis prevents FET chatter: a cell that begins balancing at +20 mV above target will not stop until it falls within 5 mV. Convergence is gradual — each measure–bleed cycle removes a small increment of imbalance, and meaningful correction accumulates across many charge sessions.
+
+<iframe src="../../assets/bms-concepts/cell-voltage-convergence.html" width="100%" height="900" frameborder="0"></iframe>
 
 The convergence animation above shows a typical CV-phase balancing session: cells start spread across a 50 mV window, bleed balancing activates on the high cells, and all voltages converge to the target over the course of the CV phase. Note that convergence is not instantaneous — the 50–200 mA bleed current is small relative to the cell capacity, and meaningful convergence requires sustained balancing across multiple charge cycles.
 
@@ -169,7 +176,7 @@ For further detail on how the AFE enables per-cell measurement at the hardware l
 3. Discharge the series string at C/5 (based on the smaller cell's capacity). Stop when either cell hits 2.8 V. Record total Ah discharged.
 4. Compare to the theoretical maximum Ah: min(Q_cell1, Q_cell2). How much capacity is still in the stronger cell when the weaker cell hits V_min?
 
-**What to observe**: The series string can only deliver as many Ah as the weakest cell — even though the stronger cell still has charge. The difference between the stronger cell's remaining capacity and zero is the capacity penalty directly attributable to imbalance. If your two cells differ by 10% in capacity, the pack delivers roughly 10% less than its rated capacity. This is the chain-of-buckets effect made numerically concrete.
+**What to observe**: The series string can only deliver as many Ah as the weakest cell — even though the stronger cell still has charge. The difference between the stronger cell's remaining capacity and zero is the capacity penalty directly attributable to imbalance. If your two cells differ by 10% in capacity, the pack delivers roughly 10% less than its rated capacity. This is the chain-of-buckets effect that we discussed earlier.
 
 ---
 

@@ -9,6 +9,7 @@
 - cooling - passive, active etc
 
 ## BMS Concepts
+- BMS Introduction — what a BMS is, its core functions, physical placement, and architectural variants
 - State of Charge (SOC)
 - State of Health (SOH)
 - State of Power (SOP)
@@ -57,6 +58,7 @@
 | AIS 156 | `topics/standards/AIS-156_standard.md` | Done | Status marker only |
 | ISO 13849 | `topics/standards/ISO-13849_standard.md` | Done | Status marker only |
 | ISO 26262 | `topics/standards/ISO-26262_standard.md` | Done | Status marker only |
+| BMS Introduction | `topics/bms_concepts/bms-introduction.md` | Plan | Full blog plan outline |
 | Analog Front End (AFE) | `topics/bms_concepts/analog-front-end-afe.md` | Plan | Full blog plan outline |
 | CAN | `topics/interfaces/can.md` | Plan | Full blog plan outline |
 | Cell balancing | `topics/bms_concepts/cell-balancing.md` | Plan | Full blog plan outline |

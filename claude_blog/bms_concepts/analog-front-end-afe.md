@@ -93,6 +93,30 @@ Thermistor placement is as important as thermistor count. A module with ten cell
 
 ---
 
+## Why Measurement Accuracy Has a Price Tag
+
+The ±1–5 mV accuracy range in the cell voltage table above is not just a spec to compare across datasheets — it is directly translatable to money lost or saved on every pack shipped.
+
+The first-order argument is about endpoints. Voltage accuracy matters most at the top and bottom of the charge window: a cell voltage reading that is too high triggers premature charge termination before the cell is actually full; a reading that is too low triggers premature discharge cutoff before the cell is actually empty. In both cases, the pack delivers less usable energy than it physically contains. The unusable fraction is capacity that was paid for but cannot be accessed.
+
+The OCV-SOC slope at the cutoff point converts mV of measurement error into percent of lost capacity. For NMC near the top of charge, the curve rises steeply — roughly 60–70 mV per percent SOC. A ±33 mV measurement error at the charge cutoff shifts the perceived charge termination point by roughly 0.5% SOC. For a single $4.25 cell that is immaterial — $0.02 of lost capacity. For a $10,000 battery pack, 0.5% of capacity is $50. The value of accuracy scales with the size and cost of the pack:
+
+```
+$ per mV ≈ battery cost ($) / OCV-SOC slope (mV / %SOC) at the cutoff point
+```
+
+For a $10,000 NMC pack, this gives roughly $7 per mV at the top of charge. That is the economic case for paying a few dollars more per chip for a higher-accuracy AFE.
+
+**LFP changes the numbers significantly.** The LFP OCV-SOC curve has a long flat plateau from roughly 20–90% SOC where the slope approaches zero. In this plateau region, 10 mV of voltage difference can correspond to tens of percent SOC difference — voltage alone cannot tell the BMS where it is in the operating window. At the endpoints where the LFP curve steepens, the slope is roughly half that of NMC, so $/mV is approximately double. In the mid-range plateau the slope is so small that the $/mV for balancing decisions becomes very large — this is why tight voltage accuracy and reliable current measurement (for coulomb counting) are proportionally more important for LFP packs than for NMC.
+
+**Balancing introduces a further mechanism.** The analysis above treats each cell independently. In a real series string, voltage measurement error can produce *measurement-induced imbalance*: the BMS balances cells to equal *measured* voltages, but if two cells have offsetting measurement errors, a real SOC gap remains after balancing completes. That residual imbalance propagates through the discharge — the worse-measured cell hits its cutoff voltage first, stranding energy in the other cells. The capacity lost depends on the OCV-SOC slope at the point where balancing happens relative to the slope at the discharge endpoint, which varies with chemistry and operating conditions.
+
+The practical implication: when comparing two AFE chips with different accuracy specs, the relevant question is not "how different are the headline numbers?" but "how much pack capacity — and pack cost — does that difference represent at my system's battery cost and chemistry?" A 2 mV improvement in accuracy means much more for a $15,000 LFP bus battery than for a $300 e-scooter pack.
+
+For the full derivation — including the exact capacity-loss formula accounting for both the balancing point slope and the endpoint slope, worked numerical examples for a car-sized and a skateboard-sized pack, and a careful reading of how three commercial AFE datasheets present their accuracy figures across temperature and solder shift — Ania Mitros's BMS course covers this rigorously in its "Value of Accuracy" module: [Ania's BMS Course](https://ofb.net/~ania/Anias-BMS-course/).
+
+---
+
 ## Balancing Control
 
 The AFE's role in balancing is to act as the gatekeeper: the BMS MCU decides *which* cells to balance; the AFE provides the gate drive to make it happen.
@@ -226,6 +250,7 @@ This hardware protection layer is the final backstop: it activates even if the M
 
 ## Further Reading
 
+- **Mitros, A.** — *Ania's BMS Course* (2023) — "Value of Accuracy" module: derives the $/mV and $/A metrics for voltage and current measurement accuracy, works through NMC vs LFP comparisons, and shows how to read AFE datasheet accuracy tables critically (temperature range, solder shift, long-term drift). Available at [ofb.net/~ania/Anias-BMS-course/](https://ofb.net/~ania/Anias-BMS-course/).
 - **Andrea, D.** — *Battery Management Systems for Large Lithium-Ion Battery Packs* (Artech House, 2010) — Chapter 7 covers AFE chip selection, interface design, and layout considerations. The most practical hardware-focused BMS reference available.
 - **TI BQ76940 Datasheet** (Texas Instruments, SLUSBK3) — the complete register map, timing diagrams, protection threshold programming, and application schematics. The primary reference for BQ-series BMS firmware development. Download directly from TI.
 - **TI BQ76940 Product Page** (Texas Instruments, ti.com/product/BQ76940) — links to the datasheet (SLUSBK3), reference design, and evaluation module user guide. The BQ76940 uses I2C; the datasheet contains the full register map, I2C timing diagrams, GAIN/OFFSET calibration procedure, and example firmware flow.
