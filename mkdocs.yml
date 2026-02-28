@@ -6,8 +6,11 @@ repo_name: ansh-bohrey/EV-blog
 docs_dir: claude_blog
 theme:
   name: material
+  palette:
+    scheme: default
+    primary: white
+    accent: blue
   features:
-    - navigation.sections
     - navigation.top
     - content.code.copy
     - search.suggest

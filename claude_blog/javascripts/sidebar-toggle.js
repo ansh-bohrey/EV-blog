@@ -26,7 +26,8 @@
     /* ── Restore persisted state (no transition yet) ────────── */
 
     var navCollapsed = localStorage.getItem('sb-nav') === '1';
-    var tocCollapsed = localStorage.getItem('sb-toc') === '1';
+    // TOC defaults to collapsed on first visit; user can open it with the toggle.
+    var tocCollapsed = localStorage.getItem('sb-toc') !== '0';
 
     if (navCollapsed) body.classList.add('nav-collapsed');
     if (tocCollapsed) body.classList.add('toc-collapsed');
