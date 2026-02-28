@@ -23,7 +23,7 @@
 | 17 | Error Handling / Fault Reporting | 5 | 5 |
 | 18 | BMS During a Drive | 4 | 4 |
 | 19 | BMS Validation | 5 | 5 |
-| 20 | Post-PDU Paralleling | 5 | 5 |
+| 20 | Battery Paralleling | 5 | 5 |
 | 21 | Communication Interface | 4 | 4 |
 | 22 | CAN | 6 | 6 |
 | 23 | RS-485 / RS-232 | 5 | 5 |
@@ -177,7 +177,7 @@ Legend: `diagram` = original SVG/Illustrator/mermaid, `chart` = plot or table, `
 - Validation pipeline timeline (step 0→5). `diagram`
 - Pass/fail regression dashboard mock. `diagram`
 
-## Post-PDU Paralleling (`topics/bms_concepts/post-pdu-paralleling.md`)
+## Battery Paralleling (`topics/bms_concepts/battery-paralleling.md`)
 - Two-pack parallel connection schematic. `diagram`
 - Inrush current waveform with/without pre-charge. `chart`
 - Pre-charge sequence timeline. `diagram`

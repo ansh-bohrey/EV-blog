@@ -21,7 +21,7 @@
 - Deep discharge protection
 - Open Circuit Voltage (OCV) vs Terminal Voltage logic
 - Charging algorithm (To Do)
-- Post-PDU paralleling (To Do)
+- Battery paralleling (To Do)
 - HV Safety Architecture — contactors, HVIL, isolation monitoring, MSD, crash fuse as one unified post
 - BMS during a drive — narrative walkthrough tying all BMS functions together
 - BMS Validation — HIL, SiL, DFMEA-linked test cases, from bench to vehicle
@@ -68,7 +68,7 @@
 | Error handling / fault reporting | `topics/bms_concepts/error-handling-fault-reporting.md` | Plan | Full blog plan outline |
 | Ignition handling | `topics/bms_concepts/ignition-handling.md` | Plan | Full blog plan outline |
 | OCV vs terminal voltage | `topics/bms_concepts/open-circuit-voltage-ocv-vs-terminal-voltage-logic.md` | Plan | Full blog plan outline |
-| Post-PDU paralleling | `topics/bms_concepts/post-pdu-paralleling.md` | Plan | Full blog plan outline (tagged To Do above) |
+| Battery paralleling | `topics/bms_concepts/battery-paralleling.md` | Plan | Full blog plan outline (tagged To Do above) |
 | RS-485 / RS-232 | `topics/interfaces/rs-485-232.md` | Plan | Full blog plan outline |
 | SOC | `topics/bms_concepts/state-of-charge-soc.md` | Plan | Full blog plan outline |
 | SOH | `topics/bms_concepts/state-of-health-soh.md` | Plan | Full blog plan outline |

@@ -71,7 +71,7 @@ These posts build on each other. Reading order matters.
 | 10 | **Error Handling & Fault Reporting** | DTC codes, severity levels, CAN fault messages, and how the BMS tells the driver (and the cloud) something is wrong. |
 | 11 | **Ignition Handling** | How the BMS wakes up, runs pre-charge, arms the contactors, and shuts down safely. |
 | 12 | **HV Safety Architecture** | The complete safety circuit: HVIL loop, contactors, pyro-fuse, and six-layer defence-in-depth. |
-| 13 | **Post-PDU Paralleling** | Connecting multiple battery packs. The inrush current problem and why pre-charge matters here too. |
+| 13 | **Battery Paralleling** | Connecting multiple battery packs. The inrush current problem and why pre-charge matters here too. |
 | 14 | **BMS During a Drive** | A narrative that ties the whole series together — what the BMS is doing every 100ms during a real drive. |
 
 ### Interfaces — How Everything Communicates

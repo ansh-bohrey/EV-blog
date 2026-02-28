@@ -29,7 +29,7 @@ A practical, engineering-focused blog on EV batteries, BMS algorithms, safety ar
 - [Thermal Runaway Detection](bms_concepts/thermal-runaway-detection-handling.md)
 - [Error Handling and Fault Reporting](bms_concepts/error-handling-fault-reporting.md)
 - [HV Safety Architecture](bms_concepts/hv-safety-architecture.md)
-- [Post-PDU Paralleling](bms_concepts/post-pdu-paralleling.md)
+- [Battery Paralleling](bms_concepts/battery-paralleling.md)
 - [BMS During a Drive](bms_concepts/bms-during-a-drive.md)
 - [BMS Validation](bms_concepts/bms-validation.md)
 

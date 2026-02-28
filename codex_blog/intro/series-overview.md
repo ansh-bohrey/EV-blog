@@ -42,7 +42,7 @@ No special background is required beyond basic Ohm’s law and RC intuition.
 10. Error Handling / Fault Reporting
 11. Ignition Handling
 12. HV Safety Architecture
-13. Post-PDU Paralleling
+13. Battery Paralleling
 14. BMS During a Drive
 15. BMS Validation
 

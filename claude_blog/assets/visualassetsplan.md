@@ -159,7 +159,7 @@ These appear across multiple posts, are the conceptual backbone of the series, o
 - `[DIAG]` Fault scenario storyboard: coolant leak → IMD warning → driver notified → resistance drops further → contactors open → safe state
 - `[ANIM]` Isolation resistance degradation: slider from healthy (500 MΩ) to fault (<50 kΩ), with implied leakage current at 400V and hazard level updating
 
-#### Post-PDU Paralleling
+#### Battery Paralleling
 - `[DIAG]` Two-pack HV bus diagram: Pack 1 and Pack 2 each with individual contactors and pre-charge paths, meeting at a common bus
 - `[ANIM]` Inrush current waveform: without pre-charge (spike) vs with pre-charge (smooth exponential) — side-by-side current waveforms
 - `[DIAG]` Parallel contactor sequencing timing diagram: step-by-step sequence to add Pack 2 to an active bus

@@ -164,7 +164,7 @@ Cell Balancing ←── Analog Front End (AFE)
         ↓
 Charging Algorithm
         ↓
-Ignition Handling ──→ Post-PDU Paralleling
+Ignition Handling ──→ Battery Paralleling
         ↓
 Communication Interface
    ├── CAN

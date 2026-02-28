@@ -1,4 +1,4 @@
-# Post-PDU Paralleling — Blog Plan
+# Battery Paralleling — Blog Plan
 
 ## Goal
 Explain what parallel battery pack connection means, why it is not as simple as plugging two packs together, what risks arise from voltage mismatch, and how BMS-controlled pre-charge and current sharing make it safe — from the "two water tanks" analogy to contactor sequencing.
@@ -15,13 +15,13 @@ Explain what parallel battery pack connection means, why it is not as simple as 
 - A single battery pack isn't always enough — heavy trucks, grid storage, and high-range EVs may combine multiple packs on a shared HV bus
 - The temptation: connect them in parallel for doubled capacity and current capability
 - The reality: voltage mismatch + no current limiting = massive inrush current, damaged contactors, blown fuses, and potential thermal runaway
-- Post-PDU paralleling is the controlled, BMS-managed way to do this safely
+- Battery paralleling is the controlled, BMS-managed way to do this safely
 
 ### 2. What is a PDU?
 - **PDU = Power Distribution Unit**: the HV junction box that routes power from the battery pack(s) to the motor inverter, charger, DC-DC converter, and auxiliary loads
 - In a single-pack system: PDU is a smart fuse box with contactors and pre-charge circuit
 - In a multi-pack system: PDU (or a parallel junction box) is where the packs are joined on a common HV bus
-- "Post-PDU paralleling" = connecting packs together on the HV bus side of the PDU, after each pack's own contactors
+- "Battery paralleling" = connecting packs together on the HV bus side of the PDU, after each pack's own contactors
 - Contrast with pre-PDU paralleling at the pack level — physically the same concept but emphasizes the HV bus connection point
 
 ### 3. The Two Water Tanks Analogy

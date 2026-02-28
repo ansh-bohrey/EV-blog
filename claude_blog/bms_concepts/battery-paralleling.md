@@ -1,4 +1,4 @@
-# Post-PDU Paralleling — Connecting Multiple Battery Packs Safely
+# Battery Paralleling — Connecting Multiple Battery Packs Safely
 
 *Prerequisites: [Ignition Handling →](./ignition-handling.md), [Battery Pack & Module Architecture →](../battery/battery.md)*
 *Next: [Thermal Runaway Detection & Handling →](./thermal-runaway-detection-handling.md)*
@@ -13,7 +13,7 @@ The reality is considerably less simple. Two battery packs on a shared HV bus wi
 
 At 500 A peak, contactors can weld shut permanently. Fast-acting HV fuses can blow. Bus voltage can collapse enough to crash the inverter. The resulting shock can trigger BMS protection faults in both packs simultaneously, leaving the vehicle stranded with both packs isolated. In severe cases the inrush current spike generates enough localised heating to initiate thermal events in cabling or connectors.
 
-Post-PDU paralleling is the engineering discipline that makes multi-pack connection safe and reliable. It is not exotic — it is a structured sequence of measurements, pre-charge, and coordination that gives controlled paralleling the same safety properties as the single-pack pre-charge sequence you learned in [Ignition Handling](./ignition-handling.md).
+Battery paralleling is the engineering discipline that makes multi-pack connection safe and reliable. It is not exotic — it is a structured sequence of measurements, pre-charge, and coordination that gives controlled paralleling the same safety properties as the single-pack pre-charge sequence you learned in [Ignition Handling](./ignition-handling.md).
 
 ---
 
@@ -21,9 +21,9 @@ Post-PDU paralleling is the engineering discipline that makes multi-pack connect
 
 The **Power Distribution Unit (PDU)** — sometimes called the HV junction box or battery junction box — is the HV switching centre for the traction battery. It houses the main contactors, pre-charge relay, HV fuses, service disconnect, and in many designs the manual service plug that isolates the pack for maintenance. Everything the pack energises passes through the PDU.
 
-**Post-PDU paralleling** means connecting two packs on the HV bus side — the output side — of each pack's own PDU. Each pack has its own contactors, its own fuses, its own BMS. They share the external HV bus that connects to the inverter, charger, and DC-DC converter.
+**Battery paralleling** means connecting two packs on the HV bus side — the output side — of each pack's own PDU. Each pack has its own contactors, its own fuses, its own BMS. They share the external HV bus that connects to the inverter, charger, and DC-DC converter.
 
-This is distinct from parallel cell strings within a single pack (handled internally during pack assembly) and from series-connected packs (used to achieve higher voltage, not higher capacity). Post-PDU paralleling specifically adds capacity at the same voltage by paralleling two independently managed packs at system level.
+This is distinct from parallel cell strings within a single pack (handled internally during pack assembly) and from series-connected packs (used to achieve higher voltage, not higher capacity). Battery paralleling specifically adds capacity at the same voltage by paralleling two independently managed packs at system level.
 
 ---
 
@@ -47,7 +47,7 @@ Consider two packs:
 
 Total series impedance of the connection path — cable resistance, contactor contact resistance, connector resistance — is approximately 10 mΩ.
 
-<iframe src="../../assets/bms-concepts/post-pdu-inrush.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/battery-paralleling-inrush.html" width="100%" height="380" frameborder="0"></iframe>
 
 Peak inrush current if connected directly:
 

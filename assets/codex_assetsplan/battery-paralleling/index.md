@@ -1,4 +1,4 @@
-# Post-PDU Paralleling Assets
+# Battery Paralleling Assets
 
 - `parallel-pack-schematic.svg` — Parallel pack schematic.
 - `inrush-current-waveform.svg` — Inrush current comparison.

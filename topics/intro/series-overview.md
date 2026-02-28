@@ -54,7 +54,7 @@ Posts in recommended reading order:
 10. Error Handling / Fault Reporting — how the BMS communicates failures
 11. Ignition Handling — how the BMS powers up and shuts down safely
 12. HV Safety Architecture — the complete safety circuit from contactors to crash fuse
-13. Post-PDU Paralleling — connecting multiple packs
+13. Battery Paralleling — connecting multiple packs
 14. BMS During a Drive — a narrative tying it all together
 15. BMS Validation — how BMS software is tested before going into a vehicle
 

@@ -64,7 +64,7 @@ Every component value depends on SOC, temperature, and SOH. At low temperature, 
 
 This model is not an academic exercise. It is the backbone of production BMS SOC and SOP estimators. The BMS maintains a running estimate of the state of each RC pair, uses it to predict terminal voltage under load, and corrects its SOC estimate based on the difference between predicted and measured voltage. More on this in the [SOC post](./state-of-charge-soc.md).
 
-<iframe src="../../assets/bms-concepts/ocv-terminal-voltage-animation.html" width="100%" height="400" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/ocv-terminal-voltage-animation.html" width="100%" height="800" frameborder="0"></iframe>
 
 ---
 

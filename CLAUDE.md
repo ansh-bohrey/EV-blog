@@ -57,7 +57,7 @@ Cell Balancing ←── AFE
         ↓
 Charging Algorithm
         ↓
-Ignition Handling ──→ Post-PDU Paralleling
+Ignition Handling ──→ Battery Paralleling
         ↓
 Communication Interface (overview)
 ├── CAN (deep dive)

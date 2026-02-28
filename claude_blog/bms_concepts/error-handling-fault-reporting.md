@@ -1,7 +1,7 @@
 # Error Handling & Fault Reporting — How the BMS Knows Something Is Wrong
 
 *Prerequisites: [Analog Front End (AFE) →](./analog-front-end-afe.md), [HV Safety Architecture →](./hv-safety-architecture.md)*
-*Next: [Post-PDU Paralleling →](./post-pdu-paralleling.md)*
+*Next: [Battery Paralleling →](./battery-paralleling.md)*
 
 ---
 
