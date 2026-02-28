@@ -1,0 +1,79 @@
+/* ================================================================
+   Collapsible sidebar toggles
+   Desktop only — matches Material theme breakpoint (76.25em ≈ 1220px)
+   ================================================================ */
+
+/* Hidden on mobile/tablet — JS reveals on desktop after positioning */
+.sidebar-toggle {
+  display: none;
+}
+
+@media screen and (min-width: 76.25em) {
+
+  /* ── Toggle button ─────────────────────────────────────────── */
+
+  .sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50vh;
+    transform: translateY(-50%);
+    z-index: 200;
+    width: 1.1rem;
+    height: 3rem;
+    padding: 0;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 0.2rem;
+    background: var(--md-default-bg-color);
+    color: var(--md-default-fg-color--light);
+    font-size: 0.6rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .sidebar-toggle:hover {
+    color: var(--md-accent-fg-color, #526cfe);
+    border-color: var(--md-accent-fg-color, #526cfe);
+  }
+
+  /* ── Sidebar transitions (only after JS sets .transitions-ready) ── */
+
+  .transitions-ready .md-sidebar--primary,
+  .transitions-ready .md-sidebar--secondary {
+    transition: width 0.2s ease;
+  }
+
+  .transitions-ready .md-sidebar--primary .md-sidebar__scrollwrap,
+  .transitions-ready .md-sidebar--secondary .md-sidebar__scrollwrap {
+    transition: opacity 0.15s ease;
+  }
+
+  /* ── Nav (left) sidebar — collapsed ────────────────────────── */
+
+  .nav-collapsed .md-sidebar--primary {
+    width: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden;
+  }
+
+  .nav-collapsed .md-sidebar--primary .md-sidebar__scrollwrap {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ── TOC (right) sidebar — collapsed ───────────────────────── */
+
+  .toc-collapsed .md-sidebar--secondary {
+    width: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden;
+  }
+
+  .toc-collapsed .md-sidebar--secondary .md-sidebar__scrollwrap {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
