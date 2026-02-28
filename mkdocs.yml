@@ -32,6 +32,7 @@ nav:
       - Battery Pack and Module: battery/battery.md
       - Cooling: battery/cooling.md
   - BMS Concepts:
+      - BMS Introduction: bms_concepts/bms-introduction.md
       - OCV vs Terminal Voltage: bms_concepts/ocv-vs-terminal-voltage.md
       - State of Charge (SOC): bms_concepts/state-of-charge-soc.md
       - State of Health (SOH): bms_concepts/state-of-health-soh.md
