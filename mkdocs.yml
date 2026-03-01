@@ -6,6 +6,7 @@ repo_name: ansh-bohrey/EV-blog
 docs_dir: claude_blog
 theme:
   name: material
+  custom_dir: overrides
   palette:
     scheme: default
     primary: white
