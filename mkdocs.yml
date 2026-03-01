@@ -23,6 +23,10 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.highlight
   - pymdownx.inlinehilite
+extra:
+  analytics:
+    provider: google
+    property: G-21L0CKXXJ3
 extra_css:
   - stylesheets/extra.css
 extra_javascript:
@@ -62,3 +66,4 @@ nav:
   - EV:
       - EV Nodes: ev/ev-nodes.md
       - Why Range Drops in Winter: ev/why-range-drops-in-winter.md
+      - Regenerative Braking: ev/regenerative-braking.md
