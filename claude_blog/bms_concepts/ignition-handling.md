@@ -33,20 +33,20 @@ The BMS does not have two states (on and off). It has a state machine with at le
 
 ![BMS state machine: Sleep → Standby → Pre-charge → Active/Run → Charge → Fault](../assets/bms-concepts/bms-state-machine.svg)
 
-| State | HV Bus | 12V Current Draw | Description |
-|---|---|---|---|
-| Sleep | Open | < 1 mA | Only wake interrupt active. MCU halted. |
-| Standby / Wake | Open | 20–100 mA | BMS MCU running, self-checks, no HV yet. |
-| Pre-charge | Partial | 100–200 mA | Main negative closed; pre-charge resistor energised. |
-| Active / Run | Live | 100–200 mA | All contactors closed, normal operation. |
-| Charge | Live (charge path) | 100–200 mA | Plugged in; charger handshake active. |
-| Fault | Open | 50–100 mA | Contactors open, fault logged, BMS awake. |
+| State | HV Bus | Description |
+|---|---|---|
+| Sleep | Open | Only wake interrupt active. MCU halted. |
+| Standby / Wake | Open | BMS MCU running, self-checks, no HV yet. |
+| Pre-charge | Partial | Main negative closed; pre-charge resistor energised. |
+| Active / Run | Live | All contactors closed, normal operation. |
+| Charge | Live (charge path) | Plugged in; charger handshake active. |
+| Fault | Open | Contactors open, fault logged, BMS awake. |
 
-**Sleep** is the default state whenever the vehicle is parked. The BMS microcontroller is halted or in its deepest power-down mode. A dedicated low-power comparator — consuming microamps, not milliamps — monitors the ignition pin, the CAN bus for wake frames, and, in some designs, a low-power ADC that periodically scans cell voltages to catch a low-cell condition that would risk deep discharge before the driver returns.
+**Sleep** is the default state whenever the vehicle is parked. The BMS microcontroller is halted or in a power-down mode. A dedicated low-power comparator — consuming microamps, not milliamps — monitors the ignition pin, the CAN bus for wake frames, and, in some designs, a low-power ADC that periodically scans cell voltages to catch a low-cell condition that would risk deep discharge before the driver returns.
 
 **Standby / Wake** begins the moment the wake trigger fires. The main MCU boots, the AFE chip initialises, and the BMS reads all cell voltages, temperatures, and the High Voltage Interlock Loop (HVIL) continuity status. It will not proceed to pre-charge if any of these checks fail.
 
-**Pre-charge** is where most of the interesting physics happens. It is covered in detail in the next section.
+**Pre-charge** solves a critical hardware protection problem: motor inverters contain large DC link capacitors that are fully discharged while parked. Closing the main positive contactor directly onto an uncharged capacitor would cause a current spike of hundreds to thousands of amperes — enough to weld contactor contacts shut. The pre-charge circuit routes current through a series resistor first, charging the capacitor slowly until its voltage matches the pack voltage, at which point the main positive contactor closes with negligible inrush. The physics are covered in detail in the next section.
 
 **Active / Run** is the steady operating state. All HV contactors are closed, the bus is live, and the BMS runs its normal 10–100 Hz monitoring loop: cell voltages, pack current, temperatures, SOC estimation, and SOP limits sent to the motor controller via CAN.
 
