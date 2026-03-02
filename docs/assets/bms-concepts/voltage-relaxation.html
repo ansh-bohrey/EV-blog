@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Voltage Relaxation After Load Removal — NMC vs LFP</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -109,8 +108,6 @@
     const nmcOCVLine = [{ x: 0, y: OCV_NMC }, { x: 60, y: OCV_NMC }];
     const lfpOCVLine = [{ x: 0, y: OCV_LFP }, { x: 60, y: OCV_LFP }];
 
-    Chart.register(ChartjsPluginAnnotation);
-
     const ctx = document.getElementById('relaxChart').getContext('2d');
     new Chart(ctx, {
       type: 'line',
@@ -158,6 +155,16 @@
             tension: 0,
             fill: false,
           },
+          {
+            label: 'Load removed (t = 0)',
+            data: [{ x: 0, y: 3.05 }, { x: 0, y: 3.82 }],
+            borderColor: '#e94560',
+            borderWidth: 2,
+            borderDash: [6, 3],
+            pointRadius: 0,
+            tension: 0,
+            fill: false,
+          },
         ]
       },
       options: {
@@ -201,74 +208,6 @@
         plugins: {
           legend: {
             labels: { color: '#b0c4de', font: { size: 11 }, padding: 16 }
-          },
-          annotation: {
-            annotations: {
-              loadRemoved: {
-                type: 'line',
-                scaleID: 'x',
-                value: 0,
-                borderColor: '#e94560',
-                borderWidth: 2,
-                borderDash: [6, 3],
-                label: {
-                  display: true,
-                  content: 'Load removed',
-                  color: '#e94560',
-                  backgroundColor: 'rgba(30,20,40,0.85)',
-                  font: { size: 10, weight: '600' },
-                  position: 'start',
-                  yAdjust: -20,
-                }
-              },
-              fastPhaseBox: {
-                type: 'box',
-                xMin: 0,
-                xMax: 2,
-                yMin: 3.05,
-                yMax: 3.82,
-                backgroundColor: 'rgba(74,158,237,0.06)',
-                borderColor: 'rgba(74,158,237,0.2)',
-                borderWidth: 1,
-                label: {
-                  display: true,
-                  content: ['Fast phase', 'R₀ recovery', '(instant)'],
-                  color: '#4a9eed',
-                  font: { size: 9 },
-                  position: { x: 'center', y: 'end' },
-                  yAdjust: 14,
-                }
-              },
-              slowPhaseBox: {
-                type: 'box',
-                xMin: 2,
-                xMax: 61,
-                yMin: 3.05,
-                yMax: 3.82,
-                backgroundColor: 'rgba(78,203,113,0.04)',
-                borderColor: 'rgba(78,203,113,0.15)',
-                borderWidth: 1,
-                label: {
-                  display: true,
-                  content: ['Slow phase: RC pair decay (minutes to hours)'],
-                  color: '#4ecb71',
-                  font: { size: 9 },
-                  position: { x: 'center', y: 'end' },
-                  yAdjust: 14,
-                }
-              },
-              ocvWarning: {
-                type: 'label',
-                xValue: 45,
-                yValue: 3.72,
-                content: ['OCV not reliable', 'until full relaxation'],
-                color: '#e94560',
-                font: { size: 9.5, weight: '600' },
-                backgroundColor: 'rgba(20,10,30,0.7)',
-                padding: { x: 6, y: 4 },
-                borderRadius: 4,
-              }
-            }
           }
         }
       }

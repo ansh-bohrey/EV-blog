@@ -1,12 +1,11 @@
 site_name: EV BMS Blog
 site_description: Practical EV battery and BMS engineering topics
 site_url: https://ansh-bohrey.github.io/EV-blog/
-repo_url: https://github.com/ansh-bohrey/EV-blog
-repo_name: ansh-bohrey/EV-blog
 docs_dir: docs
 theme:
   name: material
   custom_dir: overrides
+  font: false
   palette:
     scheme: default
     primary: white
@@ -31,8 +30,10 @@ extra:
 extra_css:
   - stylesheets/extra.css
 extra_javascript:
-  - javascripts/sidebar-toggle.js
-  - javascripts/iframe-resize.js
+  - path: javascripts/sidebar-toggle.js
+    defer: true
+  - path: javascripts/iframe-resize.js
+    defer: true
 plugins:
   - search
 nav:

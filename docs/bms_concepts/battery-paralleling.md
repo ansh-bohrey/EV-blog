@@ -48,7 +48,7 @@ Consider two packs:
 
 Total series impedance of the connection path — cable resistance, contactor contact resistance, connector resistance — is approximately 10 mΩ.
 
-<iframe src="../../assets/bms-concepts/battery-paralleling-inrush.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/battery-paralleling-inrush.html" width="100%" height="380" frameborder="0" loading="lazy"></iframe>
 
 Peak inrush current if connected directly:
 

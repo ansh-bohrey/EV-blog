@@ -114,7 +114,7 @@ The BMS balancing algorithm runs as a background task during the CV phase of cha
 
 The stop threshold (typically 5–10 mV) is tighter than the start threshold. This hysteresis prevents FET chatter: a cell that begins balancing at +20 mV above target will not stop until it falls within 5 mV. Convergence is gradual — each measure–bleed cycle removes a small increment of imbalance, and meaningful correction accumulates across many charge sessions.
 
-<iframe src="../../assets/bms-concepts/cell-voltage-convergence.html" width="100%" height="900" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/cell-voltage-convergence.html" width="100%" height="900" frameborder="0" loading="lazy"></iframe>
 
 The convergence animation above shows a typical CV-phase balancing session: cells start spread across a 50 mV window, bleed balancing activates on the high cells, and all voltages converge to the target over the course of the CV phase. Note that convergence is not instantaneous — the 50–200 mA bleed current is small relative to the cell capacity, and meaningful convergence requires sustained balancing across multiple charge cycles.
 

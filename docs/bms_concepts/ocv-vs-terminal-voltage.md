@@ -65,7 +65,7 @@ Every component value depends on SOC, temperature, and SOH. At low temperature, 
 
 This model is not an academic exercise. It is the backbone of production BMS SOC and SOP estimators. The BMS maintains a running estimate of the state of each RC pair, uses it to predict terminal voltage under load, and corrects its SOC estimate based on the difference between predicted and measured voltage. More on this in the [SOC post](./state-of-charge-soc.md).
 
-<iframe src="../../assets/bms-concepts/ocv-terminal-voltage-animation.html" width="100%" height="800" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/ocv-terminal-voltage-animation.html" width="100%" height="800" frameborder="0" loading="lazy"></iframe>
 
 ---
 
@@ -104,7 +104,7 @@ The **CV phase of charging** provides another OCV-adjacent opportunity: as charg
 
 When a BMS powers up after the vehicle has been parked, it faces the question: how long has the car been sitting, and is the voltage reading now reliable?
 
-<iframe src="../../assets/bms-concepts/voltage-relaxation.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/voltage-relaxation.html" width="100%" height="380" frameborder="0" loading="lazy"></iframe>
 
 The relaxation curve has a characteristic shape — fast initial recovery followed by a long slow tail. BMS firmware can use the slope and curvature of this trajectory to estimate how much further the voltage will move, allowing a reasonably accurate SOC estimate even before full equilibration. Some implementations pattern-match the relaxation trajectory to a database of known curves.
 

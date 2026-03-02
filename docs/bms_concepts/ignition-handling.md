@@ -46,7 +46,7 @@ The BMS does not have two states (on and off). It has a state machine with at le
 
 **Standby / Wake** begins the moment the wake trigger fires. The main MCU boots, the AFE chip initialises, and the BMS reads all cell voltages, temperatures, and the High Voltage Interlock Loop (HVIL) continuity status. It will not proceed to pre-charge if any of these checks fail.
 
-**Pre-charge** solves a critical hardware protection problem: motor inverters contain large DC link capacitors that are fully discharged while parked. Closing the main positive contactor directly onto an uncharged capacitor would cause a current spike of hundreds to thousands of amperes — enough to weld contactor contacts shut. The pre-charge circuit routes current through a series resistor first, charging the capacitor slowly until its voltage matches the pack voltage, at which point the main positive contactor closes with negligible inrush. The physics are covered in detail in the next section.
+**Pre-charge** solves a critical hardware protection problem motor inverters contain large DC link capacitors that are fully discharged while parked. Closing the main positive contactor directly onto an uncharged capacitor would cause a current spike of hundreds to thousands of amperes — enough to weld contactor contacts shut. The pre-charge circuit routes current through a series resistor first, charging the capacitor slowly until its voltage matches the pack voltage, at which point the main positive contactor closes with negligible inrush. The physics are covered in detail in the next section.
 
 **Active / Run** is the steady operating state. All HV contactors are closed, the bus is live, and the BMS runs its normal 10–100 Hz monitoring loop: cell voltages, pack current, temperatures, SOC estimation, and SOP limits sent to the motor controller via CAN.
 
@@ -74,7 +74,7 @@ V(t) = V_battery × (1 − e^(−t / RC))
 
 For a 50 Ω resistor and 1000 µF capacitor, the time constant τ = RC = 50 × 0.001 = 50 ms. The capacitor reaches 63% of battery voltage in one τ, 95% in 3τ (150 ms), and 99% in 5τ (250 ms). In practice the BMS declares pre-charge complete when the **inverter-side voltage** — measured by the BMS at the load terminal of the main positive contactor — reaches within 5–10 V of the pack voltage. This threshold, not a fixed timer, is the correct way to implement pre-charge completion detection, because resistor heating and capacitor value tolerances both affect the actual time required.
 
-<iframe src="../../assets/bms-concepts/precharge-rc-curve.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/precharge-rc-curve.html" width="100%" height="380" frameborder="0" loading="lazy"></iframe>
 
 Once the inverter-side voltage matches pack voltage, the inrush current through the main positive contactor at closure is:
 

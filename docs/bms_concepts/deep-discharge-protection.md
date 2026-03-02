@@ -94,7 +94,7 @@ After opening the contactor, the BMS performs an **OCV recovery check**: with no
 
 A cell left on the shelf loses charge slowly even with no external load. This **self-discharge** occurs through parasitic reactions at the electrode-electrolyte interface and through microscopic electronic conduction through the separator. The rate depends on chemistry, temperature, and cell age.
 
-<iframe src="../../assets/bms-concepts/self-discharge-chart.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/self-discharge-chart.html" width="100%" height="380" frameborder="0" loading="lazy"></iframe>
 
 Typical self-discharge rates at 25°C run 1–3% SOC per month for NMC and NCA cells, and somewhat lower for LFP. Temperature accelerates the rate significantly — a cell stored at 40°C may self-discharge two to four times faster than one stored at 20°C.
 

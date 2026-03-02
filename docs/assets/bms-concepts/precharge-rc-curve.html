@@ -136,8 +136,32 @@ function draw() {
   }
 
   if (chart) chart.destroy();
+  const tThreshIdx = tData.findIndex(t => t >= tThresh);
+
   chart = new Chart(document.getElementById('preChart').getContext('2d'), {
     type: 'line',
+    plugins: [{
+      id: 'verticalLine',
+      afterDraw(ch) {
+        if (tThreshIdx < 0) return;
+        const xScale = ch.scales.x;
+        const yScale = ch.scales.yV;
+        const x = xScale.getPixelForValue(tThreshIdx);
+        const c = ch.ctx;
+        c.save();
+        c.beginPath();
+        c.moveTo(x, yScale.top);
+        c.lineTo(x, yScale.bottom);
+        c.strokeStyle = '#e07b00';
+        c.lineWidth = 2;
+        c.setLineDash([4, 3]);
+        c.stroke();
+        c.fillStyle = '#e07b00';
+        c.font = '10px Arial';
+        c.fillText(`Close main @ ${tThresh.toFixed(0)}ms`, x + 4, yScale.top + 14);
+        c.restore();
+      }
+    }],
     data: {
       labels: tData,
       datasets: [
@@ -159,6 +183,17 @@ function draw() {
           tension: 0.3,
           borderDash: [5,3],
           yAxisID: 'yI'
+        },
+        {
+          label: `Threshold ${(thresh*100).toFixed(0)}% = ${(Vpack*thresh).toFixed(0)}V`,
+          data: tData.map(() => Vpack * thresh),
+          borderColor: '#2a8a2a',
+          borderWidth: 2,
+          borderDash: [6, 3],
+          pointRadius: 0,
+          tension: 0,
+          fill: false,
+          yAxisID: 'yV'
         }
       ]
     },
@@ -171,22 +206,7 @@ function draw() {
           text: `Pre-charge | V_pack=${Vpack}V | R=${R}Ω | C=${(C*1000).toFixed(1)}mF | τ=${tau.toFixed(0)}ms`,
           font: { size: 13 }
         },
-        legend: { position: 'top' },
-        annotation: {
-          annotations: {
-            threshLine: {
-              type: 'line', yMin: Vpack * thresh, yMax: Vpack * thresh,
-              yScaleID: 'yV',
-              borderColor: '#2a8a2a', borderWidth: 2, borderDash: [6,3],
-              label: { display: true, content: `Threshold ${(thresh*100).toFixed(0)}% = ${(Vpack*thresh).toFixed(0)}V`, position: 'start', color: '#2a8a2a', font: { size: 10 } }
-            },
-            tLine: {
-              type: 'line', xMin: tThresh.toFixed(0), xMax: tThresh.toFixed(0),
-              borderColor: '#e07b00', borderWidth: 2, borderDash: [4,3],
-              label: { display: true, content: `Close main @ ${tThresh.toFixed(0)}ms`, position: 'end', color: '#e07b00', font: { size: 10 } }
-            }
-          }
-        }
+        legend: { position: 'top' }
       },
       scales: {
         x: { title: { display: true, text: 'Time (ms)' }, ticks: { maxTicksLimit: 12 } },

@@ -73,7 +73,7 @@ It is measured by applying a known current step and measuring the immediate volt
 
 DCIR is a strong function of temperature. The Arrhenius relationship governs ion mobility in the electrolyte:
 
-<iframe src="../../assets/bms-concepts/rint-temperature-chart.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/rint-temperature-chart.html" width="100%" height="380" frameborder="0" loading="lazy"></iframe>
 
 Typical NMC internal resistance values (illustrative ranges from published 21700 cell characterisation; actual values are cell-design and SOC dependent):
 
@@ -146,7 +146,7 @@ The BMS publishes SOP on the CAN bus every 10–100 ms. The vehicle control unit
 
 **Derating** is a gradual reduction in SOP as limits are approached, rather than a hard cliff:
 
-<iframe src="../../assets/bms-concepts/sop-derating-chart.html" width="100%" height="380" frameborder="0"></iframe>
+<iframe src="../../assets/bms-concepts/sop-derating-chart.html" width="100%" height="380" frameborder="0" loading="lazy"></iframe>
 
 A typical derating strategy reduces SOP linearly from 100% at, say, 15°C to 20% at −20°C — an illustrative OEM-policy-dependent example; actual thresholds and curve shapes vary widely by platform. Similarly, SOP is derated as SOC drops below 15% or rises above 90%. The result is a smooth power reduction the driver experiences as progressive sluggishness rather than an abrupt cutoff.
 
