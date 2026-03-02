@@ -3,7 +3,7 @@ site_description: Practical EV battery and BMS engineering topics
 site_url: https://ansh-bohrey.github.io/EV-blog/
 repo_url: https://github.com/ansh-bohrey/EV-blog
 repo_name: ansh-bohrey/EV-blog
-docs_dir: claude_blog
+docs_dir: docs
 theme:
   name: material
   custom_dir: overrides
